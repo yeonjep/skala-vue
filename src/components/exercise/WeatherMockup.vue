@@ -3,9 +3,12 @@ import { ref } from 'vue'
 
 // 4일차 API 연동을 대비한 가상의 백엔드 데이터 배열 (v-for 및 :key 실습용)
 const weatherList = ref([
-  { id: 'city_01', name: '서울', temp: 28, status: '맑음' },
-  { id: 'city_02', name: '수원', temp: 24, status: '비' },
-  { id: 'city_03', name: '부산', temp: 26, status: '구름' },
+  { id: 'city_01', name: '서울', temp: 28, status: '맑음', humidity: 45 },
+  { id: 'city_02', name: '수원', temp: 24, status: '비', humidity: 80 },
+  { id: 'city_03', name: '부산', temp: 26, status: '구름', humidity: 65 },
+  // 개인과제 - 도시 2개, 습도 추가
+  { id: 'city_04', name: '전주', temp: 27, status: '맑음', humidity: 50 },
+  { id: 'city_05', name: '강릉', temp: 22, status: '흐림', humidity: 70 },
 ])
 
 // 검색어 및 알림창 제어용 데이터 (v-model 대용 한글 처리 및 이벤트 실습용)
@@ -35,6 +38,7 @@ const showDetail = (cityName, status) => {
       <div v-for="item in weatherList" :key="item.id" class="weather-card" @click="selectedCityInfo = `${item.name}이 선택되었습니다.`">
         <h4>{{ item.name }} ({{ item.status }})</h4>
         <p>현재 기온: {{ item.temp }}°C</p>
+        <span class="humidity-badge">💧 습도 {{ item.humidity }}%</span>
 
         <span v-if="item.temp >= 25" class="badge hot">🔥 더움 (25도 이상)</span>
         <span v-else class="badge cool">❄️ 선선함 (25도 미만)</span>
@@ -48,3 +52,14 @@ const showDetail = (cityName, status) => {
     </div>
   </div>
 </template>
+<style scoped>
+.humidity-badge {
+  display: inline-block;
+  background-color: #e1f5fe;
+  color: #0277bd;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+</style>
