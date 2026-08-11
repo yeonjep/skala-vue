@@ -1,0 +1,313 @@
+/* ===== 우주 테마 배경 ===== */
+.dashboard-wrapper {
+  position: relative;
+  min-height: 100vh;
+  padding: 28px 24px 40px;
+  overflow: hidden;
+  background:
+    radial-gradient(1px 1px at 12% 18%, rgba(255, 255, 255, 0.9), transparent),
+    radial-gradient(1.5px 1.5px at 28% 62%, rgba(255, 255, 255, 0.55), transparent),
+    radial-gradient(2px 2px at 52% 12%, rgba(255, 255, 255, 0.75), transparent),
+    radial-gradient(1px 1px at 72% 44%, rgba(255, 255, 255, 0.45), transparent),
+    radial-gradient(1.5px 1.5px at 88% 78%, rgba(255, 255, 255, 0.65), transparent),
+    radial-gradient(1px 1px at 18% 88%, rgba(255, 255, 255, 0.5), transparent),
+    radial-gradient(ellipse 80% 50% at 15% 10%, rgba(88, 120, 255, 0.22) 0%, transparent 55%),
+    radial-gradient(ellipse 70% 45% at 85% 90%, rgba(120, 80, 220, 0.18) 0%, transparent 50%),
+    radial-gradient(ellipse 50% 35% at 50% 50%, rgba(40, 100, 200, 0.08) 0%, transparent 60%),
+    linear-gradient(165deg, #04060f 0%, #0a0e24 42%, #0d1230 100%) !important;
+  background-repeat: no-repeat !important;
+}
+
+/* ===== 공통 글래스 패널 ===== */
+.search-box,
+.list-box,
+.summary-box {
+  background: rgba(255, 255, 255, 0.06) !important;
+  backdrop-filter: blur(24px) saturate(150%);
+  -webkit-backdrop-filter: blur(24px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  border-radius: 20px !important;
+  box-shadow:
+    0 10px 40px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+  padding: 22px 24px !important;
+  margin-bottom: 18px !important;
+}
+
+.search-box h3,
+.list-box h3 {
+  color: #ffffff !important;
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: -0.3px;
+  margin: 0 0 16px 0 !important;
+}
+
+.search-box p {
+  color: rgba(255, 255, 255, 0.82) !important;
+  font-weight: 500;
+  font-size: 0.92rem;
+  margin: 14px 0 0 0 !important;
+}
+
+.search-box strong {
+  color: #ffffff !important;
+  font-weight: 700;
+}
+
+/* ===== 검색창 ===== */
+.search-box input {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 4px;
+  padding: 12px 16px !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  border-radius: 14px !important;
+  outline: none;
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(10px);
+  color: #ffffff;
+  font-size: 0.95rem;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.search-box input::placeholder {
+  color: rgba(255, 255, 255, 0.38);
+}
+
+.search-box input:focus {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(140, 180, 255, 0.55) !important;
+  box-shadow: 0 0 0 3px rgba(100, 150, 255, 0.15);
+}
+
+/* ===== 요약 통계 대시보드 ===== */
+.summary-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.summary-stats li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 14px 10px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  min-height: 72px;
+}
+
+.summary-stats .label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.summary-stats .value {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.2;
+}
+
+.summary-extremes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.extreme-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: 1px solid transparent;
+}
+
+.extreme-pill.hot {
+  background: rgba(255, 110, 110, 0.12);
+  color: #ffb4b4;
+  border-color: rgba(255, 110, 110, 0.35);
+}
+
+.extreme-pill.cool {
+  background: rgba(100, 170, 255, 0.12);
+  color: #a8d4ff;
+  border-color: rgba(100, 170, 255, 0.35);
+}
+
+/* ===== 날씨 카드 ===== */
+.weather-card {
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 18px !important;
+  margin-bottom: 16px !important;
+  padding: 18px 20px !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.28) !important;
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.weather-card:last-child {
+  margin-bottom: 0 !important;
+}
+
+.weather-card h4 {
+  color: #ffffff !important;
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin: 0 0 10px 0 !important;
+}
+
+.weather-card p {
+  color: rgba(255, 255, 255, 0.78) !important;
+  font-size: 0.95rem;
+  margin: 0 0 14px 0 !important;
+}
+
+.weather-card:hover {
+  border-color: rgba(160, 190, 255, 0.35) !important;
+  background: rgba(255, 255, 255, 0.09) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.38) !important;
+}
+
+/* 뱃지 영역 — 간격 확보 */
+.card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.badge,
+.humidity-badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px !important;
+  padding: 6px 13px !important;
+  border: 1px solid transparent !important;
+  backdrop-filter: blur(6px);
+  font-weight: 600;
+  font-size: 0.8rem;
+  line-height: 1.3;
+  transition: all 0.15s ease;
+}
+
+.badge.hot {
+  background: rgba(255, 99, 99, 0.16) !important;
+  color: #ffc4c4 !important;
+  border-color: rgba(255, 99, 99, 0.4) !important;
+}
+
+.badge.cool {
+  background: rgba(90, 170, 255, 0.16) !important;
+  color: #b8dcff !important;
+  border-color: rgba(90, 170, 255, 0.4) !important;
+}
+
+.humidity-badge {
+  background: rgba(0, 200, 230, 0.12) !important;
+  color: #8eeaff !important;
+  border-color: rgba(0, 200, 230, 0.35) !important;
+}
+
+.badge:hover,
+.humidity-badge:hover {
+  transform: translateY(-1px);
+}
+
+/* ===== 상세보기 버튼 ===== */
+.btn-detail {
+  display: inline-block;
+  margin-top: 4px;
+  padding: 10px 18px !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.28) !important;
+  backdrop-filter: blur(8px);
+  border-radius: 12px !important;
+  font-weight: 600;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.btn-detail:hover {
+  background: rgba(255, 255, 255, 0.16) !important;
+  border-color: rgba(180, 210, 255, 0.55) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+}
+
+/* ===== 검색 결과 없음 ===== */
+.empty-result {
+  text-align: center;
+  color: #ff9a9a !important;
+  padding: 20px 12px !important;
+  margin: 8px 0 0 0 !important;
+  font-size: 0.92rem;
+  background: rgba(255, 80, 80, 0.08);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 100, 100, 0.2);
+}
+
+/* ===== 상태 바 ===== */
+.status-bar {
+  margin-top: 4px !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  backdrop-filter: blur(22px) saturate(140%);
+  -webkit-backdrop-filter: blur(22px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  border-radius: 18px !important;
+  padding: 16px 20px !important;
+  color: #f5f6fa !important;
+  font-weight: 600;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  box-shadow:
+    0 8px 28px rgba(0, 0, 0, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.09) !important;
+}
+
+.status-sub {
+  font-size: 0.85rem !important;
+  font-weight: 500 !important;
+  color: rgba(255, 255, 255, 0.55) !important;
+  margin: 8px 0 0 0 !important;
+}
+
+/* ===== 반응형 ===== */
+@media (max-width: 560px) {
+  .summary-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .dashboard-wrapper {
+    padding: 20px 16px 32px;
+  }
+}
