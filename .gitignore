@@ -1,39 +1,70 @@
 # Logs
-logs
+logs/
 *.log
+*.log.*
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
+vite.config.js.timestamp-*
+*.pid
+*.pid.lock
 
-node_modules
-.DS_Store
-dist
-dist-ssr
-coverage
+# Dependencies
+node_modules/
+
+# Build / output
+dist/
+dist-ssr/
+coverage/
 *.local
 
-# Editor directories and files
+# Env / secrets (예시는 커밋 가능)
+.env
+.env.*
+!.env.example
+!.env.*.example
+
+# Caches
+.cache/
+.vite/
+.turbo/
+.parcel-cache/
+.eslintcache
+.stylelintcache
+*.tsbuildinfo
+
+# Test / e2e artifacts
+/cypress/videos/
+/cypress/screenshots/
+__screenshots__/
+playwright-report/
+test-results/
+.nyc_output/
+
+# Vite
+*.timestamp-*-*.mjs
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Editor
 .vscode/*
 !.vscode/extensions.json
-.idea
+!.vscode/settings.json
+.idea/
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+*~
 
-*.tsbuildinfo
-
-.eslintcache
-
-# Cypress
-/cypress/videos/
-/cypress/screenshots/
-
-# Vitest
-__screenshots__/
-
-# Vite
-*.timestamp-*-*.mjs
+# Optional local tooling
+.history/
+*.bak
+*.tmp
+*.temp

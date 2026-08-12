@@ -1,0 +1,12 @@
+{
+  "files.associations": {
+    "*.vue": "vue"
+  },
+  "editor.semanticHighlighting.enabled": true,
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": "active",
+  "[vue]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "vue.inlayHints.missingProps": false
+}

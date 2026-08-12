@@ -1,101 +1,225 @@
-# 울산4반 Vue 2일차 종합실습 제출 - 박연제
+# 울산4반 Vue 3·4·5일차 종합실습 제출 - 박연제
 
 ## 제출 개요
 
 - 반: 울산4반
 - 제출자: 박연제(U116)
-- 제출일: 2026-08-11
-- 제출 항목: Weather Mockup, Weather Composition
+- 제출일: 2026-08-12
+- 제출 항목: Component(3) · Router(4) · Pinia Store(5)
+- 앱 이름: **AeroCast** (단일 날씨 허브로 통합)
+
+> 2일차 README는 `README_day2_backup.txt`에 백업해 두었습니다.
 
 ## 실행 방법
 
-\`\`\`
+```
 npm install
 npm run dev
-\`\`\`
+```
 
-## 프로젝트 구조
+브라우저에서 `http://localhost:3000/` (또는 터미널에 표시된 포트)로 접속합니다.
 
-\`\`\`
+### 주요 URL
+
+| 화면                              | 주소                           |
+| --------------------------------- | ------------------------------ |
+| 홈                                | `/`                            |
+| 날씨 대시보드 (과제 3·4·5 실사용) | `/cities`                      |
+| 도시 상세                         | `/weather/city_01` (서울 예시) |
+| 서비스 소개                       | `/about`                       |
+| 날씨 가이드 (본인 추가 View)      | `/guide`                       |
+| 404                               | `/kk` 처럼 **없는 주소** 입력  |
+| 1·2·3일차 원본 Lab                | `/lab/1`, `/lab/2`, `/lab/3`   |
+
+## 프로젝트 구조 (과제 3·4·5 관련)
+
+```
 src/
+├─ App.vue                          # 셸: RouterLink 네비 + UnitToggler + RouterView
+├─ router/
+│  └─ index.js                      # [4] 라우트 · Lazy Loading · Catch-all
+├─ stores/
+│  ├─ configStore.js                # [5] 섭씨/화씨 전역 단위
+│  └─ weatherStore.js               # [5] 나만의 Store (즐겨찾기·최근 검색)
+├─ composables/
+│  └─ useDisplayTemp.js             # [5] 표시 온도 변환 composable
+├─ utils/
+│  └─ temperature.js                # ℃ → ℉ 변환 유틸
 ├─ components/
-│ └─ exercise/
-│ ├─ WeatherMockup.vue
-│ └─ WeatherComposition.vue
-└─ assets/
-└─ weather-dashboard.css (두 컴포넌트 공통 스타일)
-\`\`\`
+│  ├─ MonthWeatherCalendar.vue      # 홈 월간 캘린더 (제품 UI)
+│  └─ exercise/
+│     ├─ WeatherParent.vue          # [3] 부모 — 상태·로직 소유, 자식 조립
+│     ├─ BaseDashboardCard.vue      # [3] slot 공통 카드 래퍼
+│     ├─ SearchBar.vue              # [3] props/emit 검색창
+│     ├─ WeatherCard.vue            # [3] props/emit 도시 카드 (+[5] 단위·즐겨찾기)
+│     ├─ UnitToggler.vue            # [5] 단위 변경 버튼
+│     ├─ StorePanel.vue             # [5] 최근 검색·즐겨찾기 패널
+│     ├─ WeatherMockup.vue          # 1일차 원본 (/lab/1)
+│     └─ WeatherComposition.vue     # 2일차 원본 (/lab/2)
+└─ views/
+   ├─ HubHomeView.vue               # 홈 (/)
+   ├─ WeatherHomeView.vue           # [4] /cities — 안에서 WeatherParent 사용
+   ├─ WeatherDetailView.vue         # [4] /weather/:cityId 상세
+   ├─ WeatherAboutView.vue          # [4] /about
+   ├─ WeatherGuideView.vue          # [4] 본인 추가 View /guide
+   ├─ NotFoundView.vue              # [4] 404 + programmatic navigation
+   └─ AssignmentDayView.vue         # /lab/:day Lab 껍데기
+```
 
-## 1. Weather Mockup (WeatherMockup.vue)
+---
+
+## 1. 과제 3 — Component (`src/components/exercise/`)
 
 ### 기본 요구사항 대응
 
-- 개인 도시 데이터 추가: 기존 3개 도시(서울, 수원, 부산)에 전주, 강릉 2개 도시를 추가하고, 전체 도시에 humidity(습도) 필드를 추가함
-- computed(filteredWeatherList)로 검색어에 따른 실시간 필터링을 구현하고, v-show(isCityVisible)로 필터링 결과에 따라 카드 표시 여부를 제어함
-- 카드 클릭 시 selectedCityInfo를 갱신하여 하단 상태 바에 반영함
-- 기온 조건(25도 기준)에 따라 더움/선선함 뱃지를 분기 처리하고, 습도 뱃지를 추가로 표시함
+- 과제 2 Composition의 로직을 유지한 채 UI를 **4개 컴포넌트**로 분리함
+- **WeatherParent.vue**: `weatherList`, `searchQuery`, `filteredWeatherList`, `watch` / `watchEffect`, 요약 통계 등 상태·로직을 전부 소유하고 자식을 조립함
+- **BaseDashboardCard.vue**: `<slot>`으로 검색/목록 영역을 감싸는 공통 레이아웃 래퍼
+- **SearchBar.vue**: props `currentQuery` / emit `update-query`로 부모 `searchQuery`와 단방향 연동
+- **WeatherCard.vue**: props `cityItem` / emit `select-card`, `click-detail`로 카드 선택·상세보기 이벤트 전달
 
-### 개인 추가 구현
+### 실사용 연결
 
-- summary-box 영역 추가: computed로 총 도시 수(totalCityCount), 평균 기온(summaryAverageTemp), 더움/선선함 도시 수(hotCityCount, coolCityCount)를 계산하여 요약 통계로 표시함
-- computed(hottestCity, coolestCity)로 필터링된 목록 내 최고/최저 기온 도시를 계산하여 pill 형태로 표시함
-- 검색 결과가 없을 경우 안내 문구(empty-result)를 노출함
+- 날씨 탭 `/cities` → `WeatherHomeView.vue`가 `WeatherParent`를 렌더링함 (목록 UI의 실제 본체)
+- 상세보기 클릭 시 Parent가 `router.push('/weather/' + cityId)`로 이동 (과제 4와 연결)
 
-## 2. Weather Composition (WeatherComposition.vue)
+### 개인 추가 유지
 
-### 기본 요구사항 대응 (Composition API)
+- 도시 5개(서울·수원·부산·전주·강릉) + `humidity`
+- 요약 통계(도시/평균/더움/선선함) 및 최고·최저 기온 도시 pill
+- 검색 결과 없음 안내, 상세보기 클릭 횟수 + watch 콘솔 로그
 
-- ref: weatherList, searchQuery, selectedCityInfo, detailViewCount를 반응형 상태로 관리함
-- computed: filteredWeatherList(검색 필터링), averageTemp(평균 기온)를 연산하여 의존성이 바뀔 때만 재계산되도록 함
-- watch: selectedCityInfo의 변경을 감지하여 콘솔에 로그를 출력함
-- watchEffect: searchQuery를 자동으로 추적하여 검색어가 바뀔 때마다 콘솔에 API 필터링 시뮬레이션 로그를 출력함
+---
 
-### 개인 추가 구현
+## 2. 과제 4 — Router (`src/router/index.js`, `src/views/`)
 
-- detailViewCount ref를 추가하고, 상세보기 버튼 클릭 시 값을 증가시킨 뒤 watch로 감지하여 클릭 횟수를 콘솔에 로그로 남김
-- averageTemp computed를 목록 영역 제목에 실시간으로 표시함
-- Mockup과 동일한 로직으로 totalCityCount, hotCityCount, coolCityCount, hottestCity, coolestCity computed를 추가하여 요약 통계 및 최고/최저 기온 도시를 함께 표시함
+### 기본 요구사항 대응
 
-## 디자인
+| 경로               | View 파일               | 비고                      |
+| ------------------ | ----------------------- | ------------------------- |
+| `/`                | `HubHomeView.vue`       | 제품 홈 (즉시 로드)       |
+| `/cities`          | `WeatherHomeView.vue`   | 날씨 대시보드 (Lazy)      |
+| `/about`           | `WeatherAboutView.vue`  | 서비스 소개 (Lazy)        |
+| `/weather/:cityId` | `WeatherDetailView.vue` | **동적 경로** 상세 (Lazy) |
+| `/guide`           | `WeatherGuideView.vue`  | **본인 추가 View** (Lazy) |
+| `/:pathMatch(.*)*` | `NotFoundView.vue`      | **404 Catch-all** (Lazy)  |
 
-- 두 컴포넌트의 스타일을 src/assets/weather-dashboard.css 하나로 분리하고, 각 컴포넌트의 `<style scoped>\`에서 @import하여 공유함
-- 다크 네이비 그라디언트 배경과 블루 톤 광원을 배치하여 우주 테마 적용함
-- 검색창, 요약 통계 박스, 날씨 카드, 상태 바를 모두 backdrop-filter 기반의 반투명 글래스모피즘 스타일로 통일함
-- 카드/뱃지/버튼은 기본 상태에서 테두리를 옅게 하고, hover 시 테두리와 그림자가 강조되는 인터랙션을 추가함
-- 560px 이하 화면에서는 요약 통계 grid를 2열로 재배치하는 반응형 처리를 포함함
+- **선언적 네비게이션**: `App.vue`의 `<RouterLink>` (홈 / 날씨 / 가이드 / 소개)
+- **프로그래밍 네비게이션**: 상세보기 `router.push`, 404·소개 등의 “홈/대시보드로 이동” 버튼
+- **검색 ↔ URL 쿼리 동기화**: `WeatherParent`에서 `?search=`를 `watch` + `onMounted`로 양방향 반영
+- 상세보기의 `alert` 제거 → 페이지 이동으로 교체
+
+### 404 화면 확인 방법
+
+주소창에 **정의되지 않은 경로**를 입력하면 됩니다.
+
+예: `http://localhost:3000/kk` 또는 `http://localhost:3000/abc`
+
+→ `NotFoundView.vue`가 표시되고, **날씨 메인으로 이동** 버튼으로 홈(`/`)에 돌아갑니다.
+
+### 선택·추가 구현
+
+- `/guide` 날씨 해석 가이드 View 추가
+- 제품형 허브 네비(AeroCast)로 과제 섹션을 하나로 통합 (과제 개념은 `/cities`·상세·스토어에 유지)
+
+---
+
+## 3. 과제 5 — Pinia Store (`src/stores/`, `UnitToggler` 등)
+
+### 기본 요구사항 대응
+
+- **configStore** (`src/stores/configStore.js`)
+  - state: `unit` (`celsius` / `fahrenheit`)
+  - getter: `unitSymbol` (℃ / ℉), `unitLabel`
+  - action: `toggleUnit()`
+  - localStorage에 단위 저장
+- **UnitToggler.vue**: 헤더에 배치, 스토어 `toggleUnit` 호출
+- **WeatherCard.vue** / **WeatherDetailView.vue**: 목록·상세 모두 동일 단위로 온도 표시
+- 원본 `temp`는 섭씨 숫자 유지, 화면 표시만 변환
+- 더움/선선함 뱃지는 원본 섭씨 25° 기준 유지
+
+### 선택·자율 구현
+
+- **weatherStore** (`src/stores/weatherStore.js`): 최근 검색어 · 즐겨찾기 도시 + localStorage
+- **StorePanel.vue**: 날씨 화면에서 최근 검색/즐겨찾기 UI
+- **useDisplayTemp.js**: 표시 온도 변환 composable로 분리
+- 카드 ★ 버튼 및 헤더 즐겨찾기 개수 표시
+
+---
+
+## 디자인 / 제품 UI (추가)
+
+- 단일 셸 `App.vue` + soft glass 라이트 테마 (`aurora-bg` 배경)
+- 홈: 날짜 히어로 + 대표 도시 + **MonthWeatherCalendar** (이번 달 그리드, 오늘 흰색 캡슐, 날씨 이모지·기온 목데이터)
+- 운세/게임 탭은 제거하고 날씨 중심으로 정리
+
+---
 
 ## 스크린샷
 
-### 실행 화면
+> 아래 이미지는 `screenshots/` 폴더에 있습니다.  
+> 캡처가 비어 있거나 최신이 아니면, README 하단 **직접 캡처 체크리스트**를 참고해 같은 파일명으로 덮어쓰면 됩니다.
 
-Mockup / Composition 두 화면 모두 초기 상태(도시 5개, 요약 통계, 최고/최저 기온)가 정상적으로 렌더링되는 모습입니다.
+### 홈 (AeroCast)
 
-![실행 화면 - Mockup / Composition 초기 상태](./screenshots/01-main.png)
+날짜 히어로와 월간 날씨 캘린더가 보이는 홈 화면입니다.
 
-### 검색 필터링 동작
+![홈 화면](./screenshots/d345-01-home.png)
 
-Mockup에서 "부산", Composition에서 "서울"을 검색했을 때 computed(filteredWeatherList)로 실시간 필터링되어 요약 통계까지 함께 갱신되는 모습입니다.
+### 과제 3·4·5 통합 — 날씨 대시보드 (`/cities`)
 
-![검색 필터링 - 부산/서울 검색 결과](./screenshots/02-search.png)
+`WeatherParent` + SearchBar / WeatherCard / BaseDashboardCard / StorePanel이 한 화면에 연결된 모습입니다.
 
-### 상세보기 클릭 시 콘솔 로그 (watch / watchEffect)
+![날씨 대시보드](./screenshots/d345-02-cities.png)
 
-검색어를 입력할 때마다 watchEffect가 자동으로 감지하여 API 필터링 로그를 출력합니다.
+### 검색 + URL 쿼리 (`?search=`)
 
-![콘솔 로그 1 - watchEffect 검색어 자동 추적](./screenshots/03-detail-console-1.png)
+검색어 입력 시 카드가 필터링되고, 주소에 `?search=`가 반영됩니다.
 
-상세보기 버튼을 클릭할 때마다 detailViewCount가 증가하고, watch가 이를 감지하여 클릭 횟수 로그를 출력합니다.
+![검색 및 쿼리](./screenshots/d345-03-search-query.png)
 
-![콘솔 로그 2 - watch로 상세보기 클릭 횟수 감지](./screenshots/03-detail-console-2.png)
+### 동적 경로 상세 (`/weather/:cityId`)
 
-### 반응형 화면
+상세보기 클릭 후 도시별 상세 페이지입니다. 단위 변경 시 여기 온도도 함께 바뀝니다.
 
-\`weather-dashboard.css\`에 \`@media (max-width: 560px)\` 규칙을 적용하여, 화면 너비가 560px을 넘을 때는 요약 통계(도시/평균/더움/선선함)가 4열로, 560px 이하일 때는 2×2로 재배치됩니다.
+![도시 상세](./screenshots/d345-04-detail.png)
 
-**700px (560px 초과) — 요약 통계 4열**
+### 서비스 소개 / 가이드
 
-![반응형 - 700px](./screenshots/04-responsive-700.png)
+![소개](./screenshots/d345-05-about.png)
 
-**375px (모바일 크기, 560px 이하) — 요약 통계 2×2로 전환**
+![가이드](./screenshots/d345-06-guide.png)
 
-![반응형 - 375px](./screenshots/06-responsive-375.png)
+### 404 (없는 URL)
+
+주소창에 `/kk`처럼 없는 경로를 넣었을 때 Catch-all 404 화면입니다.
+
+![404](./screenshots/d345-07-404.png)
+
+### 단위 변경 (섭씨 ↔ 화씨)
+
+헤더 **단위변경** 후 목록 온도가 ℉로 바뀐 모습입니다.
+
+![단위 화씨](./screenshots/d345-08-unit-fahrenheit.png)
+
+### 즐겨찾기 (나만의 Store)
+
+카드 ★ 토글 및 StorePanel / 헤더 즐겨찾기 수 반영입니다.
+
+![즐겨찾기](./screenshots/d345-09-favorite.png)
+
+---
+
+## 직접 캡처 체크리스트 (필요 시)
+
+브라우저에서 `npm run dev` 후 아래를 캡처해 `screenshots/`에 저장하세요.
+
+1. `/` → `d345-01-home.png`
+2. `/cities` → `d345-02-cities.png`
+3. `/cities`에서 `부산` 검색 → `d345-03-search-query.png` (주소창에 `?search=` 보이게)
+4. 서울 상세보기 → `d345-04-detail.png`
+5. `/about` → `d345-05-about.png`
+6. `/guide` → `d345-06-guide.png`
+7. `/kk` → `d345-07-404.png` ← **404는 이렇게 찾으면 됩니다**
+8. 단위변경(℉) → `d345-08-unit-fahrenheit.png`
+9. ★ 즐겨찾기 → `d345-09-favorite.png`
