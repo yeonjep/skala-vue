@@ -8,7 +8,7 @@ const routes = [
     component: HubHomeView,
   },
   {
-    // [4·5일차] 전국 날씨 대시보드 — 컴포넌트·검색·스토어 통합 화면
+    //  전국 날씨 대시보드 — 컴포넌트·검색·스토어 통합 화면
     path: '/cities',
     name: 'WeatherHome',
     component: () => import('../views/WeatherHomeView.vue'),
@@ -19,7 +19,7 @@ const routes = [
     component: () => import('../views/WeatherAboutView.vue'),
   },
   {
-    // [4일차] 동적 경로 상세
+    //  동적 경로 상세
     path: '/weather/:cityId',
     name: 'WeatherDetail',
     component: () => import('../views/WeatherDetailView.vue'),

@@ -2,7 +2,7 @@ import { computed, toValue } from 'vue'
 import { useConfigStore } from '@/stores/configStore'
 import { convertTemp } from '@/utils/temperature'
 
-/** [5일차 과제] 스토어 단위에 따라 표시 온도를 계산하는 composable */
+/* 스토어 단위에 따라 표시 온도를 계산하는 composable */
 export function useDisplayTemp(rawTempSource) {
   const configStore = useConfigStore()
 

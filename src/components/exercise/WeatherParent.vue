@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed, watch, watchEffect, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-// [3일차 과제] 4개 컴포넌트 분리 — 부모가 자식들을 조립하고 모든 상태·로직을 소유
+// 4개 컴포넌트 분리
 import BaseDashboardCard from './BaseDashboardCard.vue'
 import SearchBar from './SearchBar.vue'
 import WeatherCard from './WeatherCard.vue'
@@ -11,7 +11,7 @@ import { useWeatherStore } from '@/stores/weatherStore'
 import { convertTemp } from '@/utils/temperature'
 
 defineProps({
-  /** 허브(/cities) 안에서는 이중 배경 제거 */
+  /** 허브(/cities) 안에서 이중 배경 제거 */
   embedded: {
     type: Boolean,
     default: false,
@@ -43,7 +43,7 @@ onMounted(() => {
   }
 })
 
-// [4·5일차] 검색어 ↔ 라우터 query + 최근 검색 스토어
+// 검색어 ↔ 라우터 query + 최근 검색 스토어
 watch(searchQuery, (newQuery) => {
   if (route.path === '/cities' || route.name === 'WeatherHome') {
     router.push({
@@ -105,7 +105,7 @@ const coolestCity = computed(() => {
   return filteredWeatherList.value.reduce((min, item) => (item.temp < min.temp ? item : min))
 })
 
-// [3·4일차] WeatherCard click-detail → 라우터 상세 이동
+//  WeatherCard click-detail → 라우터 상세 이동
 const handleDetailJump = (cityId) => {
   detailViewCount.value++
   router.push(`/weather/${cityId}`)
@@ -122,12 +122,12 @@ const jumpCity = (cityId) => {
 
 <template>
   <div class="dashboard-wrapper" :class="{ 'dashboard-wrapper--embedded': embedded }">
-    <!-- [3일차 과제] BaseDashboardCard + SearchBar — props/emit으로 searchQuery 연동 -->
+    <!--  BaseDashboardCard + SearchBar — props/emit으로 searchQuery 연동 -->
     <BaseDashboardCard class="search-box">
       <SearchBar :current-query="searchQuery" @update-query="(val) => (searchQuery = val)" />
     </BaseDashboardCard>
 
-    <!-- [5일차 과제] 스토어 패널 — 최근 검색 · 즐겨찾기 -->
+    <!--  스토어 패널 — 최근 검색 · 즐겨찾기 -->
     <StorePanel :cities="weatherList" @apply-search="applySearch" @jump-city="jumpCity" />
 
     <!-- [실습과제 코드 추가 : 요약 통계 및 최고·최저 기온 표시 영역] -->
@@ -148,26 +148,16 @@ const jumpCity = (cityId) => {
         </li>
       </ul>
       <div v-if="hottestCity && coolestCity" class="summary-extremes">
-        <span class="extreme-pill hot">
-          최고 {{ hottestCity.name }} {{ convertTemp(hottestCity.temp, configStore.unit) }}{{ configStore.unitSymbol }}
-        </span>
-        <span class="extreme-pill cool">
-          최저 {{ coolestCity.name }} {{ convertTemp(coolestCity.temp, configStore.unit) }}{{ configStore.unitSymbol }}
-        </span>
+        <span class="extreme-pill hot"> 최고 {{ hottestCity.name }} {{ convertTemp(hottestCity.temp, configStore.unit) }}{{ configStore.unitSymbol }} </span>
+        <span class="extreme-pill cool"> 최저 {{ coolestCity.name }} {{ convertTemp(coolestCity.temp, configStore.unit) }}{{ configStore.unitSymbol }} </span>
       </div>
     </section>
 
-    <!-- [3일차 과제] BaseDashboardCard + WeatherCard — cityItem props / select-card·click-detail emit -->
+    <!--  BaseDashboardCard + WeatherCard — cityItem props / select-card·click-detail emit -->
     <BaseDashboardCard class="list-box">
       <h3>지역별 날씨 현황 (평균 기온: {{ displayAverageTemp }}{{ configStore.unitSymbol }})</h3>
 
-      <WeatherCard
-        v-for="item in filteredWeatherList"
-        :key="item.id"
-        :city-item="item"
-        @select-card="(msg) => (selectedCityInfo = msg)"
-        @click-detail="() => handleDetailJump(item.id)"
-      />
+      <WeatherCard v-for="item in filteredWeatherList" :key="item.id" :city-item="item" @select-card="(msg) => (selectedCityInfo = msg)" @click-detail="() => handleDetailJump(item.id)" />
 
       <p v-if="filteredWeatherList.length === 0" class="empty-result">검색 결과와 일치하는 도시가 없습니다.</p>
     </BaseDashboardCard>

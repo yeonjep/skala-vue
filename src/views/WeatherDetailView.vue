@@ -1,5 +1,5 @@
 <script setup>
-// [4일차 과제] 동적 경로 상세 View + [5일차] 스토어 단위 변환
+// 동적 경로 상세 View + 스토어 단위 변환
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useConfigStore } from '@/stores/configStore'

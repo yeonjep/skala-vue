@@ -18,7 +18,7 @@ function saveList(key, list) {
   localStorage.setItem(key, JSON.stringify(list))
 }
 
-// [5일차 과제] 나만의 Store — 최근 검색어·즐겨찾기 도시
+// 나만의 Store — 최근 검색어·즐겨찾기 도시
 export const useWeatherStore = defineStore('weather', () => {
   const recentSearches = ref(loadList(RECENT_KEY))
   const favoriteCityIds = ref(loadList(FAVORITE_KEY))
