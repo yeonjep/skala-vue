@@ -2,65 +2,92 @@
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
-
-const handleGoHome = () => {
-  router.push('/')
-}
+const handleGoHome = () => router.push('/cities')
 </script>
 
 <template>
-  <div>
-    <h3>ℹ️ 서비스 소개</h3>
-    <hr />
+  <div class="about-page">
+    <h3>서비스 소개</h3>
 
     <div class="description-box">
-      <p>본 앱은 <strong>Vue 3</strong> 및 <strong>Vue Router 4</strong> 기반 제작된 실습용 기상 관측 대시보드 시스템입니다.</p>
+      <p>
+        <strong>AeroCast</strong>는 Vue 3 · Vue Router · Pinia로 만든 종합 날씨 허브입니다.
+      </p>
       <ul>
-        <li><code>components/exercise/</code> 폴더 내부의 독립 부품 연동</li>
-        <li>클라이언트 사이드 라우팅을 통한 새로고침 없는 화면 전환</li>
-        <li>URL 쿼리 스트링 매핑을 활용한 실시간 검색 상태 동기화</li>
+        <li>
+          <strong>날씨</strong> — <code>WeatherParent</code> + 컴포넌트 분리 · 검색 · 요약 · 즐겨찾기
+        </li>
+        <li>
+          <strong>라우터</strong> — <code>/cities</code>, <code>/weather/:cityId</code>, 검색 query, 404
+        </li>
+        <li>
+          <strong>스토어</strong> — 섭씨/화씨 단위 · 즐겨찾기 · 최근 검색
+        </li>
+        <li>부가 기능: 홈 월간 날씨 캘린더 · 날씨 해석 가이드</li>
       </ul>
     </div>
 
-    <button @click="handleGoHome" class="home-btn">대시보드 홈으로 이동</button>
+    <button type="button" class="home-btn" @click="handleGoHome">날씨 대시보드로 이동</button>
   </div>
 </template>
 
 <style scoped>
+.about-page h3 {
+  color: #2a3340;
+  font-weight: 800;
+  font-size: 2.8rem;
+  margin: 0 0 20px 0;
+  letter-spacing: -0.02em;
+}
+
 .description-box {
-  background-color: #f8f9fa;
-  padding: 12px;
-  border-radius: 6px;
-  line-height: 1.5;
-  font-size: 14px;
+  background: rgba(255, 255, 255, 0.55);
+  border: none;
+  border-radius: 24px;
+  padding: 28px 32px;
+  line-height: 1.7;
+  font-size: 1.45rem;
+  color: rgba(42, 51, 64, 0.82);
+  margin-bottom: 20px;
+  box-shadow: 0 12px 28px rgba(90, 110, 140, 0.12);
+  backdrop-filter: blur(20px);
+}
+
+.description-box strong {
+  color: #2a3340;
 }
 
 ul {
-  padding-left: 20px;
-  margin: 8px 0 0 0;
+  padding-left: 24px;
+  margin: 16px 0 0 0;
 }
 
 li {
-  margin-bottom: 6px;
-  color: #555;
+  margin-bottom: 12px;
 }
 
 code {
-  background-color: #ffeaa7;
-  padding: 2px 4px;
-  border-radius: 4px;
-  color: #d63031;
+  background: rgba(140, 168, 184, 0.22);
+  padding: 3px 8px;
+  border-radius: 6px;
+  color: #3d5566;
+  font-size: 1.2rem;
 }
 
 .home-btn {
   width: 100%;
-  margin-top: 15px;
-  padding: 10px;
-  background-color: #3498db;
-  color: white;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.72);
+  color: #2a3340;
   border: none;
-  border-radius: 4px;
-  font-weight: bold;
+  border-radius: 18px;
+  font-weight: 800;
+  font-size: 1.45rem;
   cursor: pointer;
+  box-shadow: 0 8px 20px rgba(90, 110, 140, 0.12);
+}
+
+.home-btn:hover {
+  background: rgba(255, 255, 255, 0.95);
 }
 </style>

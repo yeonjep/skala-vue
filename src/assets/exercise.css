@@ -79,7 +79,8 @@ h1 {
 
 /* 과제페이지 스타일 - Component 분리 후 각 페이지별로 이동 */
 .dashboard-wrapper {
-  width: 600px;
+  width: 100%;
+  max-width: 100%;
   margin: 0 auto;
 }
 .search-box,

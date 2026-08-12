@@ -1,8 +1,9 @@
-/* 레이아웃 리셋 — Vue 기본 템플릿/외부 CSS가 body·#app 을 망가뜨리지 못하게 */
+/* Element Plus 이후 최종 레이아웃 고정 — 가로 스크롤/밀림 원천 차단 */
 html {
   width: 100% !important;
   max-width: 100% !important;
-  overflow-x: hidden !important;
+  overflow-x: clip !important;
+  overscroll-behavior-x: none !important;
   margin: 0 !important;
   padding: 0 !important;
 }
@@ -13,23 +14,14 @@ body {
   min-height: 100vh !important;
   margin: 0 !important;
   padding: 0 !important;
-  overflow-x: hidden !important;
+  overflow-x: clip !important;
+  overscroll-behavior-x: none !important;
   display: block !important;
   place-items: unset !important;
   justify-content: unset !important;
   align-items: unset !important;
-  background: #04060f !important;
-  color: #f5f7fb !important;
-  line-height: 1.6;
-  font-family:
-    'Pretendard',
-    'Apple SD Gothic Neo',
-    -apple-system,
-    BlinkMacSystemFont,
-    system-ui,
-    sans-serif;
-  font-size: 15px;
-  -webkit-font-smoothing: antialiased;
+  background: #aeb3c5 !important;
+  color: #2a3340 !important;
 }
 
 #app {
@@ -38,15 +30,14 @@ body {
   min-height: 100vh !important;
   margin: 0 !important;
   padding: 0 !important;
-  overflow-x: hidden !important;
+  overflow-x: clip !important;
   display: block !important;
   grid-template-columns: none !important;
   place-items: unset !important;
-  font-weight: normal;
 }
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
+/* App.vue HMR 누락 대비 — 프레임 폭을 여기서도 강제 */
+.hub-frame {
+  width: min(1440px, 96vw) !important;
+  max-width: 1440px !important;
 }

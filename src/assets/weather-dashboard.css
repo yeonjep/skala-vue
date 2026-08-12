@@ -1,52 +1,100 @@
-/* ------ 우주 테마 배경 ------ */
+/* ------ 우주 테마 배경 (이미지) ------ */
 .dashboard-wrapper {
   position: relative;
-  min-height: 100vh;
-  padding: 28px 24px 40px;
-  overflow: hidden;
-  background:
-    radial-gradient(1px 1px at 12% 18%, rgba(255, 255, 255, 0.9), transparent), radial-gradient(1.5px 1.5px at 28% 62%, rgba(255, 255, 255, 0.55), transparent),
-    radial-gradient(2px 2px at 52% 12%, rgba(255, 255, 255, 0.75), transparent), radial-gradient(1px 1px at 72% 44%, rgba(255, 255, 255, 0.45), transparent),
-    radial-gradient(1.5px 1.5px at 88% 78%, rgba(255, 255, 255, 0.65), transparent), radial-gradient(1px 1px at 18% 88%, rgba(255, 255, 255, 0.5), transparent),
-    radial-gradient(ellipse 80% 50% at 15% 10%, rgba(88, 120, 255, 0.22) 0%, transparent 55%), radial-gradient(ellipse 70% 45% at 85% 90%, rgba(120, 80, 220, 0.18) 0%, transparent 50%),
-    radial-gradient(ellipse 50% 35% at 50% 50%, rgba(40, 100, 200, 0.08) 0%, transparent 60%), linear-gradient(165deg, #04060f 0%, #0a0e24 42%, #0d1230 100%) !important;
-  background-repeat: no-repeat !important;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  min-height: auto;
+  padding: 0;
+  overflow-x: hidden;
+  background-color: transparent;
+  background-image: none;
 }
 
-/* ------ 공통 글래스 패널 ------ */
+/* [실습 원본] 단독 사용 시 — 소프트 블루~오프화이트 일렁이 */
+.dashboard-wrapper:not(.dashboard-wrapper--embedded) {
+  min-height: 100vh;
+  padding: 28px 24px 40px;
+  position: relative;
+  isolation: isolate;
+  background:
+    radial-gradient(120% 90% at 12% 8%, rgba(140, 168, 184, 0.85) 0%, transparent 58%),
+    radial-gradient(110% 80% at 88% 18%, rgba(174, 179, 197, 0.75) 0%, transparent 55%),
+    linear-gradient(165deg, #8ca8b8 0%, #aeb3c5 42%, #e8eaef 78%, #f0f1f3 100%);
+  background-color: #aeb3c5;
+  overflow: hidden;
+}
+
+.dashboard-wrapper:not(.dashboard-wrapper--embedded)::before,
+.dashboard-wrapper:not(.dashboard-wrapper--embedded)::after {
+  content: '';
+  position: absolute;
+  inset: -25%;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.dashboard-wrapper:not(.dashboard-wrapper--embedded)::before {
+  background:
+    radial-gradient(ellipse 60% 50% at 18% 28%, rgba(124, 160, 178, 0.9) 0%, transparent 70%),
+    radial-gradient(ellipse 55% 45% at 72% 22%, rgba(185, 187, 208, 0.75) 0%, transparent 68%);
+  filter: blur(48px);
+  animation: aurora-drift-a 20s ease-in-out infinite alternate;
+}
+
+.dashboard-wrapper:not(.dashboard-wrapper--embedded)::after {
+  background:
+    radial-gradient(ellipse 55% 48% at 82% 62%, rgba(152, 176, 196, 0.7) 0%, transparent 70%),
+    radial-gradient(ellipse 45% 40% at 28% 68%, rgba(201, 203, 220, 0.65) 0%, transparent 68%);
+  filter: blur(56px);
+  animation: aurora-drift-b 26s ease-in-out infinite alternate;
+}
+
+/* [4일차] 라우터/허브 안에서는 전체 화면 높이·이중 배경 제거 */
+.dashboard-wrapper--embedded {
+  min-height: auto;
+  padding: 0;
+  background: transparent !important;
+  background-image: none !important;
+}
 .search-box,
 .list-box,
 .summary-box {
-  background: rgba(255, 255, 255, 0.06) !important;
-  backdrop-filter: blur(24px) saturate(150%);
-  -webkit-backdrop-filter: blur(24px) saturate(150%);
-  border: 1px solid rgba(255, 255, 255, 0.14) !important;
-  border-radius: 20px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+  overflow-x: hidden !important;
+  background: rgba(255, 255, 255, 0.55) !important;
+  backdrop-filter: blur(28px) saturate(140%);
+  -webkit-backdrop-filter: blur(28px) saturate(140%);
+  border: none !important;
+  border-radius: 28px !important;
   box-shadow:
-    0 10px 40px rgba(0, 0, 0, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
-  padding: 22px 24px !important;
-  margin-bottom: 18px !important;
+    0 18px 40px rgba(90, 110, 140, 0.14),
+    0 2px 8px rgba(90, 110, 140, 0.06) !important;
+  padding: 36px !important;
+  margin-bottom: 20px !important;
 }
 
 .search-box h3,
 .list-box h3 {
-  color: #ffffff !important;
-  font-weight: 700;
-  font-size: 1.05rem;
+  color: #2a3340 !important;
+  font-weight: 800 !important;
+  font-size: 2rem !important;
   letter-spacing: -0.3px;
-  margin: 0 0 16px 0 !important;
+  margin: 0 0 20px 0 !important;
 }
 
 .search-box p {
-  color: rgba(255, 255, 255, 0.82) !important;
+  color: rgba(42, 51, 64, 0.72) !important;
   font-weight: 500;
-  font-size: 0.92rem;
-  margin: 14px 0 0 0 !important;
+  font-size: 1.4rem !important;
+  margin: 16px 0 0 0 !important;
 }
 
 .search-box strong {
-  color: #ffffff !important;
+  color: #2a3340 !important;
   font-weight: 700;
 }
 
@@ -54,40 +102,42 @@
 .search-box input {
   display: block;
   width: 100%;
+  max-width: 100%;
   box-sizing: border-box;
   margin-top: 4px;
-  padding: 12px 16px !important;
-  border: 1px solid rgba(255, 255, 255, 0.16) !important;
-  border-radius: 14px !important;
+  padding: 16px 20px !important;
+  border: none !important;
+  border-radius: 16px !important;
   outline: none;
-  background: rgba(0, 0, 0, 0.25);
-  backdrop-filter: blur(10px);
-  color: #ffffff;
-  font-size: 0.95rem;
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: inset 0 1px 3px rgba(90, 110, 140, 0.1);
+  color: #2a3340;
+  font-size: 1.35rem !important;
   transition:
     background 0.2s ease,
-    border-color 0.2s ease,
     box-shadow 0.2s ease;
 }
 
 .search-box input::placeholder {
-  color: rgba(255, 255, 255, 0.38);
+  color: rgba(42, 51, 64, 0.4);
 }
 
 .search-box input:focus {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(140, 180, 255, 0.55) !important;
-  box-shadow: 0 0 0 3px rgba(100, 150, 255, 0.15);
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 0 0 3px rgba(140, 168, 184, 0.35);
 }
 
 /* ------ 요약 통계 대시보드 ------ */
 .summary-stats {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
   list-style: none;
   margin: 0;
   padding: 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .summary-stats li {
@@ -96,26 +146,36 @@
   align-items: center;
   justify-content: center;
   gap: 6px;
-  padding: 14px 10px;
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  min-height: 72px;
+  min-width: 0;
+  max-width: 100%;
+  padding: 18px 10px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.5);
+  border: none;
+  box-shadow: 0 4px 14px rgba(90, 110, 140, 0.08);
+  min-height: 104px;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .summary-stats .label {
-  font-size: 0.72rem;
-  font-weight: 600;
+  font-size: 1.05rem;
+  font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(42, 51, 64, 0.5);
+  white-space: nowrap;
 }
 
 .summary-stats .value {
-  font-size: 1.15rem;
-  font-weight: 700;
-  color: #ffffff;
+  font-size: 2.4rem;
+  font-weight: 800;
+  color: #2a3340;
   line-height: 1.2;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .summary-extremes {
@@ -124,7 +184,7 @@
   gap: 10px;
   margin-top: 14px;
   padding-top: 14px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(42, 51, 64, 0.08);
 }
 
 .extreme-pill {
@@ -132,37 +192,40 @@
   align-items: center;
   padding: 8px 14px;
   border-radius: 999px;
-  font-size: 0.85rem;
+  font-size: 1.15rem;
   font-weight: 600;
   border: 1px solid transparent;
 }
 
 .extreme-pill.hot {
-  background: rgba(255, 110, 110, 0.12);
-  color: #ffb4b4;
-  border-color: rgba(255, 110, 110, 0.35);
+  background: rgba(255, 120, 120, 0.16);
+  color: #b42318;
+  border-color: transparent;
 }
 
 .extreme-pill.cool {
-  background: rgba(100, 170, 255, 0.12);
-  color: #a8d4ff;
-  border-color: rgba(100, 170, 255, 0.35);
+  background: rgba(100, 150, 210, 0.16);
+  color: #175cd3;
+  border-color: transparent;
 }
 
 /* ----- 날씨 카드 ----- */
 .weather-card {
-  border: 1px solid rgba(255, 255, 255, 0.12) !important;
-  border-radius: 18px !important;
-  margin-bottom: 16px !important;
-  padding: 18px 20px !important;
-  background: rgba(255, 255, 255, 0.05) !important;
-  backdrop-filter: blur(18px) saturate(140%);
-  -webkit-backdrop-filter: blur(18px) saturate(140%);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.28) !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+  border: none !important;
+  border-radius: 22px !important;
+  margin-bottom: 18px !important;
+  padding: 22px 28px 18px !important;
+  background: rgba(255, 255, 255, 0.62) !important;
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  box-shadow: 0 10px 28px rgba(90, 110, 140, 0.12) !important;
   cursor: pointer;
   transition:
-    border-color 0.2s ease,
-    transform 0.2s ease,
     box-shadow 0.2s ease,
     background 0.2s ease;
 }
@@ -172,31 +235,50 @@
 }
 
 .weather-card h4 {
-  color: #ffffff !important;
-  font-weight: 700;
-  font-size: 1.05rem;
-  margin: 0 0 10px 0 !important;
+  color: #2a3340 !important;
+  font-weight: 800 !important;
+  font-size: 2.15rem !important;
+  margin: 0 !important;
+  letter-spacing: -0.02em;
 }
 
-.weather-card p {
-  color: rgba(255, 255, 255, 0.78) !important;
-  font-size: 0.95rem;
-  margin: 0 0 14px 0 !important;
+.weather-card p,
+.weather-card .card-temp {
+  color: rgba(42, 51, 64, 0.78) !important;
+  font-size: 1.55rem !important;
+  margin: 0 0 16px 0 !important;
+  font-weight: 600;
 }
 
 .weather-card:hover {
-  border-color: rgba(160, 190, 255, 0.35) !important;
-  background: rgba(255, 255, 255, 0.09) !important;
-  transform: translateY(-2px);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.38) !important;
+  background: rgba(255, 255, 255, 0.78) !important;
+  box-shadow: 0 14px 34px rgba(90, 110, 140, 0.16) !important;
 }
 
-/* 뱃지 영역 — 간격 확보 */
 .card-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 16px;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.favorite-btn {
+  width: auto !important;
+  height: auto !important;
+  padding: 0 !important;
+  border: none !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: rgba(42, 51, 64, 0.35) !important;
+  font-size: 2.1rem !important;
+  line-height: 1 !important;
+  box-shadow: none !important;
+}
+
+.favorite-btn.active {
+  color: #d4a017 !important;
+  background: transparent !important;
+  border: none !important;
 }
 
 .badge,
@@ -204,59 +286,59 @@
   display: inline-flex;
   align-items: center;
   border-radius: 999px !important;
-  padding: 6px 13px !important;
-  border: 1px solid transparent !important;
+  padding: 10px 18px !important;
+  border: none !important;
   backdrop-filter: blur(6px);
-  font-weight: 600;
-  font-size: 0.8rem;
+  font-weight: 700 !important;
+  font-size: 1.2rem !important;
   line-height: 1.3;
   transition: all 0.15s ease;
 }
 
 .badge.hot {
-  background: rgba(255, 99, 99, 0.16) !important;
-  color: #ffc4c4 !important;
-  border-color: rgba(255, 99, 99, 0.4) !important;
+  background: rgba(255, 120, 120, 0.18) !important;
+  color: #b42318 !important;
 }
 
 .badge.cool {
-  background: rgba(90, 170, 255, 0.16) !important;
-  color: #b8dcff !important;
-  border-color: rgba(90, 170, 255, 0.4) !important;
+  background: rgba(100, 150, 210, 0.18) !important;
+  color: #175cd3 !important;
 }
 
 .humidity-badge {
-  background: rgba(0, 200, 230, 0.12) !important;
-  color: #8eeaff !important;
-  border-color: rgba(0, 200, 230, 0.35) !important;
+  background: rgba(80, 180, 200, 0.16) !important;
+  color: #0e7490 !important;
 }
 
-.badge:hover,
-.humidity-badge:hover {
-  transform: translateY(-1px);
+.card-footer {
+  display: flex !important;
+  justify-content: flex-end !important;
+  align-items: center;
+  width: 100%;
 }
 
 /* ------상세보기 버튼 ------ */
 .btn-detail {
-  display: inline-block;
-  margin-top: 4px;
-  padding: 10px 18px !important;
-  background: rgba(255, 255, 255, 0.08) !important;
-  color: #ffffff !important;
-  border: 1px solid rgba(255, 255, 255, 0.28) !important;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  margin: 0 0 0 auto !important;
+  padding: 12px 24px !important;
+  background: rgba(42, 51, 64, 0.08) !important;
+  color: #2a3340 !important;
+  border: none !important;
   backdrop-filter: blur(8px);
-  border-radius: 12px !important;
-  font-weight: 600;
-  font-size: 0.88rem;
+  border-radius: 14px !important;
+  font-weight: 700 !important;
+  font-size: 1.3rem !important;
   cursor: pointer;
   transition: all 0.18s ease;
+  box-shadow: 0 2px 8px rgba(90, 110, 140, 0.1);
 }
 
 .btn-detail:hover {
-  background: rgba(255, 255, 255, 0.16) !important;
-  border-color: rgba(180, 210, 255, 0.55) !important;
-  transform: translateY(-1px);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+  background: rgba(42, 51, 64, 0.14) !important;
+  box-shadow: 0 6px 16px rgba(90, 110, 140, 0.14);
 }
 
 /* ----- 검색 결과 없음 ----- */
@@ -274,32 +356,67 @@
 /* ------ 상태 바 ------ */
 .status-bar {
   margin-top: 4px !important;
-  background: rgba(255, 255, 255, 0.06) !important;
+  background: rgba(255, 255, 255, 0.55) !important;
   backdrop-filter: blur(22px) saturate(140%);
   -webkit-backdrop-filter: blur(22px) saturate(140%);
-  border: 1px solid rgba(255, 255, 255, 0.14) !important;
-  border-radius: 18px !important;
-  padding: 16px 20px !important;
-  color: #f5f6fa !important;
-  font-weight: 600;
-  font-size: 0.95rem;
-  line-height: 1.5;
-  box-shadow:
-    0 8px 28px rgba(0, 0, 0, 0.32),
-    inset 0 1px 0 rgba(255, 255, 255, 0.09) !important;
+  border: none !important;
+  border-radius: 22px !important;
+  padding: 22px 28px !important;
+  color: #2a3340 !important;
+  font-weight: 700;
+  font-size: 1.45rem !important;
+  line-height: 1.55;
+  box-shadow: 0 12px 28px rgba(90, 110, 140, 0.12) !important;
 }
 
 .status-sub {
-  font-size: 0.85rem !important;
-  font-weight: 500 !important;
-  color: rgba(255, 255, 255, 0.55) !important;
-  margin: 8px 0 0 0 !important;
+  font-size: 1.25rem !important;
+  font-weight: 600 !important;
+  color: rgba(42, 51, 64, 0.55) !important;
+  margin: 12px 0 0 0 !important;
+}
+
+/* ----- 라이트 테마 ------ */
+html.theme-light .search-box,
+html.theme-light .list-box,
+html.theme-light .summary-box,
+html.theme-light .status-bar {
+  background: rgba(255, 255, 255, 0.86) !important;
+  border-color: rgba(15, 23, 42, 0.08) !important;
+}
+
+html.theme-light .search-box h3,
+html.theme-light .list-box h3,
+html.theme-light .summary-stats .value,
+html.theme-light .status-bar {
+  color: #0f172a !important;
+}
+
+html.theme-light .summary-stats .label,
+html.theme-light .status-sub,
+html.theme-light .search-box p {
+  color: #64748b !important;
+}
+
+html.theme-light .summary-stats li {
+  background: rgba(15, 23, 42, 0.03);
+  border-color: rgba(15, 23, 42, 0.08);
+}
+
+html.theme-light .search-box input {
+  background: #ffffff;
+  color: #0f172a;
+  border-color: rgba(15, 23, 42, 0.12) !important;
+}
+
+html.theme-light .search-box strong {
+  color: #0f172a !important;
 }
 
 /* ----- 반응형 ------ */
-@media (max-width: 560px) {
+@media (max-width: 640px) {
   .summary-stats {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .dashboard-wrapper {

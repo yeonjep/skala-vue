@@ -1,9 +1,27 @@
 <script setup>
-import { ref, computed, watch, watchEffect } from 'vue'
+import { ref, computed, watch, watchEffect, onMounted } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 // [3일차 과제] 4개 컴포넌트 분리 — 부모가 자식들을 조립하고 모든 상태·로직을 소유
 import BaseDashboardCard from './BaseDashboardCard.vue'
 import SearchBar from './SearchBar.vue'
 import WeatherCard from './WeatherCard.vue'
+import StorePanel from './StorePanel.vue'
+import { useConfigStore } from '@/stores/configStore'
+import { useWeatherStore } from '@/stores/weatherStore'
+import { convertTemp } from '@/utils/temperature'
+
+defineProps({
+  /** 허브(/cities) 안에서는 이중 배경 제거 */
+  embedded: {
+    type: Boolean,
+    default: false,
+  },
+})
+
+const router = useRouter()
+const route = useRoute()
+const configStore = useConfigStore()
+const weatherStore = useWeatherStore()
 
 // 1. [1일차 데이터] 가상의 백엔드 데이터 배열
 // [실습과제 코드 추가 : 습도(humidity) 필드 및 도시 2개 추가]
@@ -18,6 +36,25 @@ const weatherList = ref([
 // 2. [1일차 데이터] 검색어 및 알림창 제어용 데이터
 const searchQuery = ref('')
 const selectedCityInfo = ref('카드를 클릭하거나 검색해 보세요.')
+
+onMounted(() => {
+  if (route.query.search) {
+    searchQuery.value = String(route.query.search)
+  }
+})
+
+// [4·5일차] 검색어 ↔ 라우터 query + 최근 검색 스토어
+watch(searchQuery, (newQuery) => {
+  if (route.path === '/cities' || route.name === 'WeatherHome') {
+    router.push({
+      path: route.path,
+      query: { search: newQuery || undefined },
+    })
+  }
+  if (newQuery.trim()) {
+    weatherStore.addRecentSearch(newQuery)
+  }
+})
 
 // 3. [2일차 추가] computed 활용한 실시간 검색 필터링 연산기
 const filteredWeatherList = computed(() => {
@@ -43,8 +80,10 @@ const detailViewCount = ref(0)
 const averageTemp = computed(() => {
   if (filteredWeatherList.value.length === 0) return 0
   const total = filteredWeatherList.value.reduce((sum, item) => sum + item.temp, 0)
-  return (total / filteredWeatherList.value.length).toFixed(1)
+  return total / filteredWeatherList.value.length
 })
+
+const displayAverageTemp = computed(() => convertTemp(Number(averageTemp.value.toFixed(1)), configStore.unit))
 
 // [실습과제 코드 추가 : watch를 활용한 클릭 횟수 감시]
 watch(detailViewCount, (newCount) => {
@@ -66,19 +105,30 @@ const coolestCity = computed(() => {
   return filteredWeatherList.value.reduce((min, item) => (item.temp < min.temp ? item : min))
 })
 
-// [3일차 과제] WeatherCard의 click-detail 이벤트를 수신해 alert 처리
-const showDetail = (cityName, status) => {
+// [3·4일차] WeatherCard click-detail → 라우터 상세 이동
+const handleDetailJump = (cityId) => {
   detailViewCount.value++
-  window.alert(`${cityName}의 현재 날씨는 [${status}] 상태입니다.`)
+  router.push(`/weather/${cityId}`)
+}
+
+const applySearch = (query) => {
+  searchQuery.value = query
+}
+
+const jumpCity = (cityId) => {
+  handleDetailJump(cityId)
 }
 </script>
 
 <template>
-  <div class="dashboard-wrapper">
+  <div class="dashboard-wrapper" :class="{ 'dashboard-wrapper--embedded': embedded }">
     <!-- [3일차 과제] BaseDashboardCard + SearchBar — props/emit으로 searchQuery 연동 -->
     <BaseDashboardCard class="search-box">
       <SearchBar :current-query="searchQuery" @update-query="(val) => (searchQuery = val)" />
     </BaseDashboardCard>
+
+    <!-- [5일차 과제] 스토어 패널 — 최근 검색 · 즐겨찾기 -->
+    <StorePanel :cities="weatherList" @apply-search="applySearch" @jump-city="jumpCity" />
 
     <!-- [실습과제 코드 추가 : 요약 통계 및 최고·최저 기온 표시 영역] -->
     <section class="summary-box">
@@ -87,7 +137,8 @@ const showDetail = (cityName, status) => {
           <span class="label">도시</span><span class="value">{{ totalCityCount }}</span>
         </li>
         <li>
-          <span class="label">평균</span><span class="value">{{ averageTemp }}°C</span>
+          <span class="label">평균</span>
+          <span class="value">{{ displayAverageTemp }}{{ configStore.unitSymbol }}</span>
         </li>
         <li>
           <span class="label">더움</span><span class="value">{{ hotCityCount }}</span>
@@ -97,16 +148,26 @@ const showDetail = (cityName, status) => {
         </li>
       </ul>
       <div v-if="hottestCity && coolestCity" class="summary-extremes">
-        <span class="extreme-pill hot">최고 {{ hottestCity.name }} {{ hottestCity.temp }}°C</span>
-        <span class="extreme-pill cool">최저 {{ coolestCity.name }} {{ coolestCity.temp }}°C</span>
+        <span class="extreme-pill hot">
+          최고 {{ hottestCity.name }} {{ convertTemp(hottestCity.temp, configStore.unit) }}{{ configStore.unitSymbol }}
+        </span>
+        <span class="extreme-pill cool">
+          최저 {{ coolestCity.name }} {{ convertTemp(coolestCity.temp, configStore.unit) }}{{ configStore.unitSymbol }}
+        </span>
       </div>
     </section>
 
     <!-- [3일차 과제] BaseDashboardCard + WeatherCard — cityItem props / select-card·click-detail emit -->
     <BaseDashboardCard class="list-box">
-      <h3>지역별 날씨 현황 (평균 기온: {{ averageTemp }}°C)</h3>
+      <h3>지역별 날씨 현황 (평균 기온: {{ displayAverageTemp }}{{ configStore.unitSymbol }})</h3>
 
-      <WeatherCard v-for="item in filteredWeatherList" :key="item.id" :city-item="item" @select-card="(msg) => (selectedCityInfo = msg)" @click-detail="showDetail" />
+      <WeatherCard
+        v-for="item in filteredWeatherList"
+        :key="item.id"
+        :city-item="item"
+        @select-card="(msg) => (selectedCityInfo = msg)"
+        @click-detail="() => handleDetailJump(item.id)"
+      />
 
       <p v-if="filteredWeatherList.length === 0" class="empty-result">검색 결과와 일치하는 도시가 없습니다.</p>
     </BaseDashboardCard>
@@ -123,10 +184,10 @@ const showDetail = (cityName, status) => {
 @import '@/assets/weather-dashboard.css';
 
 .list-box h3 {
-  color: #ffffff;
-  font-weight: 700;
-  font-size: 1.05rem;
+  color: #2a3340;
+  font-weight: 800;
+  font-size: 2rem;
   letter-spacing: -0.3px;
-  margin: 0 0 16px 0;
+  margin: 0 0 20px 0;
 }
 </style>
