@@ -6,9 +6,7 @@
 - 제출자: 박연제(U116)
 - 제출일: 2026-08-12
 - 제출 항목: Component(3) · Router(4) · Pinia Store(5)
-- 앱 이름: **AeroCast** (단일 날씨 허브로 통합)
-
-> 2일차 README는 `README_day2_backup.txt`에 백업해 두었습니다.
+- 앱 이름: **AeroCast**
 
 ## 실행 방법
 
@@ -16,8 +14,6 @@
 npm install
 npm run dev
 ```
-
-브라우저에서 `http://localhost:3000/` (또는 터미널에 표시된 포트)로 접속합니다.
 
 ### 주요 URL
 
@@ -151,14 +147,10 @@ src/
 
 - 단일 셸 `App.vue` + soft glass 라이트 테마 (`aurora-bg` 배경)
 - 홈: 날짜 히어로 + 대표 도시 + **MonthWeatherCalendar** (이번 달 그리드, 오늘 흰색 캡슐, 날씨 이모지·기온 목데이터)
-- 운세/게임 탭은 제거하고 날씨 중심으로 정리
 
 ---
 
 ## 스크린샷
-
-> 아래 이미지는 `screenshots/` 폴더에 있습니다.  
-> 캡처가 비어 있거나 최신이 아니면, README 하단 **직접 캡처 체크리스트**를 참고해 같은 파일명으로 덮어쓰면 됩니다.
 
 ### 홈 (AeroCast)
 
@@ -209,17 +201,3 @@ src/
 ![즐겨찾기](./screenshots/d345-09-favorite.png)
 
 ---
-
-## 직접 캡처 체크리스트 (필요 시)
-
-브라우저에서 `npm run dev` 후 아래를 캡처해 `screenshots/`에 저장하세요.
-
-1. `/` → `d345-01-home.png`
-2. `/cities` → `d345-02-cities.png`
-3. `/cities`에서 `부산` 검색 → `d345-03-search-query.png` (주소창에 `?search=` 보이게)
-4. 서울 상세보기 → `d345-04-detail.png`
-5. `/about` → `d345-05-about.png`
-6. `/guide` → `d345-06-guide.png`
-7. `/kk` → `d345-07-404.png` ← **404는 이렇게 찾으면 됩니다**
-8. 단위변경(℉) → `d345-08-unit-fahrenheit.png`
-9. ★ 즐겨찾기 → `d345-09-favorite.png`
