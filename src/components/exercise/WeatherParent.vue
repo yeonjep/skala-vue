@@ -148,6 +148,9 @@ const jumpCity = (cityId) => {
         <li>
           <span class="label">더움</span><span class="value">{{ hotCityCount }}</span>
         </li>
+        <li>
+          <span class="label">선선함</span><span class="value">{{ coolCityCount }}</span>
+        </li>
       </ul>
       <div v-if="!isLoading && hottestCity && coolestCity" class="summary-extremes">
         <span class="extreme-pill hot">

@@ -131,7 +131,7 @@
 /* ------ 요약 통계 대시보드 ------ */
 .summary-stats {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 8px;
   list-style: none;
   margin: 0;
@@ -182,19 +182,19 @@
 .summary-extremes {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 14px;
-  padding-top: 14px;
+  gap: 6px;
+  margin-top: 10px;
+  padding-top: 10px;
   border-top: 1px solid rgba(42, 51, 64, 0.08);
 }
 
 .extreme-pill {
   display: inline-flex;
   align-items: center;
-  padding: 8px 14px;
+  padding: 4px 9px;
   border-radius: 999px;
-  font-size: 1.15rem;
-  font-weight: 600;
+  font-size: 0.75rem;
+  font-weight: 650;
   border: 1px solid transparent;
 }
 
@@ -361,20 +361,20 @@
   backdrop-filter: blur(22px) saturate(140%);
   -webkit-backdrop-filter: blur(22px) saturate(140%);
   border: none !important;
-  border-radius: 22px !important;
-  padding: 22px 28px !important;
+  border-radius: 14px !important;
+  padding: 10px 14px !important;
   color: #2a3340 !important;
   font-weight: 700;
-  font-size: 1.45rem !important;
-  line-height: 1.55;
-  box-shadow: 0 12px 28px rgba(90, 110, 140, 0.12) !important;
+  font-size: 0.85rem !important;
+  line-height: 1.4;
+  box-shadow: 0 8px 18px rgba(90, 110, 140, 0.1) !important;
 }
 
 .status-sub {
-  font-size: 1.25rem !important;
+  font-size: 0.75rem !important;
   font-weight: 600 !important;
   color: rgba(42, 51, 64, 0.55) !important;
-  margin: 12px 0 0 0 !important;
+  margin: 4px 0 0 0 !important;
 }
 
 /* ----- 라이트 테마 ------ */
