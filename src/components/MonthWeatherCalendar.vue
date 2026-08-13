@@ -4,6 +4,7 @@ import { useConfigStore } from '@/stores/configStore'
 import { convertTemp } from '@/utils/temperature'
 import { CITY_CATALOG, DEFAULT_CITY, findCityById } from '@/data/cities'
 import { fetchMonthDaily } from '@/api/openMeteo'
+import WeatherGlyph from '@/components/weather/WeatherGlyph.vue'
 
 const props = defineProps({
   cityId: { type: String, default: '' },
@@ -107,6 +108,7 @@ const weeks = computed(() => {
         inMonth,
         isToday,
         emoji: wx?.emoji ?? (inMonth ? '·' : ''),
+        icon: wx?.icon || '',
         label: wx?.label ?? '데이터 없음',
         high: wx ? convertTemp(wx.high, configStore.unit) : '—',
         low: wx ? convertTemp(wx.low, configStore.unit) : '—',
@@ -154,7 +156,14 @@ const weeks = computed(() => {
         >
           <div class="month-cal__pill">
             <span class="month-cal__date">{{ cell.day }}</span>
-            <span class="month-cal__emoji" aria-hidden="true">{{ cell.emoji }}</span>
+            <WeatherGlyph
+              v-if="cell.inMonth"
+              class="month-cal__glyph"
+              :icon="cell.hasData ? cell.icon : 'empty'"
+              :emoji="cell.emoji"
+              :label="cell.label"
+              :size="58"
+            />
             <span class="month-cal__temps">
               <span class="hi">{{ cell.high }}{{ cell.hasData ? '°' : '' }}</span>
               <span class="lo">{{ cell.low }}{{ cell.hasData ? '°' : '' }}</span>
@@ -189,36 +198,37 @@ const weeks = computed(() => {
 }
 
 .month-cal__eyebrow {
-  margin: 0 0 6px;
-  font-size: 1.15rem;
-  font-weight: 600;
-  color: rgba(42, 51, 64, 0.48);
+  margin: 0 0 8px;
+  font-size: 1.4rem;
+  font-weight: 650;
+  color: rgba(42, 51, 64, 0.5);
 }
 
 .month-cal__title {
   margin: 0;
-  font-size: 1.9rem;
+  font-size: clamp(2.2rem, 3.2vw, 2.7rem);
   font-weight: 800;
   letter-spacing: -0.02em;
   color: #2a3340;
 }
 
 .month-cal__credit {
-  margin: 6px 0 0;
-  font-size: 1.05rem;
-  color: rgba(42, 51, 64, 0.42);
+  margin: 8px 0 0;
+  font-size: 1.25rem;
+  color: rgba(42, 51, 64, 0.45);
 }
 
 .month-cal__range {
   margin: 0;
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: rgba(42, 51, 64, 0.48);
+  font-size: 1.55rem;
+  font-weight: 650;
+  color: rgba(42, 51, 64, 0.5);
 }
 
 .month-cal__status {
   margin: 0 8px 12px;
-  font-weight: 600;
+  font-weight: 650;
+  font-size: 1.35rem;
   color: #3d6680;
 }
 
@@ -230,16 +240,16 @@ const weeks = computed(() => {
   display: grid;
   grid-template-columns: repeat(7, minmax(0, 1fr));
   gap: 6px;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
   padding: 0 4px;
 }
 
 .month-cal__weekdays span {
   text-align: center;
-  font-size: 1.05rem;
-  font-weight: 700;
+  font-size: 1.35rem;
+  font-weight: 750;
   letter-spacing: 0.04em;
-  color: rgba(42, 51, 64, 0.42);
+  color: rgba(42, 51, 64, 0.45);
 }
 
 .month-cal__grid {
@@ -251,8 +261,8 @@ const weeks = computed(() => {
 .month-cal__week {
   display: grid;
   grid-template-columns: repeat(7, minmax(0, 1fr));
-  gap: 6px;
-  padding: 14px 0;
+  gap: 8px;
+  padding: 16px 0;
   border-top: 1px solid rgba(90, 110, 140, 0.1);
 }
 
@@ -268,15 +278,15 @@ const weeks = computed(() => {
 
 .month-cal__pill {
   width: 100%;
-  max-width: 118px;
-  min-height: 168px;
-  padding: 16px 6px 14px;
+  max-width: 140px;
+  min-height: 210px;
+  padding: 18px 6px 16px;
   border-radius: 999px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  gap: 10px;
+  gap: 12px;
   box-sizing: border-box;
 }
 
@@ -292,30 +302,29 @@ const weeks = computed(() => {
   pointer-events: none;
 }
 
-.month-cal__day.is-empty .month-cal__emoji {
+.month-cal__day.is-empty .month-cal__glyph {
   opacity: 0.35;
 }
 
 .month-cal__date {
-  font-size: 1.65rem;
+  font-size: 2.15rem;
   font-weight: 800;
   line-height: 1;
   color: #2a3340;
 }
 
-.month-cal__emoji {
-  font-size: 2.35rem;
-  line-height: 1;
+.month-cal__glyph {
+  margin: 2px 0;
 }
 
 .month-cal__temps {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 3px;
-  font-size: 1.15rem;
-  font-weight: 700;
-  line-height: 1.2;
+  gap: 4px;
+  font-size: 1.55rem;
+  font-weight: 750;
+  line-height: 1.15;
 }
 
 .month-cal__temps .hi {
@@ -323,7 +332,23 @@ const weeks = computed(() => {
 }
 
 .month-cal__temps .lo {
-  color: rgba(42, 51, 64, 0.45);
+  color: rgba(42, 51, 64, 0.48);
+}
+
+@media (max-width: 900px) {
+  .month-cal__pill {
+    max-width: 120px;
+    min-height: 180px;
+    gap: 10px;
+  }
+
+  .month-cal__date {
+    font-size: 1.75rem;
+  }
+
+  .month-cal__temps {
+    font-size: 1.25rem;
+  }
 }
 
 @media (max-width: 720px) {
@@ -333,22 +358,26 @@ const weeks = computed(() => {
 
   .month-cal__pill {
     max-width: none;
-    min-height: 132px;
+    min-height: 150px;
     padding: 12px 2px 10px;
     border-radius: 28px;
-    gap: 6px;
+    gap: 8px;
   }
 
   .month-cal__date {
-    font-size: 1.25rem;
+    font-size: 1.45rem;
   }
 
-  .month-cal__emoji {
-    font-size: 1.7rem;
+  .month-cal__glyph {
+    transform: scale(0.82);
   }
 
   .month-cal__temps {
-    font-size: 0.95rem;
+    font-size: 1.1rem;
+  }
+
+  .month-cal__weekdays span {
+    font-size: 1.1rem;
   }
 }
 </style>

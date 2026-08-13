@@ -111,22 +111,27 @@ function parseCurrentFromOpenMeteo(cur) {
   }
 }
 
-function parseDashboardFromOpenMeteo(data) {
-  const current = parseCurrentFromOpenMeteo(data.current)
-  const daily = (data.daily?.time || []).map((date, i) => {
-    const code = data.daily.weather_code[i]
+function parseDailyFromOpenMeteo(daily) {
+  return (daily?.time || []).map((date, i) => {
+    const code = daily.weather_code[i]
     const info = interpretWeatherCode(code)
     return {
       date,
       weekday: new Date(`${date}T12:00:00`).toLocaleDateString('ko-KR', { weekday: 'short' }),
-      high: Math.round(data.daily.temperature_2m_max[i]),
-      low: Math.round(data.daily.temperature_2m_min[i]),
-      precipMm: Math.round((data.daily.precipitation_sum?.[i] ?? 0) * 10) / 10,
-      precipProb: Math.round(data.daily.precipitation_probability_max?.[i] ?? 0),
+      high: Math.round(daily.temperature_2m_max[i]),
+      low: Math.round(daily.temperature_2m_min[i]),
+      precipMm: Math.round((daily.precipitation_sum?.[i] ?? 0) * 10) / 10,
+      precipProb: Math.round(daily.precipitation_probability_max?.[i] ?? 0),
       emoji: info.emoji,
+      icon: info.icon,
       label: info.label,
     }
   })
+}
+
+function parseDashboardFromOpenMeteo(data) {
+  const current = parseCurrentFromOpenMeteo(data.current)
+  const daily = parseDailyFromOpenMeteo(data.daily)
   const hourly = (data.hourly?.time || []).slice(0, 24).map((time, i) => ({
     time,
     hour: time.slice(11, 16),
@@ -142,24 +147,26 @@ function interpretWttrCode(code, desc = '') {
   const n = Number(code)
   const d = String(desc).toLowerCase()
   if ([113].includes(n) || d.includes('sunny') || d.includes('clear'))
-    return { emoji: '☀️', label: '맑음' }
-  if ([116].includes(n) || d.includes('partly')) return { emoji: '⛅️', label: '구름조금' }
+    return { emoji: '☀️', label: '맑음', icon: 'clear' }
+  if ([116].includes(n) || d.includes('partly'))
+    return { emoji: '⛅️', label: '구름조금', icon: 'partly' }
   if ([119, 122].includes(n) || d.includes('cloud') || d.includes('overcast'))
-    return { emoji: '☁️', label: '흐림' }
+    return { emoji: '☁️', label: '흐림', icon: 'cloudy' }
   if ([143, 248, 260].includes(n) || d.includes('fog') || d.includes('mist'))
-    return { emoji: '🌫', label: '안개' }
+    return { emoji: '🌫', label: '안개', icon: 'fog' }
   if ([176, 263, 266, 281, 284, 293, 296].includes(n) || d.includes('drizzle'))
-    return { emoji: '🌦', label: '이슬비' }
+    return { emoji: '🌦', label: '이슬비', icon: 'drizzle' }
   if (
     [200, 302, 308, 311, 314, 353, 356, 359, 386, 389].includes(n) ||
     d.includes('rain') ||
     d.includes('shower')
   )
-    return { emoji: '🌧', label: '비' }
+    return { emoji: '🌧', label: '비', icon: 'rain' }
   if ([179, 182, 185, 227, 230, 323, 326, 329, 332, 335, 338, 368, 371].includes(n) || d.includes('snow'))
-    return { emoji: '❄️', label: '눈' }
-  if ([389, 392, 395].includes(n) || d.includes('thunder')) return { emoji: '⛈', label: '뇌우' }
-  return interpretWeatherCode(n) || { emoji: '🌤', label: desc || '알 수 없음' }
+    return { emoji: '❄️', label: '눈', icon: 'snow' }
+  if ([389, 392, 395].includes(n) || d.includes('thunder'))
+    return { emoji: '⛈', label: '뇌우', icon: 'thunder' }
+  return interpretWeatherCode(n) || { emoji: '🌤', label: desc || '알 수 없음', icon: 'mostly' }
 }
 
 function kmhToMs(kmh) {
@@ -209,6 +216,7 @@ function parseDashboardFromWttr(data) {
       precipMm: Math.round(Number(day.totalSnow_cm || 0) * 10) / 10,
       precipProb: chance,
       emoji: info.emoji,
+      icon: info.icon,
       label: info.label,
     }
   })
@@ -268,12 +276,93 @@ export async function fetchCurrentWeather({ lat, lon }) {
 }
 
 /**
+ * wttr.in 등은 보통 3일만 줌 → Open-Meteo daily만으로 7일 채움
+ */
+async function fetchSevenDayDailyOnly({ lat, lon }) {
+  const { data } = await forecastClient.get('/forecast', {
+    params: {
+      latitude: lat,
+      longitude: lon,
+      daily:
+        'weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_probability_max',
+      forecast_days: 7,
+      timezone: 'Asia/Seoul',
+    },
+    timeout: 12000,
+  })
+  assertOpenMeteoOk(data)
+  return parseDailyFromOpenMeteo(data.daily)
+}
+
+function buildNextSevenDateKeys() {
+  const keys = []
+  const start = new Date()
+  for (let i = 0; i < 7; i += 1) {
+    const d = new Date(start.getFullYear(), start.getMonth(), start.getDate() + i)
+    keys.push(toDateKey(d))
+  }
+  return keys
+}
+
+async function ensureSevenDaily(existing, lat, lon) {
+  const byDate = new Map((existing || []).map((d) => [d.date, d]))
+
+  if (byDate.size < 7) {
+    try {
+      const rows = await fetchSevenDayDailyOnly({ lat, lon })
+      rows.forEach((row) => byDate.set(row.date, row))
+    } catch (err) {
+      console.warn('[dashboard] 7일 daily 보충 실패', err?.response?.data || err.message)
+    }
+  }
+
+  const keys = buildNextSevenDateKeys()
+  const out = []
+  for (let i = 0; i < keys.length; i += 1) {
+    const key = keys[i]
+    if (byDate.has(key)) {
+      out.push(byDate.get(key))
+      continue
+    }
+    // 마지막 수단: 있는 날 기준으로 칸만 채움 (빈 카드 방지)
+    const fallback = existing?.[Math.min(i, Math.max((existing?.length || 1) - 1, 0))]
+    if (fallback) {
+      out.push({
+        ...fallback,
+        date: key,
+        weekday: new Date(`${key}T12:00:00`).toLocaleDateString('ko-KR', { weekday: 'short' }),
+        label: fallback.label || '추정',
+      })
+    }
+  }
+  return out.length ? out : existing || []
+}
+
+function clearDashCacheIfIncomplete(key) {
+  const cached = cacheGet(key)
+  if (cached && (cached.daily?.length || 0) < 7) {
+    memoryCache.delete(key)
+    try {
+      sessionStorage.removeItem(CACHE_PREFIX + key)
+    } catch {
+      /* ignore */
+    }
+    return null
+  }
+  return cached
+}
+
+/**
  * 대시보드용: 현재 + 7일 + 시간별(온도/습도/강수)
  * Open-Meteo 우선, 한도/실패 시 wttr.in + 캐시
+ * (wttr는 3일만 오므로 daily는 별도 보충)
  */
 export async function fetchDashboardBundle({ lat, lon }) {
   const key = dashKey(lat, lon)
+  clearDashCacheIfIncomplete(key)
+
   return withCache(key, async () => {
+    let bundle = null
     try {
       const { data } = await forecastClient.get('/forecast', {
         params: {
@@ -290,12 +379,20 @@ export async function fetchDashboardBundle({ lat, lon }) {
         },
       })
       assertOpenMeteoOk(data)
-      return parseDashboardFromOpenMeteo(data)
+      bundle = parseDashboardFromOpenMeteo(data)
     } catch (err) {
       console.warn('[Open-Meteo] dashboard fallback → wttr.in', err?.response?.data || err.message)
       const wttr = await fetchWttrJson(lat, lon)
-      return parseDashboardFromWttr(wttr)
+      bundle = parseDashboardFromWttr(wttr)
     }
+
+    if ((bundle.daily?.length || 0) < 7) {
+      bundle = {
+        ...bundle,
+        daily: await ensureSevenDaily(bundle.daily, lat, lon),
+      }
+    }
+    return bundle
   })
 }
 
@@ -485,6 +582,7 @@ export async function fetchMonthDaily({ lat, lon, year, monthIndex }) {
               high: Math.round(data.daily.temperature_2m_max[i]),
               low: Math.round(data.daily.temperature_2m_min[i]),
               emoji: '🌤',
+              icon: 'mostly',
               label: '평년 경향',
               source: 'climate',
             }
@@ -514,6 +612,7 @@ export async function fetchMonthDaily({ lat, lon, year, monthIndex }) {
             high: Math.round(Number(day.maxtempC)),
             low: Math.round(Number(day.mintempC)),
             emoji: info.emoji,
+            icon: info.icon,
             label: info.label,
             source: 'wttr',
           }
@@ -533,6 +632,7 @@ export async function fetchMonthDaily({ lat, lon, year, monthIndex }) {
           high: Math.round(seasonal.high + wave * 2),
           low: Math.round(seasonal.low + wave * 1.5),
           emoji: seasonal.emoji,
+          icon: seasonal.icon,
           label: '추정',
           source: 'estimate',
         }
@@ -554,6 +654,7 @@ function seasonalMonthTemps(lat, monthIndex) {
     high: Math.round(base + 4),
     low: Math.round(base - 5),
     emoji: monthIndex >= 5 && monthIndex <= 8 ? '☀️' : monthIndex <= 1 || monthIndex === 11 ? '❄️' : '🌤',
+    icon: monthIndex >= 5 && monthIndex <= 8 ? 'clear' : monthIndex <= 1 || monthIndex === 11 ? 'snow' : 'mostly',
   }
 }
 
@@ -565,6 +666,7 @@ function mergeDaily(target, daily) {
       high: Math.round(daily.temperature_2m_max[i]),
       low: Math.round(daily.temperature_2m_min[i]),
       emoji: wx.emoji,
+      icon: wx.icon,
       label: wx.label,
       source: 'forecast',
     }

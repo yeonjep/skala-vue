@@ -8,6 +8,8 @@ const props = defineProps({
   daily: { type: Array, default: () => [] },
   loading: { type: Boolean, default: false },
   interactive: { type: Boolean, default: true },
+  /** 모달 등에서 세로로 남는 공간을 채움 */
+  fill: { type: Boolean, default: false },
 })
 
 const emit = defineEmits(['show-detail'])
@@ -122,7 +124,7 @@ const plot = computed(() => {
 <template>
   <section
     class="chart glass-card"
-    :class="{ 'is-clickable': interactive }"
+    :class="{ 'is-clickable': interactive, 'is-fill': fill }"
     @click="onOpen"
   >
     <header class="chart__head">
@@ -171,54 +173,57 @@ const plot = computed(() => {
         </div>
 
         <div class="chart__canvas">
-          <svg viewBox="0 0 100 100" preserveAspectRatio="none" class="chart__svg" aria-hidden="true">
-            <defs>
-              <linearGradient :id="gradientId" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="rgba(56,189,248,0.55)" />
-                <stop offset="100%" stop-color="rgba(56,189,248,0.02)" />
-              </linearGradient>
-            </defs>
+          <div class="chart__svg-wrap">
+            <svg viewBox="0 0 100 100" preserveAspectRatio="none" class="chart__svg" aria-hidden="true">
+              <defs>
+                <linearGradient :id="gradientId" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="rgba(56,189,248,0.55)" />
+                  <stop offset="100%" stop-color="rgba(56,189,248,0.02)" />
+                </linearGradient>
+              </defs>
 
-            <line
-              v-for="gy in plot.gridYs"
-              :key="`g-${gy}`"
-              x1="0"
-              :y1="gy"
-              x2="100"
-              :y2="gy"
-              class="chart__grid"
-            />
-            <line
-              v-for="xt in plot.xTicks"
-              :key="`vg-${xt.label}-${xt.x}`"
-              :x1="xt.x"
-              y1="0"
-              :x2="xt.x"
-              y2="100"
-              class="chart__grid chart__grid--v"
-            />
+              <line
+                v-for="gy in plot.gridYs"
+                :key="`g-${gy}`"
+                x1="0"
+                :y1="gy"
+                x2="100"
+                :y2="gy"
+                class="chart__grid"
+              />
+              <line
+                v-for="xt in plot.xTicks"
+                :key="`vg-${xt.label}-${xt.x}`"
+                :x1="xt.x"
+                y1="0"
+                :x2="xt.x"
+                y2="100"
+                class="chart__grid chart__grid--v"
+              />
 
-            <polygon v-if="plot.area" :points="plot.area" :fill="`url(#${gradientId})`" />
-            <polyline
-              v-if="plot.points"
-              :points="plot.points"
-              fill="none"
-              stroke="#38bdf8"
-              stroke-width="2.4"
-              stroke-linejoin="round"
-              stroke-linecap="round"
-              vector-effect="non-scaling-stroke"
-            />
-            <circle
-              v-for="xt in plot.xTicks"
-              :key="`dot-${xt.label}-${xt.x}`"
-              :cx="xt.x"
-              :cy="xt.y"
-              r="1.4"
-              class="chart__dot"
-              vector-effect="non-scaling-stroke"
-            />
-          </svg>
+              <polygon v-if="plot.area" :points="plot.area" :fill="`url(#${gradientId})`" />
+              <polyline
+                v-if="plot.points"
+                :points="plot.points"
+                fill="none"
+                stroke="#38bdf8"
+                stroke-width="2.4"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+                vector-effect="non-scaling-stroke"
+              />
+            </svg>
+
+            <!-- SVG preserveAspectRatio=none 때문에 circle이 타원으로 찌그러져 HTML 원으로 표시 -->
+            <div class="chart__dots" aria-hidden="true">
+              <span
+                v-for="xt in plot.xTicks"
+                :key="`dot-${xt.label}-${xt.x}`"
+                class="chart__dot-el"
+                :style="{ left: `${xt.x}%`, top: `${xt.y}%` }"
+              />
+            </div>
+          </div>
 
           <div class="chart__x">
             <span
@@ -247,6 +252,12 @@ const plot = computed(() => {
   flex-direction: column;
   min-height: 0;
   overflow: visible;
+}
+
+.chart.is-fill {
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
 }
 
 .chart__head {
@@ -280,11 +291,25 @@ const plot = computed(() => {
   min-height: 0;
 }
 
+.chart.is-fill .chart__body {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
 .chart__plot {
   display: grid;
   grid-template-columns: 58px 1fr;
   gap: 8px;
   height: 188px;
+}
+
+.chart.is-fill .chart__plot {
+  height: auto;
+  min-height: 0;
+  flex: 1 1 auto;
+  align-content: stretch;
 }
 
 .chart__y {
@@ -310,21 +335,62 @@ const plot = computed(() => {
   height: 100%;
   overflow: visible;
   padding-right: 4px;
+  min-height: 0;
 }
 
-.chart__svg {
+.chart__svg-wrap {
+  position: relative;
   width: 100%;
   height: 156px;
   flex: 0 0 156px;
   border-radius: 16px;
+  overflow: hidden;
   background: rgba(0, 0, 0, 0.22);
   border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.chart.is-fill .chart__svg-wrap {
+  height: auto;
+  flex: 1 1 auto;
+  min-height: 220px;
+}
+
+.chart__svg {
+  width: 100%;
+  height: 100%;
+  display: block;
   overflow: visible;
+}
+
+.chart__dots {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.chart__dot-el {
+  position: absolute;
+  width: 11px;
+  height: 11px;
+  margin-left: -5.5px;
+  margin-top: -5.5px;
+  border-radius: 50%;
+  background: #7dd3fc;
+  border: 2px solid #0b1220;
+  box-shadow: 0 0 0 1px rgba(125, 211, 252, 0.35);
+}
+
+.chart.is-fill .chart__dot-el {
+  width: 13px;
+  height: 13px;
+  margin-left: -6.5px;
+  margin-top: -6.5px;
 }
 
 .chart__x {
   position: relative;
   height: 32px;
+  flex: 0 0 32px;
   margin-top: 2px;
   overflow: visible;
 }
@@ -359,11 +425,5 @@ const plot = computed(() => {
 .chart__grid--v {
   stroke: rgba(125, 211, 252, 0.14);
   stroke-dasharray: 1.2 1.6;
-}
-
-.chart__dot {
-  fill: #7dd3fc;
-  stroke: #0b1220;
-  stroke-width: 0.35;
 }
 </style>

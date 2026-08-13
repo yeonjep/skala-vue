@@ -2,6 +2,7 @@
 import { computed } from 'vue'
 import { convertTemp } from '@/utils/temperature'
 import { useConfigStore } from '@/stores/configStore'
+import WeatherGlyph from '@/components/weather/WeatherGlyph.vue'
 
 const props = defineProps({
   city: { type: Object, required: true },
@@ -44,14 +45,20 @@ const temp = computed(() =>
         <h2 class="hero__city">{{ city.name }}</h2>
         <p class="hero__date">{{ dateLabel }}</p>
       </div>
-      <span class="hero__emoji" aria-hidden="true">{{ current?.emoji || '☁' }}</span>
+      <WeatherGlyph
+        class="hero__glyph"
+        :emoji="current?.emoji || '☁'"
+        :icon="current?.icon || ''"
+        :label="current?.status || ''"
+        :size="72"
+      />
     </div>
 
-    <div class="hero__temp-row">
-      <p class="hero__temp">
+    <div class="hero__temp-block">
+      <div class="hero__temp">
         <template v-if="loading">…</template>
         <template v-else>{{ temp }}{{ configStore.unitSymbol }}</template>
-      </p>
+      </div>
       <p class="hero__status">{{ loading ? '불러오는 중' : current?.status || '—' }}</p>
     </div>
 
@@ -82,7 +89,7 @@ const temp = computed(() =>
   padding: 22px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
   min-height: 100%;
   box-sizing: border-box;
 }
@@ -98,7 +105,7 @@ const temp = computed(() =>
 
 .hero__city {
   margin: 0;
-  font-size: 2.5rem;
+  font-size: 2.4rem;
   font-weight: 800;
   letter-spacing: -0.03em;
   color: #fff;
@@ -106,7 +113,7 @@ const temp = computed(() =>
 
 .hero__date {
   margin: 6px 0 0;
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   font-weight: 600;
   color: rgba(232, 238, 248, 0.55);
 }
@@ -114,29 +121,41 @@ const temp = computed(() =>
 .hero__top {
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
   gap: 12px;
+  flex-shrink: 0;
 }
 
-.hero__emoji {
-  font-size: 3.6rem;
-  line-height: 1;
-  filter: drop-shadow(0 8px 18px rgba(56, 189, 248, 0.35));
+.hero__glyph {
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+.hero__temp-block {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 180px;
+  padding: 12px 0 8px;
 }
 
 .hero__temp {
   margin: 0;
-  font-size: clamp(3.2rem, 5vw, 4.4rem);
-  font-weight: 800;
-  letter-spacing: -0.05em;
-  line-height: 1;
+  font-size: clamp(5.5rem, 11vw, 9.5rem);
+  font-weight: 900;
+  letter-spacing: -0.06em;
+  line-height: 0.9;
   color: #fff;
+  text-shadow: 0 12px 40px rgba(56, 189, 248, 0.3);
 }
 
 .hero__status {
-  margin: 8px 0 0;
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: rgba(232, 238, 248, 0.72);
+  margin: 10px 0 0;
+  font-size: 1.55rem;
+  font-weight: 750;
+  color: rgba(232, 238, 248, 0.78);
 }
 
 .hero__metrics {
@@ -144,6 +163,7 @@ const temp = computed(() =>
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 10px;
   margin-top: auto;
+  flex-shrink: 0;
 }
 
 .metric {
@@ -175,9 +195,14 @@ const temp = computed(() =>
   font-size: 1.05rem;
   font-weight: 600;
   color: rgba(56, 189, 248, 0.8);
+  flex-shrink: 0;
 }
 
 @media (max-width: 720px) {
+  .hero__temp {
+    font-size: clamp(4.2rem, 16vw, 6rem);
+  }
+
   .hero__metrics {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }

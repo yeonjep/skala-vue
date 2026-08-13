@@ -23,8 +23,16 @@ const handleGoHome = () => router.push('/cities')
         <li>
           <strong>스토어</strong> — 섭씨/화씨 단위 · 즐겨찾기 · 최근 검색
         </li>
-        <li>Axios + Open-Meteo: 실시간 도시 날씨 · 월간 캘린더 · 대기질 API</li>
-        <li>부가 기능: 홈 월간 날씨 캘린더 · 날씨 해석 가이드</li>
+        <li>
+          <strong>Axios + Open-Meteo:</strong> 실시간 도시 날씨 · 월간 캘린더 · 대기질 API
+        </li>
+        <li>
+          <strong>운동 뉴스</strong> — ESPN 공개 API로 프리미어리그 등 순위·스코어·기사 (`/sports`)
+        </li>
+        <li>
+          <strong>건강 관리</strong> — wger.de 운동 DB · BMI · 대기질 가이드 (`/health`)
+        </li>
+        <li>부가 기능: 홈 월간 날씨 캘린더 · 날씨 해석 가이드 · Groq 챗봇</li>
       </ul>
     </div>
 
@@ -34,9 +42,9 @@ const handleGoHome = () => router.push('/cities')
 
 <style scoped>
 .about-page h3 {
-  color: #2a3340;
+  color: #e8eef8;
   font-weight: 800;
-  font-size: 2.8rem;
+  font-size: clamp(2.4rem, 4vw, 3rem);
   margin: 0 0 20px 0;
   letter-spacing: -0.02em;
 }

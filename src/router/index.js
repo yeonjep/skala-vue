@@ -35,6 +35,16 @@ const routes = [
     component: () => import('../views/ChatbotView.vue'),
   },
   {
+    path: '/sports',
+    name: 'SportsNews',
+    component: () => import('../views/SportsNewsView.vue'),
+  },
+  {
+    path: '/health',
+    name: 'HealthHub',
+    component: () => import('../views/HealthHubView.vue'),
+  },
+  {
     path: '/lab/:day',
     name: 'LabDay',
     component: () => import('../views/AssignmentDayView.vue'),

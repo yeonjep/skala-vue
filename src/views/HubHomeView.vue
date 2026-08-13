@@ -549,7 +549,13 @@ onMounted(async () => {
               <span class="mac-window__spacer" />
             </header>
 
-            <div class="mac-window__body">
+            <div
+              class="mac-window__body"
+              :class="{
+                'is-chart': detailType === 'chart',
+                'is-forecast': detailType === 'forecast',
+              }"
+            >
               <div v-if="detailType === 'current'" class="detail">
                 <p class="detail__lead">
                   {{ current?.emoji }} {{ current?.status }} ·
@@ -610,6 +616,7 @@ onMounted(async () => {
               <WeatherOverviewChart
                 v-else-if="detailType === 'chart'"
                 :interactive="false"
+                fill
                 :hourly="hourly"
                 :daily="daily"
               />
@@ -866,10 +873,45 @@ onMounted(async () => {
   font-size: 1.3rem;
 }
 
+.mac-window__body.is-chart {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 20px 24px 24px;
+}
+
+.mac-window__body.is-forecast {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+
 .mac-window__body :deep(.glass-card) {
   min-height: 560px;
   height: 100%;
   background: rgba(255, 255, 255, 0.06) !important;
+}
+
+.mac-window__body.is-chart :deep(.glass-card),
+.mac-window__body.is-chart :deep(.chart) {
+  flex: 1 1 auto;
+  min-height: 0;
+  height: 100%;
+  max-height: none;
+}
+
+.mac-window__body.is-forecast :deep(.forecast) {
+  min-height: 0;
+  height: auto;
+}
+
+.mac-window__body.is-forecast :deep(.forecast__list) {
+  gap: 10px;
+}
+
+.mac-window__body.is-forecast :deep(.forecast__row) {
+  padding: 16px 16px;
+  font-size: 1.35rem;
 }
 
 .mac-fade-enter-active,

@@ -24,21 +24,21 @@ defineEmits(['update-query'])
 .search-inner h3 {
   color: #2a3340;
   font-weight: 800;
-  font-size: 2rem;
+  font-size: 2.1rem;
   letter-spacing: -0.3px;
-  margin: 0 0 18px 0;
+  margin: 0 0 20px 0;
 }
 
 .search-inner p {
   color: rgba(42, 51, 64, 0.72);
-  font-weight: 500;
-  font-size: 1.4rem;
-  margin: 16px 0 0 0;
+  font-weight: 600;
+  font-size: 1.45rem;
+  margin: 18px 0 0 0;
 }
 
 .search-inner strong {
   color: #2a3340;
-  font-weight: 700;
+  font-weight: 750;
 }
 
 .search-inner input {
@@ -47,22 +47,27 @@ defineEmits(['update-query'])
   max-width: 100%;
   box-sizing: border-box;
   margin-top: 4px;
-  padding: 16px 20px;
+  min-height: 72px;
+  padding: 22px 26px;
   border: none;
-  border-radius: 16px;
+  border-radius: 20px;
   outline: none;
-  background: rgba(255, 255, 255, 0.72);
+  background: rgba(255, 255, 255, 0.88);
   box-shadow: inset 0 1px 3px rgba(90, 110, 140, 0.1);
-  color: #2a3340;
-  font-size: 1.35rem;
+  color: #0b1220;
+  font-size: 1.7rem;
+  font-weight: 650;
+  line-height: 1.3;
 }
 
 .search-inner input::placeholder {
-  color: rgba(42, 51, 64, 0.4);
+  color: rgba(42, 51, 64, 0.42);
+  font-size: 1.55rem;
+  font-weight: 550;
 }
 
 .search-inner input:focus {
-  background: rgba(255, 255, 255, 0.92);
-  box-shadow: 0 0 0 3px rgba(140, 168, 184, 0.35);
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.35);
 }
 </style>

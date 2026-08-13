@@ -30,24 +30,24 @@ import WeatherParent from '../components/exercise/WeatherParent.vue'
 }
 
 .page-eyebrow {
-  margin: 0 0 6px;
-  font-size: 0.95rem;
+  margin: 0 0 8px;
+  font-size: 1.15rem;
   letter-spacing: 0.12em;
   font-weight: 800;
-  color: #5b7c92;
+  color: rgba(125, 211, 252, 0.85);
 }
 
 .page-title {
-  margin: 0 0 8px;
-  font-size: 2.6rem;
+  margin: 0 0 10px;
+  font-size: clamp(2.4rem, 4vw, 3rem);
   font-weight: 800;
   letter-spacing: -0.02em;
-  color: #2a3340;
+  color: #e8eef8;
 }
 
 .page-sub {
   margin: 0;
-  color: rgba(42, 51, 64, 0.62);
-  font-size: 1.3rem;
+  color: rgba(232, 238, 248, 0.62);
+  font-size: 1.4rem;
 }
 </style>

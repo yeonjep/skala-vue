@@ -55,24 +55,24 @@ const tips = [
 
 .guide-eyebrow {
   margin: 0 0 8px;
-  font-size: 1rem;
+  font-size: 1.15rem;
   font-weight: 800;
   letter-spacing: 0.14em;
-  color: #5b7c92;
+  color: rgba(125, 211, 252, 0.85);
 }
 
 .guide-page h3 {
-  color: #2a3340;
+  color: #e8eef8;
   font-weight: 800;
-  font-size: clamp(2.2rem, 3.5vw, 2.8rem);
+  font-size: clamp(2.2rem, 3.5vw, 2.9rem);
   margin: 0 0 10px;
   letter-spacing: -0.02em;
 }
 
 .guide-lead {
   margin: 0;
-  color: rgba(42, 51, 64, 0.62);
-  font-size: 1.35rem;
+  color: rgba(232, 238, 248, 0.62);
+  font-size: 1.4rem;
   line-height: 1.5;
 }
 

@@ -16,12 +16,13 @@ const EDGE = 0.28
 const TOOLS = [
   { id: 'home', label: '홈', icon: '⌂', to: '/', enabled: true },
   { id: 'chat', label: '챗봇', icon: '✦', to: '/chat', enabled: true },
-  { id: 'coming-a', label: '추가 예정', icon: '＋', to: null, enabled: false },
-  { id: 'coming-b', label: '추가 예정', icon: '＋', to: null, enabled: false },
+  { id: 'sports', label: '운동 뉴스', icon: '⚽', to: '/sports', enabled: true },
+  { id: 'health', label: '건강 관리', icon: '♡', to: '/health', enabled: true },
 ]
 
 const dock = ref('left')
 const dragging = ref(false)
+const expanded = ref(false)
 const dragPos = ref({ x: 0, y: 0 })
 const previewDock = ref(null)
 const suppressClick = ref(false)
@@ -35,6 +36,8 @@ let railH = 320
 const activeId = computed(() => {
   if (route.path === '/') return 'home'
   if (route.path.startsWith('/chat')) return 'chat'
+  if (route.path.startsWith('/sports')) return 'sports'
+  if (route.path.startsWith('/health')) return 'health'
   return ''
 })
 
@@ -57,6 +60,18 @@ function onSelect(tool) {
   if (suppressClick.value) return
   if (!tool.enabled || !tool.to) return
   router.push(tool.to)
+  // 포커스가 남아 focus로 열린 채 유지되지 않게
+  if (typeof document !== 'undefined' && document.activeElement?.blur) {
+    document.activeElement.blur()
+  }
+}
+
+function onRailEnter() {
+  if (!dragging.value) expanded.value = true
+}
+
+function onRailLeave() {
+  if (!dragging.value) expanded.value = false
 }
 
 function persistDock(next) {
@@ -136,6 +151,20 @@ function onPointerUp(e) {
   previewDock.value = null
   document.body.classList.remove('is-rail-dragging')
 
+  // 드래그 중 leave를 무시했으므로, 끝난 뒤 커서 위치에 맞춰 접기/펼치기
+  const el = document.querySelector('.side-rail')
+  if (el) {
+    const r = el.getBoundingClientRect()
+    const over =
+      e.clientX >= r.left &&
+      e.clientX <= r.right &&
+      e.clientY >= r.top &&
+      e.clientY <= r.bottom
+    expanded.value = over
+  } else {
+    expanded.value = false
+  }
+
   if (moved) {
     setTimeout(() => {
       suppressClick.value = false
@@ -177,11 +206,14 @@ onUnmounted(() => {
       `side-rail--${dock}`,
       {
         'is-dragging': dragging,
+        'is-expanded': expanded,
         'is-horizontal': isHorizontal,
       },
     ]"
     :style="railStyle"
     aria-label="부가 기능"
+    @pointerenter="onRailEnter"
+    @pointerleave="onRailLeave"
   >
     <div class="side-rail__inner">
       <div
@@ -291,20 +323,16 @@ onUnmounted(() => {
   height: 96px;
 }
 
-.side-rail--left:hover:not(.is-dragging),
-.side-rail--left:focus-within:not(.is-dragging) {
+.side-rail--left.is-expanded:not(.is-dragging) {
   width: 320px;
   z-index: 60;
 }
-.side-rail--right:hover:not(.is-dragging),
-.side-rail--right:focus-within:not(.is-dragging) {
+.side-rail--right.is-expanded:not(.is-dragging) {
   width: 320px;
   z-index: 60;
 }
-.side-rail--top:hover:not(.is-dragging),
-.side-rail--top:focus-within:not(.is-dragging),
-.side-rail--bottom:hover:not(.is-dragging),
-.side-rail--bottom:focus-within:not(.is-dragging) {
+.side-rail--top.is-expanded:not(.is-dragging),
+.side-rail--bottom.is-expanded:not(.is-dragging) {
   height: 132px;
   z-index: 60;
 }
@@ -352,8 +380,7 @@ onUnmounted(() => {
   transform: none;
 }
 
-.side-rail:hover:not(.is-dragging),
-.side-rail:focus-within:not(.is-dragging) {
+.side-rail.is-expanded:not(.is-dragging) {
   background: rgba(22, 30, 48, 0.72);
   border-color: rgba(255, 255, 255, 0.22);
   box-shadow:
@@ -403,19 +430,15 @@ onUnmounted(() => {
     opacity 0.2s ease;
 }
 
-.side-rail--left:hover .side-rail__grip,
-.side-rail--left:focus-within .side-rail__grip,
-.side-rail--right:hover .side-rail__grip,
-.side-rail--right:focus-within .side-rail__grip,
+.side-rail--left.is-expanded .side-rail__grip,
+.side-rail--right.is-expanded .side-rail__grip,
 .side-rail.is-horizontal .side-rail__grip {
   width: 18px;
   opacity: 1;
 }
 
-.side-rail--left:hover .side-rail__brand,
-.side-rail--left:focus-within .side-rail__brand,
-.side-rail--right:hover .side-rail__brand,
-.side-rail--right:focus-within .side-rail__brand {
+.side-rail--left.is-expanded .side-rail__brand,
+.side-rail--right.is-expanded .side-rail__brand {
   justify-content: flex-start;
   padding: 6px;
 }
@@ -451,10 +474,8 @@ onUnmounted(() => {
   white-space: nowrap;
 }
 
-.side-rail--left:hover .side-rail__brand-text,
-.side-rail--left:focus-within .side-rail__brand-text,
-.side-rail--right:hover .side-rail__brand-text,
-.side-rail--right:focus-within .side-rail__brand-text {
+.side-rail--left.is-expanded .side-rail__brand-text,
+.side-rail--right.is-expanded .side-rail__brand-text {
   width: auto;
   opacity: 1;
   transform: translateX(0);
@@ -510,10 +531,8 @@ onUnmounted(() => {
     padding 0.2s ease;
 }
 
-.side-rail--left:hover .side-rail__btn,
-.side-rail--left:focus-within .side-rail__btn,
-.side-rail--right:hover .side-rail__btn,
-.side-rail--right:focus-within .side-rail__btn {
+.side-rail--left.is-expanded .side-rail__btn,
+.side-rail--right.is-expanded .side-rail__btn {
   justify-content: flex-start;
   gap: 16px;
   padding: 0 12px;
@@ -565,10 +584,8 @@ onUnmounted(() => {
     width 0.22s ease;
 }
 
-.side-rail--left:hover .side-rail__label,
-.side-rail--left:focus-within .side-rail__label,
-.side-rail--right:hover .side-rail__label,
-.side-rail--right:focus-within .side-rail__label {
+.side-rail--left.is-expanded .side-rail__label,
+.side-rail--right.is-expanded .side-rail__label {
   width: auto;
   opacity: 1;
   transform: translateX(0);
@@ -585,10 +602,8 @@ onUnmounted(() => {
   transform: translateX(8px);
   text-align: right;
 }
-.side-rail--right:hover .side-rail__brand-text,
-.side-rail--right:focus-within .side-rail__brand-text,
-.side-rail--right:hover .side-rail__label,
-.side-rail--right:focus-within .side-rail__label {
+.side-rail--right.is-expanded .side-rail__brand-text,
+.side-rail--right.is-expanded .side-rail__label {
   transform: translateX(0);
 }
 

@@ -533,8 +533,13 @@ body {
   font-size: 1.2rem !important;
 }
 
-.hero__temp {
-  font-size: clamp(3.8rem, 6vw, 5.2rem) !important;
+/* 기온은 카드 히어로 — dash 날짜 타이틀보다 더 크게 */
+.glass-card .hero__temp,
+.hero .hero__temp {
+  font-size: clamp(5.5rem, 11vw, 9.5rem) !important;
+  font-weight: 900 !important;
+  line-height: 0.9 !important;
+  letter-spacing: -0.06em !important;
 }
 
 .detail__lead {
