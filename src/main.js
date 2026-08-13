@@ -10,6 +10,7 @@ import 'element-plus/dist/index.css'
 // Element Plus 이후에 로드해서 body/#app 레이아웃을 최종 고정
 import './assets/layout-fix.css'
 import './assets/aurora-bg.css'
+import './assets/glass-controls.css'
 
 const app = createApp(App)
 

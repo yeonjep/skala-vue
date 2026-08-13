@@ -1,50 +1,543 @@
-/* Element Plus 이후 최종 레이아웃 고정 */
+/* 다크 글래스 허브 레이아웃 */
+@property --beam-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+:root {
+  --ac-bg: #0b1220;
+  --ac-text: #e8eef8;
+  --ac-muted: rgba(232, 238, 248, 0.62);
+  --ac-glass: rgba(255, 255, 255, 0.08);
+  --ac-glass-strong: rgba(255, 255, 255, 0.12);
+  --ac-border: rgba(255, 255, 255, 0.14);
+  --ac-accent: #38bdf8;
+  --side-rail-width: 112px;
+  --side-rail-expanded: 320px;
+  --shine-a: #7dd3fc;
+  --shine-b: #c4b5fd;
+  --shine-c: #f9a8d4;
+  --shine-hot: rgba(255, 255, 255, 0.95);
+  --beam-angle: 0deg;
+  --el-font-size-base: 18px;
+  --el-font-size-small: 16px;
+  --el-font-size-extra-small: 15px;
+}
+
 html {
   width: 100% !important;
   max-width: 100% !important;
-  overflow-x: clip !important;
+  height: 100% !important;
+  overflow-x: hidden !important;
   margin: 0 !important;
   padding: 0 !important;
+  background-color: var(--ac-bg) !important;
 }
 
 body {
   width: 100% !important;
   max-width: 100% !important;
   min-height: 100vh !important;
+  min-height: 100dvh !important;
   margin: 0 !important;
   padding: 0 !important;
-  overflow-x: clip !important;
+  overflow-x: hidden !important;
   display: block !important;
-  background: #aeb3c5 !important;
-  color: #2a3340 !important;
+  color: var(--ac-text) !important;
+  background-color: var(--ac-bg) !important;
+  background-image:
+    radial-gradient(120% 80% at 8% 0%, rgba(56, 189, 248, 0.28) 0%, transparent 50%),
+    radial-gradient(100% 70% at 100% 10%, rgba(167, 139, 250, 0.3) 0%, transparent 48%),
+    radial-gradient(90% 60% at 50% 100%, rgba(14, 165, 233, 0.18) 0%, transparent 50%),
+    linear-gradient(160deg, #071018 0%, #0b1220 40%, #121a2e 100%) !important;
+  background-attachment: fixed !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
 }
 
 #app {
   width: 100% !important;
   max-width: 100% !important;
   min-height: 100vh !important;
+  min-height: 100dvh !important;
   margin: 0 !important;
   padding: 0 !important;
-  overflow-x: clip !important;
+  overflow-x: hidden !important;
   display: block !important;
+  background: transparent !important;
 }
 
 .hub-app {
-  display: flex !important;
-  align-items: stretch !important;
+  position: relative !important;
+  display: block !important;
+  width: 100% !important;
   min-height: 100vh !important;
+  min-height: 100dvh !important;
   padding: 0 !important;
+  box-sizing: border-box !important;
+  background: transparent !important;
+  overflow: visible !important;
+  color: var(--ac-text) !important;
 }
 
 .side-rail {
-  width: 280px !important;
-  min-height: 100vh !important;
-  position: sticky !important;
-  top: 0 !important;
-  flex-shrink: 0 !important;
+  /* 위치는 HubSideRail 도킹 클래스가 담당 */
+  z-index: 50 !important;
+  box-sizing: border-box !important;
 }
 
 .hub-main-panel {
-  flex: 1 !important;
-  min-width: 0 !important;
+  margin-left: calc(var(--side-rail-width) + 24px) !important;
+  margin-right: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  width: calc(100% - var(--side-rail-width) - 24px) !important;
+  min-height: 100vh !important;
+  min-height: 100dvh !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  flex-direction: column !important;
+  background: transparent !important;
+  transition:
+    margin 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+    width 0.28s cubic-bezier(0.22, 1, 0.36, 1) !important;
 }
+
+.hub-app--rail-left .hub-main-panel {
+  margin-left: calc(var(--side-rail-width) + 24px) !important;
+  margin-right: 0 !important;
+  margin-top: 0 !important;
+  width: calc(100% - var(--side-rail-width) - 24px) !important;
+}
+
+.hub-app--rail-right .hub-main-panel {
+  margin-left: 0 !important;
+  margin-right: calc(var(--side-rail-width) + 24px) !important;
+  margin-top: 0 !important;
+  width: calc(100% - var(--side-rail-width) - 24px) !important;
+}
+
+.hub-app--rail-top .hub-main-panel {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  margin-top: calc(96px + 24px) !important;
+  width: 100% !important;
+}
+
+.hub-app--rail-bottom .hub-main-panel {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: calc(96px + 24px) !important;
+  width: 100% !important;
+}
+
+.hub-main {
+  flex: 1 1 auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  min-height: 0 !important;
+}
+
+.hub-main > * {
+  flex: 1 1 auto !important;
+  width: 100% !important;
+  min-height: 0 !important;
+}
+
+.hub-footer {
+  margin-top: auto !important;
+  flex-shrink: 0 !important;
+}
+
+.hub-app--lab .hub-main-panel {
+  margin-left: 0 !important;
+  width: 100% !important;
+}
+
+/* 글래스 카드 — 안은 투명 다크, 테두리에만 빔 */
+.glass-card {
+  position: relative;
+  isolation: isolate;
+  background: var(--ac-glass) !important;
+  backdrop-filter: blur(28px) saturate(160%);
+  -webkit-backdrop-filter: blur(28px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 24px;
+  box-shadow:
+    0 18px 40px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  color: var(--ac-text);
+  transition:
+    transform 0.18s ease,
+    background 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+/* 내부 채움 없음 — ::before 비활성 */
+.glass-card::before {
+  content: none;
+  display: none;
+}
+
+/* 테두리만 도는 얇은 빔 — @property로 부드럽게 연속 회전 */
+.glass-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: conic-gradient(
+    from var(--beam-angle),
+    transparent 0deg,
+    transparent 55deg,
+    color-mix(in srgb, var(--shine-a) 45%, transparent) 85deg,
+    var(--shine-hot) 105deg,
+    color-mix(in srgb, var(--shine-b) 50%, transparent) 130deg,
+    transparent 165deg,
+    transparent 360deg
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  pointer-events: none !important;
+  z-index: 3;
+  opacity: 0.85;
+  will-change: --beam-angle;
+  animation: glass-beam-spin 4.5s linear infinite;
+}
+
+.glass-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes glass-beam-spin {
+  from {
+    --beam-angle: 0deg;
+  }
+  to {
+    --beam-angle: 360deg;
+  }
+}
+
+.dash__grid > :nth-child(1).glass-card,
+.dash__grid > :nth-child(1) .glass-card,
+.dash__searchbar.glass-card {
+  --shine-a: #38bdf8;
+  --shine-b: #818cf8;
+  --shine-c: #a78bfa;
+}
+.dash__grid > :nth-child(1).glass-card::after,
+.dash__grid > :nth-child(1) .glass-card::after,
+.dash__searchbar.glass-card::after {
+  animation-duration: 7s;
+  animation-delay: -1s;
+}
+
+.dash__grid > :nth-child(2).glass-card,
+.dash__grid > :nth-child(2) .glass-card {
+  --shine-a: #a78bfa;
+  --shine-b: #38bdf8;
+  --shine-c: #e879f9;
+}
+.dash__grid > :nth-child(2).glass-card::after,
+.dash__grid > :nth-child(2) .glass-card::after {
+  animation-duration: 8s;
+  animation-delay: -3s;
+  animation-direction: reverse;
+}
+
+.dash__grid > :nth-child(3).glass-card,
+.dash__grid > :nth-child(3) .glass-card {
+  --shine-a: #22d3ee;
+  --shine-b: #67e8f9;
+  --shine-c: #818cf8;
+}
+.dash__grid > :nth-child(3).glass-card::after,
+.dash__grid > :nth-child(3) .glass-card::after {
+  animation-duration: 6.5s;
+  animation-delay: -2s;
+}
+
+.dash__grid > :nth-child(4).glass-card,
+.dash__grid > :nth-child(4) .glass-card {
+  --shine-a: #fb923c;
+  --shine-b: #f472b6;
+  --shine-c: #a78bfa;
+}
+.dash__grid > :nth-child(4).glass-card::after,
+.dash__grid > :nth-child(4) .glass-card::after {
+  animation-duration: 7.5s;
+  animation-delay: -4s;
+  animation-direction: reverse;
+}
+
+.dash__grid > :nth-child(5).glass-card,
+.dash__grid > :nth-child(5) .glass-card {
+  --shine-a: #4ade80;
+  --shine-b: #22d3ee;
+  --shine-c: #818cf8;
+}
+.dash__grid > :nth-child(5).glass-card::after,
+.dash__grid > :nth-child(5) .glass-card::after {
+  animation-duration: 8.5s;
+  animation-delay: -1.5s;
+}
+
+.dash__grid > :nth-child(6).glass-card,
+.dash__grid > :nth-child(6) .glass-card {
+  --shine-a: #f472b6;
+  --shine-b: #38bdf8;
+  --shine-c: #c4b5fd;
+}
+.dash__grid > :nth-child(6).glass-card::after,
+.dash__grid > :nth-child(6) .glass-card::after {
+  animation-duration: 6s;
+  animation-delay: -2.5s;
+  animation-direction: reverse;
+}
+
+.dash__calendar.glass-card {
+  --shine-a: #38bdf8;
+  --shine-b: #a78bfa;
+  --shine-c: #67e8f9;
+}
+.dash__calendar.glass-card::after {
+  animation-duration: 9s;
+}
+
+.glass-card.is-clickable {
+  cursor: pointer;
+}
+
+.glass-card.is-clickable:hover {
+  transform: translateY(-2px);
+  background: var(--ac-glass-strong) !important;
+  box-shadow:
+    0 22px 48px rgba(0, 0, 0, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 0 20px rgba(56, 189, 248, 0.12);
+}
+
+.glass-card.is-clickable:hover::after {
+  opacity: 1;
+  animation-duration: 3.5s;
+}
+
+@media (max-width: 900px) {
+  :root {
+    --side-rail-width: 0px;
+  }
+
+  .side-rail {
+    position: static !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  .hub-main-panel,
+  .hub-app--rail-left .hub-main-panel,
+  .hub-app--rail-right .hub-main-panel,
+  .hub-app--rail-top .hub-main-panel,
+  .hub-app--rail-bottom .hub-main-panel {
+    margin: 0 !important;
+    width: 100% !important;
+  }
+}
+
+@supports not (background: conic-gradient(red, blue)) {
+  .glass-card::after {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glass-card::after {
+    animation: none !important;
+  }
+}
+
+/* Mac 팝업 — 크게 + 신호등 동작 스타일 */
+.mac-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 10000 !important;
+  display: grid !important;
+  place-items: center !important;
+  padding: 20px !important;
+  box-sizing: border-box !important;
+  background: rgba(0, 0, 0, 0.55) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+}
+
+.mac-overlay.is-minimized {
+  place-items: end center !important;
+  padding: 0 20px 22px !important;
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  pointer-events: none !important;
+}
+
+.mac-overlay.is-maximized {
+  padding: 8px !important;
+}
+
+.mac-window {
+  width: min(1280px, 96vw) !important;
+  height: min(88vh, 920px) !important;
+  max-height: min(88vh, 920px) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  border-radius: 18px !important;
+  overflow: hidden !important;
+  background: rgba(40, 44, 52, 0.94) !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 0 40px rgba(56, 189, 248, 0.12) !important;
+  backdrop-filter: blur(28px) saturate(160%) !important;
+  -webkit-backdrop-filter: blur(28px) saturate(160%) !important;
+  color: #e8eef8 !important;
+  outline: none !important;
+  font-size: 1.25rem !important;
+}
+
+.mac-window.is-maximized {
+  width: 98vw !important;
+  max-width: 98vw !important;
+  height: 96vh !important;
+  max-height: 96vh !important;
+  border-radius: 14px !important;
+}
+
+.mac-window.is-hidden-min {
+  display: none !important;
+}
+
+.mac-window__bar {
+  min-height: 72px !important;
+}
+
+.mac-window__title {
+  font-size: 1.55rem !important;
+  font-weight: 800 !important;
+}
+
+.mac-window__body {
+  padding: 28px 32px !important;
+  overflow: auto !important;
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  font-size: 1.3rem !important;
+}
+
+.mac-window__body .glass-card {
+  height: 100% !important;
+  min-height: 560px !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  font-size: 1.15em !important;
+}
+
+.mac-window__body .glass-card::after {
+  opacity: 0.55;
+}
+
+.mac-dot {
+  width: 22px !important;
+  height: 22px !important;
+  min-width: 22px !important;
+  min-height: 22px !important;
+}
+
+/* —— 전역 타이포 대폭 상향 —— */
+.hub-app .hub-brand__text {
+  font-size: 2rem !important;
+}
+.hub-app .hub-nav__item {
+  font-size: 1.4rem !important;
+  padding: 16px 14px !important;
+}
+.hub-app .hub-fav {
+  font-size: 1.25rem !important;
+}
+.hub-app .hub-footer {
+  font-size: 1.15rem !important;
+}
+
+.dash__eyebrow {
+  font-size: 1.3rem !important;
+}
+.dash__title {
+  font-size: clamp(3rem, 5vw, 4rem) !important;
+}
+.dash__search-field input {
+  font-size: 1.5rem !important;
+}
+.dash__calendar-head h3 {
+  font-size: 1.9rem !important;
+}
+.dash__calendar-head p {
+  font-size: 1.25rem !important;
+}
+
+.glass-card h2,
+.glass-card h3,
+.hero__city,
+.forecast__head h3,
+.world__head h3,
+.fav__head h3,
+.chart__head h3,
+.radar__head h3 {
+  font-size: clamp(1.85rem, 2.2vw, 2.35rem) !important;
+}
+
+.glass-card p,
+.hero__date,
+.hero__status,
+.hero__hint,
+.forecast__head p,
+.world__head p,
+.radar__head p,
+.fav__meta small,
+.chart__labels,
+.radar__credit,
+.radar__time {
+  font-size: 1.25rem !important;
+}
+
+.forecast__row,
+.fav__meta strong,
+.fav__temp,
+.metric strong,
+.detail__item strong {
+  font-size: 1.45rem !important;
+}
+
+.metric span,
+.detail__item span,
+.hero__eyebrow {
+  font-size: 1.2rem !important;
+}
+
+.hero__temp {
+  font-size: clamp(3.8rem, 6vw, 5.2rem) !important;
+}
+
+.detail__lead {
+  font-size: 2.35rem !important;
+}
+

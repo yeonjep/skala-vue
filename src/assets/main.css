@@ -18,8 +18,7 @@ body {
   place-items: unset !important;
   justify-content: unset !important;
   align-items: unset !important;
-  background: #04060f !important;
-  color: #f5f7fb !important;
+  color: #e8eef8 !important;
   line-height: 1.6;
   font-family:
     'Pretendard',
@@ -28,7 +27,7 @@ body {
     BlinkMacSystemFont,
     system-ui,
     sans-serif;
-  font-size: 15px;
+  font-size: 24px;
   -webkit-font-smoothing: antialiased;
 }
 

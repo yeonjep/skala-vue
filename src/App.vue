@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import UnitToggler from './components/exercise/UnitToggler.vue'
 import HubSideRail from './components/HubSideRail.vue'
@@ -8,6 +8,11 @@ import { useWeatherStore } from './stores/weatherStore'
 const route = useRoute()
 const weatherStore = useWeatherStore()
 const isLab = computed(() => String(route.name || '').startsWith('Lab'))
+const railDock = ref('left')
+
+function onRailDock(dock) {
+  railDock.value = dock || 'left'
+}
 
 onMounted(() => {
   window.scrollTo(0, 0)
@@ -17,9 +22,11 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="hub-app aurora-bg" :class="{ 'hub-app--lab': isLab }">
-    <!-- 왼쪽 full-height 사이드바 + 오른쪽 메인 -->
-    <HubSideRail v-if="!isLab" />
+  <div
+    class="hub-app aurora-bg"
+    :class="[{ 'hub-app--lab': isLab }, `hub-app--rail-${railDock}`]"
+  >
+    <HubSideRail v-if="!isLab" @dock="onRailDock" />
 
     <div class="hub-main-panel">
       <header class="hub-header">
@@ -59,14 +66,12 @@ onMounted(() => {
   width: 100%;
   max-width: 100%;
   min-height: 100vh;
+  min-height: 100dvh;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  overflow-x: clip;
-  display: flex;
-  align-items: stretch;
-  color: #2a3340;
-  font-size: 24px;
+  color: #e8eef8;
+  font-size: 22px;
   font-family:
     'Pretendard',
     'Apple SD Gothic Neo',
@@ -78,14 +83,13 @@ onMounted(() => {
 
 .hub-app--lab {
   padding: 28px 24px 56px;
+  display: flex;
   justify-content: center;
 }
 
 .hub-main-panel {
-  flex: 1;
-  min-width: 0;
   box-sizing: border-box;
-  padding: 28px 28px 48px;
+  padding: 22px 24px 28px;
   overflow-x: hidden;
 }
 
@@ -94,8 +98,8 @@ onMounted(() => {
   flex-direction: column;
   gap: 14px;
   width: 100%;
-  max-width: 1200px;
-  margin: 0 auto 20px;
+  margin: 0 0 16px;
+  flex-shrink: 0;
 }
 
 .hub-header__top {
@@ -111,35 +115,35 @@ onMounted(() => {
   align-items: center;
   gap: 12px;
   text-decoration: none;
-  color: inherit;
+  color: #fff;
   font-weight: 800;
-  font-size: 1.9rem;
+  font-size: 1.75rem;
   letter-spacing: -0.02em;
 }
 
 .hub-brand__mark {
-  width: 54px;
-  height: 54px;
-  border-radius: 18px;
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.55rem;
-  background: rgba(255, 255, 255, 0.55);
-  box-shadow: 0 4px 14px rgba(90, 110, 140, 0.12);
+  font-size: 1.4rem;
+  background: linear-gradient(145deg, rgba(56, 189, 248, 0.35), rgba(129, 140, 248, 0.35));
+  border: 1px solid rgba(255, 255, 255, 0.16);
 }
 
 .hub-nav {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 10px;
+  gap: 8px;
   width: 100%;
   box-sizing: border-box;
-  padding: 12px;
+  padding: 8px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   backdrop-filter: blur(18px);
-  box-shadow: 0 10px 28px rgba(90, 110, 140, 0.12);
 }
 
 .hub-nav__item {
@@ -147,24 +151,24 @@ onMounted(() => {
   align-items: center;
   justify-content: center;
   text-decoration: none;
-  color: rgba(42, 51, 64, 0.62);
+  color: rgba(232, 238, 248, 0.65);
   font-size: 1.4rem;
   font-weight: 800;
-  padding: 18px 14px;
+  padding: 16px 14px;
   border-radius: 999px;
   white-space: nowrap;
   min-width: 0;
 }
 
 .hub-nav__item:hover {
-  color: #2a3340;
-  background: rgba(255, 255, 255, 0.55);
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .hub-nav__item.router-link-active {
-  color: #2a3340;
-  background: rgba(255, 255, 255, 0.92);
-  box-shadow: 0 4px 14px rgba(90, 110, 140, 0.12);
+  color: #0b1220;
+  background: #fff;
+  box-shadow: 0 8px 22px rgba(56, 189, 248, 0.25);
 }
 
 .hub-header__actions {
@@ -176,47 +180,49 @@ onMounted(() => {
 }
 
 .hub-fav {
-  font-size: 1.2rem;
+  font-size: 1.05rem;
   font-weight: 800;
-  color: #b45309;
-  padding: 12px 16px;
+  color: #fbbf24;
+  padding: 10px 14px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.55);
-  box-shadow: 0 4px 12px rgba(90, 110, 140, 0.1);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .hub-main {
   width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
+  margin: 0;
   min-width: 0;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .hub-footer {
   width: 100%;
-  max-width: 1200px;
-  margin: 22px auto 0;
-  padding-top: 12px;
-  font-size: 1.15rem;
-  color: rgba(42, 51, 64, 0.55);
+  margin: auto 0 0;
+  padding-top: 16px;
+  flex-shrink: 0;
+  font-size: 1rem;
+  color: rgba(232, 238, 248, 0.45);
 }
 
 @media (max-width: 900px) {
-  .hub-app {
-    flex-direction: column;
-  }
-
-  .hub-main-panel {
+  .hub-app--lab {
     padding: 18px 16px 40px;
   }
 
+  .hub-main-panel {
+    padding: 14px 14px 24px;
+  }
+
   .hub-nav {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     border-radius: 22px;
   }
 
   .hub-nav__item {
-    font-size: 0.95rem;
+    font-size: 1rem;
     padding: 12px 8px;
   }
 }

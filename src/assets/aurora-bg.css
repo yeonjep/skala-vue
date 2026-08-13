@@ -1,64 +1,65 @@
-/* 소프트 블루 · 라벤더 그레이 · 오프화이트 일렁이 배경 */
+/* 다채로운 네뷸라 오로라 — 뷰포트 고정 + 강한 움직임 */
 .aurora-bg {
   position: relative;
-  isolation: isolate;
-  background:
-    radial-gradient(120% 90% at 12% 8%, rgba(140, 168, 184, 0.85) 0%, transparent 58%),
-    radial-gradient(110% 80% at 88% 18%, rgba(174, 179, 197, 0.75) 0%, transparent 55%),
-    linear-gradient(165deg, #8ca8b8 0%, #aeb3c5 42%, #e8eaef 78%, #f0f1f3 100%);
-  background-color: #aeb3c5;
+  background: transparent !important;
+  isolation: auto;
 }
 
 .aurora-bg::before,
 .aurora-bg::after {
   content: '';
-  position: absolute;
-  inset: -25%;
+  position: fixed;
+  inset: -20%;
   z-index: -1;
   pointer-events: none;
-  will-change: transform, opacity;
+  will-change: transform, opacity, filter;
 }
 
 .aurora-bg::before {
   background:
-    radial-gradient(ellipse 60% 50% at 18% 28%, rgba(124, 160, 178, 0.9) 0%, transparent 70%),
-    radial-gradient(ellipse 55% 45% at 72% 22%, rgba(185, 187, 208, 0.75) 0%, transparent 68%),
-    radial-gradient(ellipse 50% 55% at 48% 78%, rgba(240, 241, 243, 0.7) 0%, transparent 72%);
-  filter: blur(48px);
-  animation: aurora-drift-a 20s ease-in-out infinite alternate;
+    radial-gradient(ellipse 50% 42% at 12% 18%, rgba(56, 189, 248, 0.75) 0%, transparent 62%),
+    radial-gradient(ellipse 45% 40% at 78% 12%, rgba(167, 139, 250, 0.7) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 48% at 88% 72%, rgba(244, 114, 182, 0.45) 0%, transparent 65%),
+    radial-gradient(ellipse 55% 50% at 30% 85%, rgba(34, 211, 238, 0.4) 0%, transparent 68%);
+  filter: blur(52px);
+  animation: aurora-drift-a 14s ease-in-out infinite alternate;
 }
 
 .aurora-bg::after {
   background:
-    radial-gradient(ellipse 55% 48% at 82% 62%, rgba(152, 176, 196, 0.7) 0%, transparent 70%),
-    radial-gradient(ellipse 45% 40% at 28% 68%, rgba(201, 203, 220, 0.65) 0%, transparent 68%),
-    radial-gradient(ellipse 40% 42% at 58% 30%, rgba(236, 237, 242, 0.6) 0%, transparent 65%);
-  filter: blur(56px);
+    radial-gradient(ellipse 48% 44% at 62% 30%, rgba(99, 102, 241, 0.55) 0%, transparent 62%),
+    radial-gradient(ellipse 42% 38% at 18% 58%, rgba(14, 165, 233, 0.5) 0%, transparent 60%),
+    radial-gradient(ellipse 36% 42% at 70% 80%, rgba(251, 146, 60, 0.35) 0%, transparent 65%),
+    radial-gradient(ellipse 30% 30% at 48% 48%, rgba(255, 255, 255, 0.12) 0%, transparent 70%);
+  filter: blur(64px);
   opacity: 0.95;
-  animation: aurora-drift-b 26s ease-in-out infinite alternate;
+  animation: aurora-drift-b 18s ease-in-out infinite alternate;
 }
 
 @keyframes aurora-drift-a {
   0% {
-    transform: translate3d(-3%, -2%, 0) scale(1);
+    transform: translate3d(-6%, -4%, 0) scale(1) rotate(0deg);
+    opacity: 0.85;
   }
   50% {
-    transform: translate3d(4%, 3%, 0) scale(1.06);
+    transform: translate3d(7%, 5%, 0) scale(1.12) rotate(3deg);
+    opacity: 1;
   }
   100% {
-    transform: translate3d(2%, -4%, 0) scale(1.03);
+    transform: translate3d(4%, -6%, 0) scale(1.08) rotate(-2deg);
+    opacity: 0.9;
   }
 }
 
 @keyframes aurora-drift-b {
   0% {
-    transform: translate3d(2%, 3%, 0) scale(1.04);
+    transform: translate3d(5%, 4%, 0) scale(1.1) rotate(-2deg);
   }
   50% {
-    transform: translate3d(-5%, -2%, 0) scale(1);
+    transform: translate3d(-8%, -3%, 0) scale(1) rotate(2deg);
   }
   100% {
-    transform: translate3d(-1%, 4%, 0) scale(1.08);
+    transform: translate3d(-2%, 7%, 0) scale(1.14) rotate(1deg);
   }
 }
 

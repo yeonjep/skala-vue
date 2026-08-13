@@ -1,14 +1,32 @@
 <script setup>
-import { computed, onMounted, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useConfigStore } from '@/stores/configStore'
 import { convertTemp } from '@/utils/temperature'
-import { CITY_CATALOG, DEFAULT_CITY } from '@/data/cities'
+import { CITY_CATALOG, DEFAULT_CITY, findCityById } from '@/data/cities'
 import { fetchMonthDaily } from '@/api/openMeteo'
+
+const props = defineProps({
+  cityId: { type: String, default: '' },
+  lat: { type: Number, default: null },
+  lon: { type: Number, default: null },
+  cityName: { type: String, default: '' },
+})
 
 const configStore = useConfigStore()
 
 const WEEKDAYS = ['M', 'T', 'W', 'T', 'F', 'S', 'S']
-const defaultCity = DEFAULT_CITY || CITY_CATALOG[0]
+
+const activeCity = computed(() => {
+  if (props.lat != null && props.lon != null) {
+    return {
+      name: props.cityName || findCityById(props.cityId)?.name || DEFAULT_CITY.name,
+      lat: props.lat,
+      lon: props.lon,
+    }
+  }
+  if (props.cityId) return findCityById(props.cityId) || DEFAULT_CITY
+  return DEFAULT_CITY || CITY_CATALOG[0]
+})
 
 const today = new Date()
 const year = today.getFullYear()
@@ -29,23 +47,30 @@ function dateKey(y, m, d) {
   return `${y}-${String(m + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`
 }
 
-onMounted(async () => {
+async function loadMonth(city) {
   isLoading.value = true
   loadError.value = ''
   try {
-    dailyMap.value = await fetchMonthDaily({
-      lat: defaultCity.lat,
-      lon: defaultCity.lon,
+    const map = await fetchMonthDaily({
+      lat: city.lat,
+      lon: city.lon,
       year,
       monthIndex: month,
     })
+    dailyMap.value = map || {}
+    if (!Object.keys(dailyMap.value).length) {
+      loadError.value = '이번 달 날씨를 불러오지 못했습니다.'
+    }
   } catch (err) {
-    console.error('[Open-Meteo] 월간 날씨 실패:', err)
+    console.error('[월간 날씨] 실패:', err)
     loadError.value = '이번 달 날씨를 불러오지 못했습니다.'
+    dailyMap.value = {}
   } finally {
     isLoading.value = false
   }
-})
+}
+
+watch(activeCity, (city) => city && loadMonth(city), { immediate: true })
 
 const monthLabel = computed(() =>
   today.toLocaleDateString('en-US', { month: 'short', year: 'numeric' }),
@@ -94,15 +119,13 @@ const weeks = computed(() => {
 
   return rows
 })
-
-const unit = computed(() => configStore.unitSymbol)
 </script>
 
 <template>
   <section class="month-cal" aria-label="이번 달 날씨 캘린더">
     <header class="month-cal__head">
       <div>
-        <p class="month-cal__eyebrow">This month · {{ defaultCity.name }}</p>
+        <p class="month-cal__eyebrow">This month · {{ activeCity.name }}</p>
         <h2 class="month-cal__title">{{ monthTitleKo }}</h2>
         <p class="month-cal__credit">Open-Meteo Archive + Forecast</p>
       </div>
@@ -167,14 +190,14 @@ const unit = computed(() => configStore.unitSymbol)
 
 .month-cal__eyebrow {
   margin: 0 0 6px;
-  font-size: 1.05rem;
+  font-size: 1.15rem;
   font-weight: 600;
   color: rgba(42, 51, 64, 0.48);
 }
 
 .month-cal__title {
   margin: 0;
-  font-size: 1.75rem;
+  font-size: 1.9rem;
   font-weight: 800;
   letter-spacing: -0.02em;
   color: #2a3340;
@@ -182,13 +205,13 @@ const unit = computed(() => configStore.unitSymbol)
 
 .month-cal__credit {
   margin: 6px 0 0;
-  font-size: 0.9rem;
+  font-size: 1.05rem;
   color: rgba(42, 51, 64, 0.42);
 }
 
 .month-cal__range {
   margin: 0;
-  font-size: 1.15rem;
+  font-size: 1.25rem;
   font-weight: 600;
   color: rgba(42, 51, 64, 0.48);
 }

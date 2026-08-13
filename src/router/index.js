@@ -30,6 +30,11 @@ const routes = [
     component: () => import('../views/WeatherGuideView.vue'),
   },
   {
+    path: '/chat',
+    name: 'Chatbot',
+    component: () => import('../views/ChatbotView.vue'),
+  },
+  {
     path: '/lab/:day',
     name: 'LabDay',
     component: () => import('../views/AssignmentDayView.vue'),
