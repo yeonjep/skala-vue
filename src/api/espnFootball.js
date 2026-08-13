@@ -1,9 +1,15 @@
 import axios from 'axios'
 
-/** ESPN public soccer endpoints — API 키 불필요 */
+/**
+ * ESPN soccer API
+ * - 로컬(dev): Vite 프록시 `/api/espn` 로 라이브 호출, 실패 시 public 스냅샷 폴백
+ * - 배포(prod): 빌드 시 생성한 `data/espn/{league}.json` 스냅샷
+ */
+const isDev = import.meta.env.DEV
+
 const site = axios.create({
-  baseURL: 'https://site.api.espn.com/apis',
-  timeout: 15000,
+  baseURL: '/api/espn/apis',
+  timeout: 20000,
 })
 
 export const FOOTBALL_LEAGUES = [
@@ -13,6 +19,50 @@ export const FOOTBALL_LEAGUES = [
   { id: 'ger.1', name: '분데스리가', short: 'Bundesliga' },
   { id: 'uefa.champions', name: '챔피언스리그', short: 'UCL' },
 ]
+
+const bundleCache = new Map()
+
+function snapshotUrl(leagueId) {
+  return `${import.meta.env.BASE_URL}data/espn/${leagueId}.json`
+}
+
+async function loadSnapshotBundle(leagueId) {
+  const { data } = await axios.get(snapshotUrl(leagueId), { timeout: 15000 })
+  return {
+    standings: data.standings,
+    scoreboard: data.scoreboard,
+    news: data.news,
+    source: 'snapshot',
+    fetchedAt: data.fetchedAt,
+  }
+}
+
+async function loadLiveBundle(leagueId) {
+  const [standings, scoreboard, news] = await Promise.all([
+    fetchStandingsLive(leagueId),
+    fetchScoreboardLive(leagueId),
+    fetchNewsLive(leagueId),
+  ])
+  return { standings, scoreboard, news, source: 'live' }
+}
+
+async function loadBundle(leagueId) {
+  if (bundleCache.has(leagueId)) return bundleCache.get(leagueId)
+
+  const promise = (async () => {
+    if (!isDev) return loadSnapshotBundle(leagueId)
+
+    try {
+      return await loadLiveBundle(leagueId)
+    } catch (err) {
+      console.warn('[ESPN] live failed → snapshot', err?.message || err)
+      return loadSnapshotBundle(leagueId)
+    }
+  })()
+
+  bundleCache.set(leagueId, promise)
+  return promise
+}
 
 function statMap(stats = []) {
   const map = {}
@@ -49,7 +99,6 @@ function parseStandings(data) {
 }
 
 function previousSeasonYear(seasonAbbr = '') {
-  // "2026-2027" → 2025
   const m = String(seasonAbbr).match(/^(\d{4})/)
   if (m) return Number(m[1]) - 1
   return new Date().getFullYear() - 1
@@ -89,11 +138,7 @@ function ymd(date) {
   return `${y}${m}${d}`
 }
 
-/**
- * 리그 순위표
- * - 현재 시즌 경기가 아직 없으면(전부 0) 직전 시즌으로 자동 폴백
- */
-export async function fetchLeagueStandings(leagueId = 'eng.1') {
+async function fetchStandingsLive(leagueId = 'eng.1') {
   const { data } = await site.get(`/v2/sports/soccer/${leagueId}/standings`)
   let parsed = parseStandings(data)
   let isFallback = false
@@ -121,67 +166,39 @@ export async function fetchLeagueStandings(leagueId = 'eng.1') {
   }
 }
 
-/**
- * 최근 종료 경기 + 예정 경기
- */
-export async function fetchLeagueScoreboard(leagueId = 'eng.1') {
-  const upcomingRes = await site.get(`/site/v2/sports/soccer/${leagueId}/scoreboard`)
-  const upcoming = parseEvents(upcomingRes.data.events || [])
+async function fetchScoreboardLive(leagueId = 'eng.1') {
+  const end = new Date()
+  const start = new Date()
+  start.setDate(end.getDate() - 21)
+  const dates = `${ymd(start)}-${ymd(end)}`
+  const year = end.getFullYear()
+  const enrichDates = [`${year - 1}0501-${year - 1}0525`, `${year}0501-${year}0525`]
 
+  const results = await Promise.all([
+    site.get(`/site/v2/sports/soccer/${leagueId}/scoreboard`, { params: { dates } }),
+    site.get(`/site/v2/sports/soccer/${leagueId}/scoreboard`),
+    ...enrichDates.map((d) =>
+      site
+        .get(`/site/v2/sports/soccer/${leagueId}/scoreboard`, { params: { dates: d } })
+        .catch(() => ({ data: { events: [] } })),
+    ),
+  ])
+
+  const seen = new Set()
   const finished = []
-  const seen = new Set(upcoming.map((e) => e.id))
-  const cursor = new Date()
+  const schedule = []
 
-  const dayStamps = Array.from({ length: 14 }, (_, i) => {
-    const day = new Date(cursor)
-    day.setDate(cursor.getDate() - i)
-    return ymd(day)
-  })
-
-  const dayResults = await Promise.all(
-    dayStamps.map(async (stamp) => {
-      try {
-        const { data } = await site.get(`/site/v2/sports/soccer/${leagueId}/scoreboard`, {
-          params: { dates: stamp },
-        })
-        return parseEvents(data.events || [])
-      } catch {
-        return []
-      }
-    }),
-  )
-
-  dayResults.flat().forEach((ev) => {
-    if (!ev.completed || seen.has(ev.id)) return
-    seen.add(ev.id)
-    finished.push(ev)
-  })
-
-  // 시즌 초라 최근 결과가 비면 직전 시즌 말(5월) 결과 보강
-  if (finished.length < 3) {
-    const year = new Date().getFullYear()
-    const fallbackDates = [`${year}0518`, `${year - 1}0518`, `${year}0511`, `${year - 1}0511`]
-    const extra = await Promise.all(
-      fallbackDates.map(async (stamp) => {
-        try {
-          const { data } = await site.get(`/site/v2/sports/soccer/${leagueId}/scoreboard`, {
-            params: { dates: stamp },
-          })
-          return parseEvents(data.events || [])
-        } catch {
-          return []
-        }
-      }),
-    )
-    extra.flat().forEach((ev) => {
-      if (!ev.completed || seen.has(ev.id)) return
+  results
+    .flatMap((r) => parseEvents(r.data.events || []))
+    .forEach((ev) => {
+      if (seen.has(ev.id)) return
       seen.add(ev.id)
-      finished.push(ev)
+      if (ev.completed) finished.push(ev)
+      else schedule.push(ev)
     })
-  }
 
   finished.sort((a, b) => new Date(b.date) - new Date(a.date))
-  const schedule = upcoming.filter((e) => !e.completed)
+  schedule.sort((a, b) => new Date(a.date) - new Date(b.date))
 
   return {
     matches: [...finished.slice(0, 8), ...schedule.slice(0, 6)],
@@ -190,10 +207,7 @@ export async function fetchLeagueScoreboard(leagueId = 'eng.1') {
   }
 }
 
-/**
- * 리그 뉴스/기사
- */
-export async function fetchLeagueNews(leagueId = 'eng.1', limit = 10) {
+async function fetchNewsLive(leagueId = 'eng.1', limit = 10) {
   const { data } = await site.get(`/site/v2/sports/soccer/${leagueId}/news`)
   return (data.articles || []).slice(0, limit).map((a) => ({
     id: a.id,
@@ -204,4 +218,92 @@ export async function fetchLeagueNews(leagueId = 'eng.1', limit = 10) {
     link: a.links?.web?.href || a.links?.mobile?.href || a.link?.href || '',
     byline: a.byline || a.source || 'ESPN',
   }))
+}
+
+function parseStandingsFromRaw(data) {
+  const parsed = parseStandings(data)
+  const thisYear = String(new Date().getFullYear())
+  const isFallback =
+    parsed.totalPlayed > 0 &&
+    Boolean(parsed.seasonAbbr) &&
+    !String(parsed.seasonAbbr).startsWith(thisYear)
+  return {
+    seasonName: parsed.seasonName,
+    seasonAbbr: parsed.seasonAbbr,
+    isFallback,
+    note:
+      parsed.totalPlayed === 0
+        ? '시즌 데이터가 아직 없습니다.'
+        : isFallback
+          ? '새 시즌 경기가 아직 없어 직전 시즌 최종 순위를 보여줍니다.'
+          : '현재 시즌 순위입니다.',
+    rows: parsed.entries,
+  }
+}
+
+function parseScoreboardFromRaw(data) {
+  const events = parseEvents(data.events || [])
+  const finished = events
+    .filter((e) => e.completed)
+    .sort((a, b) => new Date(b.date) - new Date(a.date))
+  const schedule = events
+    .filter((e) => !e.completed)
+    .sort((a, b) => new Date(a.date) - new Date(b.date))
+  return {
+    matches: [...finished.slice(0, 8), ...schedule.slice(0, 6)],
+    finishedCount: finished.length,
+    upcomingCount: schedule.length,
+  }
+}
+
+function parseNewsFromRaw(data, limit = 12) {
+  return (data.articles || []).slice(0, limit).map((a) => ({
+    id: a.id,
+    headline: a.headline || a.description || 'Untitled',
+    description: a.description || '',
+    published: a.published || a.lastModified || '',
+    image: a.images?.[0]?.url || '',
+    link: a.links?.web?.href || a.links?.mobile?.href || a.link?.href || '',
+    byline: a.byline || a.source || 'ESPN',
+  }))
+}
+
+/**
+ * Unified league payload (standings / scores / news)
+ * Sports view should prefer this to avoid triple parallel cache misses.
+ */
+export async function fetchLeaguePack(leagueId = 'eng.1', newsLimit = 12) {
+  const bundle = await loadBundle(leagueId)
+
+  if (bundle.source === 'live') {
+    return {
+      standings: bundle.standings,
+      scores: bundle.scoreboard,
+      news: bundle.news.slice(0, newsLimit),
+      source: 'live',
+    }
+  }
+
+  return {
+    standings: parseStandingsFromRaw(bundle.standings),
+    scores: parseScoreboardFromRaw(bundle.scoreboard),
+    news: parseNewsFromRaw(bundle.news, newsLimit),
+    source: 'snapshot',
+    fetchedAt: bundle.fetchedAt,
+  }
+}
+
+export async function fetchLeagueStandings(leagueId = 'eng.1') {
+  const pack = await fetchLeaguePack(leagueId)
+  return pack.standings
+}
+
+export async function fetchLeagueScoreboard(leagueId = 'eng.1') {
+  const pack = await fetchLeaguePack(leagueId)
+  return pack.scores
+}
+
+export async function fetchLeagueNews(leagueId = 'eng.1', limit = 10) {
+  const pack = await fetchLeaguePack(leagueId, limit)
+  return pack.news
 }

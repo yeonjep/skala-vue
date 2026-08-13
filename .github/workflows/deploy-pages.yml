@@ -23,10 +23,15 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      - name: Prefetch ESPN snapshots
+        continue-on-error: true
+        env:
+          VITE_ESPN_PROXY: https://site.api.espn.com/apis
+        run: npm run prefetch:espn
       - name: Build
         env:
           DEPLOY_BASE: /skala-vue/
-        run: npm run build
+        run: npx vite build
       - name: SPA 404 fallback
         run: cp dist/index.html dist/404.html
       - name: Deploy to gh-pages

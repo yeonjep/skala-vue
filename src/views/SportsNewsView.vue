@@ -2,9 +2,7 @@
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import {
   FOOTBALL_LEAGUES,
-  fetchLeagueNews,
-  fetchLeagueScoreboard,
-  fetchLeagueStandings,
+  fetchLeaguePack,
 } from '@/api/espnFootball'
 
 const leagueId = ref('eng.1')
@@ -58,19 +56,15 @@ async function load() {
   pageIndex.value = 0
   stopAuto()
   try {
-    const [table, board, articles] = await Promise.all([
-      fetchLeagueStandings(leagueId.value),
-      fetchLeagueScoreboard(leagueId.value),
-      fetchLeagueNews(leagueId.value, 12),
-    ])
-    standings.value = table.rows
+    const pack = await fetchLeaguePack(leagueId.value, 12)
+    standings.value = pack.standings.rows
     seasonMeta.value = {
-      seasonName: table.seasonName,
-      note: table.note,
-      isFallback: table.isFallback,
+      seasonName: pack.standings.seasonName,
+      note: pack.standings.note,
+      isFallback: pack.standings.isFallback,
     }
-    scores.value = board.matches
-    news.value = articles
+    scores.value = pack.scores.matches
+    news.value = pack.news
   } catch (err) {
     console.error('[Sports]', err)
     errorMsg.value = '축구 데이터를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.'
@@ -103,7 +97,7 @@ function formatDate(iso) {
   <div class="sports">
     <header class="sports__head">
       <div>
-        <p class="sports__eyebrow">SPORTS · ESPN (무료 공개 API)</p>
+        <p class="sports__eyebrow">SPORTS · ESPN</p>
         <h2>운동 뉴스 · 축구</h2>
         <p class="sports__lead">리그 순위 · 경기 스코어 · 최신 기사</p>
         <p v-if="seasonMeta.seasonName" class="sports__season">

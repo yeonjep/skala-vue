@@ -14,7 +14,7 @@
 
 ## 배포 주소 (필수)
 
-- **배포 URL (영구):** https://yeonjep.github.io/skala-vue/
+- **배포 URL:** https://yeonjep.github.io/skala-vue/
 - **소스 레포:** https://github.com/yeonjep/skala-vue
 - 배포 방식: GitHub Pages (`main` 푸시 → Actions 자동 빌드/배포)
 
@@ -81,7 +81,7 @@ npm run dev
 | wttr.in | Open-Meteo 실패 시 폴백 |
 | RainViewer | 홈 대시보드 강수 레이더 |
 | CartoCDN | Leaflet 지도 타일 (세계 지도 · 레이더 배경) |
-| ESPN | `/sports` 축구 순위·스코어·뉴스 |
+| ESPN | `/sports` 축구 순위·스코어·뉴스 (배포 시 스냅샷) |
 | wger.de | `/health` 운동 라이브러리 · BMI |
 | Groq | `/chat` AI 챗봇 (`VITE_GROQ_API_KEY`) |
 
@@ -177,7 +177,3 @@ src/
 
 ---
 
-## 참고
-
-- Open-Meteo, ESPN, wger.de, Groq — 각 서비스 이용약관 준수
-- 수업 교안 Hands on — Weather Refinement / Deployment 기준
