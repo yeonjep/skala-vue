@@ -24,16 +24,16 @@ defineEmits(['update-query'])
 .search-inner h3 {
   color: #2a3340;
   font-weight: 800;
-  font-size: 2.1rem;
+  font-size: 1.35rem;
   letter-spacing: -0.3px;
-  margin: 0 0 20px 0;
+  margin: 0 0 14px 0;
 }
 
 .search-inner p {
   color: rgba(42, 51, 64, 0.72);
   font-weight: 600;
-  font-size: 1.45rem;
-  margin: 18px 0 0 0;
+  font-size: 0.95rem;
+  margin: 12px 0 0 0;
 }
 
 .search-inner strong {
@@ -47,22 +47,22 @@ defineEmits(['update-query'])
   max-width: 100%;
   box-sizing: border-box;
   margin-top: 4px;
-  min-height: 72px;
-  padding: 22px 26px;
+  min-height: 48px;
+  padding: 14px 18px;
   border: none;
-  border-radius: 20px;
+  border-radius: 16px;
   outline: none;
   background: rgba(255, 255, 255, 0.88);
   box-shadow: inset 0 1px 3px rgba(90, 110, 140, 0.1);
   color: #0b1220;
-  font-size: 1.7rem;
+  font-size: 1.05rem;
   font-weight: 650;
   line-height: 1.3;
 }
 
 .search-inner input::placeholder {
   color: rgba(42, 51, 64, 0.42);
-  font-size: 1.55rem;
+  font-size: 1rem;
   font-weight: 550;
 }
 

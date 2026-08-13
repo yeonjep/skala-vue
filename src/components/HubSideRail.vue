@@ -268,8 +268,8 @@ onUnmounted(() => {
   position: fixed;
   z-index: 50;
   box-sizing: border-box;
-  padding: 18px 14px;
-  border-radius: 32px;
+  padding: 12px 10px;
+  border-radius: 24px;
   background: rgba(18, 24, 38, 0.55);
   border: 1px solid rgba(255, 255, 255, 0.16);
   backdrop-filter: blur(28px) saturate(160%);
@@ -295,7 +295,7 @@ onUnmounted(() => {
   top: 12px;
   left: 12px;
   bottom: 12px;
-  width: 112px;
+  width: var(--side-rail-width, 72px);
   height: auto;
 }
 .side-rail--right {
@@ -303,7 +303,7 @@ onUnmounted(() => {
   right: 12px;
   bottom: 12px;
   left: auto;
-  width: 112px;
+  width: var(--side-rail-width, 72px);
   height: auto;
 }
 .side-rail--top {
@@ -312,7 +312,7 @@ onUnmounted(() => {
   right: 12px;
   bottom: auto;
   width: auto;
-  height: 96px;
+  height: 72px;
 }
 .side-rail--bottom {
   bottom: 12px;
@@ -320,28 +320,28 @@ onUnmounted(() => {
   right: 12px;
   top: auto;
   width: auto;
-  height: 96px;
+  height: 72px;
 }
 
 .side-rail--left.is-expanded:not(.is-dragging) {
-  width: 320px;
+  width: var(--side-rail-expanded, 240px);
   z-index: 60;
 }
 .side-rail--right.is-expanded:not(.is-dragging) {
-  width: 320px;
+  width: var(--side-rail-expanded, 240px);
   z-index: 60;
 }
 .side-rail--top.is-expanded:not(.is-dragging),
 .side-rail--bottom.is-expanded:not(.is-dragging) {
-  height: 132px;
+  height: 104px;
   z-index: 60;
 }
 
 .side-rail.is-dragging {
   z-index: 80;
-  width: 112px !important;
+  width: var(--side-rail-width, 72px) !important;
   height: auto !important;
-  min-height: 320px;
+  min-height: 280px;
   opacity: 0.92;
   cursor: grabbing;
   box-shadow:
@@ -445,13 +445,13 @@ onUnmounted(() => {
 
 .side-rail__logo {
   flex: 0 0 auto;
-  width: 60px;
-  height: 60px;
-  border-radius: 18px;
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.9rem;
+  font-size: 1.25rem;
   line-height: 1;
   text-align: center;
   background: linear-gradient(145deg, #38bdf8, #818cf8);
@@ -482,7 +482,7 @@ onUnmounted(() => {
 }
 
 .side-rail__brand-text strong {
-  font-size: 1.55rem;
+  font-size: 1.1rem;
   font-weight: 800;
   color: #fff;
   letter-spacing: -0.02em;
@@ -563,15 +563,15 @@ onUnmounted(() => {
 
 .side-rail__icon {
   flex: 0 0 auto;
-  width: 44px;
+  width: 32px;
   display: grid;
   place-items: center;
-  font-size: 2rem;
+  font-size: 1.35rem;
   line-height: 1;
 }
 
 .side-rail__label {
-  font-size: 1.45rem;
+  font-size: 0.95rem;
   font-weight: 750;
   white-space: nowrap;
   width: 0;
@@ -638,25 +638,25 @@ onUnmounted(() => {
   top: 12px;
   bottom: 12px;
   left: 12px;
-  width: 112px;
+  width: var(--side-rail-width, 72px);
 }
 .rail-drop-guides__edge.is-right {
   top: 12px;
   bottom: 12px;
   right: 12px;
-  width: 112px;
+  width: var(--side-rail-width, 72px);
 }
 .rail-drop-guides__edge.is-top {
   top: 12px;
   left: 12px;
   right: 12px;
-  height: 96px;
+  height: 72px;
 }
 .rail-drop-guides__edge.is-bottom {
   bottom: 12px;
   left: 12px;
   right: 12px;
-  height: 96px;
+  height: 72px;
 }
 
 @media (max-width: 900px) {

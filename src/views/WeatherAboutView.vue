@@ -44,59 +44,59 @@ const handleGoHome = () => router.push('/cities')
 .about-page h3 {
   color: #e8eef8;
   font-weight: 800;
-  font-size: clamp(2.4rem, 4vw, 3rem);
-  margin: 0 0 20px 0;
+  font-size: clamp(1.35rem, 2.2vw, 1.75rem);
+  margin: 0 0 14px 0;
   letter-spacing: -0.02em;
 }
 
 .description-box {
-  background: rgba(255, 255, 255, 0.55);
-  border: none;
-  border-radius: 24px;
-  padding: 28px 32px;
-  line-height: 1.7;
-  font-size: 1.45rem;
-  color: rgba(42, 51, 64, 0.82);
-  margin-bottom: 20px;
-  box-shadow: 0 12px 28px rgba(90, 110, 140, 0.12);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  padding: 16px 18px;
+  line-height: 1.6;
+  font-size: 0.92rem;
+  color: rgba(232, 238, 248, 0.82);
+  margin-bottom: 14px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
   backdrop-filter: blur(20px);
 }
 
 .description-box strong {
-  color: #2a3340;
+  color: #fff;
 }
 
 ul {
-  padding-left: 24px;
-  margin: 16px 0 0 0;
+  padding-left: 20px;
+  margin: 12px 0 0 0;
 }
 
 li {
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 }
 
 code {
   background: rgba(140, 168, 184, 0.22);
-  padding: 3px 8px;
-  border-radius: 6px;
-  color: #3d5566;
-  font-size: 1.2rem;
+  padding: 2px 6px;
+  border-radius: 5px;
+  color: #c7e7f7;
+  font-size: 0.85rem;
 }
 
 .home-btn {
   width: 100%;
-  padding: 20px;
-  background: rgba(255, 255, 255, 0.72);
-  color: #2a3340;
-  border: none;
-  border-radius: 18px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.12);
+  color: #e8eef8;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 14px;
   font-weight: 800;
-  font-size: 1.45rem;
+  font-size: 0.92rem;
   cursor: pointer;
-  box-shadow: 0 8px 20px rgba(90, 110, 140, 0.12);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.16);
 }
 
 .home-btn:hover {
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.18);
 }
 </style>

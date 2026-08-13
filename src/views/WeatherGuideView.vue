@@ -50,12 +50,12 @@ const tips = [
 }
 
 .guide-head {
-  margin-bottom: 22px;
+  margin-bottom: 14px;
 }
 
 .guide-eyebrow {
-  margin: 0 0 8px;
-  font-size: 1.15rem;
+  margin: 0 0 6px;
+  font-size: 0.75rem;
   font-weight: 800;
   letter-spacing: 0.14em;
   color: rgba(125, 211, 252, 0.85);
@@ -64,32 +64,32 @@ const tips = [
 .guide-page h3 {
   color: #e8eef8;
   font-weight: 800;
-  font-size: clamp(2.2rem, 3.5vw, 2.9rem);
-  margin: 0 0 10px;
+  font-size: clamp(1.35rem, 2.2vw, 1.75rem);
+  margin: 0 0 6px;
   letter-spacing: -0.02em;
 }
 
 .guide-lead {
   margin: 0;
   color: rgba(232, 238, 248, 0.62);
-  font-size: 1.4rem;
+  font-size: 0.9rem;
   line-height: 1.5;
 }
 
 .guide-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 14px;
+  gap: 10px;
 }
 
 .guide-card {
-  background: rgba(255, 255, 255, 0.62);
-  border: none;
-  border-radius: 24px;
-  padding: 26px 28px;
-  box-shadow: 0 12px 28px rgba(90, 110, 140, 0.12);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  padding: 14px 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
   backdrop-filter: blur(20px);
-  border-left: 6px solid rgba(90, 140, 180, 0.45);
+  border-left: 4px solid rgba(90, 140, 180, 0.45);
 }
 
 .guide-card.is-hot {
@@ -105,29 +105,29 @@ const tips = [
 }
 
 .guide-card h4 {
-  color: #2a3340;
-  margin: 0 0 12px;
-  font-size: 1.7rem;
+  color: #e8eef8;
+  margin: 0 0 8px;
+  font-size: 1.05rem;
   font-weight: 800;
 }
 
 .guide-card p {
-  color: rgba(42, 51, 64, 0.72);
+  color: rgba(232, 238, 248, 0.72);
   margin: 0;
-  font-size: 1.35rem;
-  line-height: 1.6;
+  font-size: 0.9rem;
+  line-height: 1.55;
 }
 
 .home-btn {
   width: 100%;
-  margin-top: 18px;
-  padding: 18px 20px;
+  margin-top: 14px;
+  padding: 12px 16px;
   background: rgba(42, 51, 64, 0.9);
   color: #fff;
   border: none;
-  border-radius: 18px;
+  border-radius: 14px;
   font-weight: 800;
-  font-size: 1.35rem;
+  font-size: 0.92rem;
   cursor: pointer;
   box-shadow: 0 8px 20px rgba(90, 110, 140, 0.16);
 }

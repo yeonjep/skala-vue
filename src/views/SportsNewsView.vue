@@ -266,8 +266,8 @@ function formatDate(iso) {
 }
 
 .sports__eyebrow {
-  margin: 0 0 10px;
-  font-size: 1.25rem;
+  margin: 0 0 8px;
+  font-size: 0.85rem;
   font-weight: 800;
   letter-spacing: 0.06em;
   color: rgba(125, 211, 252, 0.85);
@@ -275,21 +275,21 @@ function formatDate(iso) {
 
 .sports__head h2 {
   margin: 0;
-  font-size: clamp(2.6rem, 4.5vw, 3.4rem);
+  font-size: clamp(1.75rem, 3vw, 2.35rem);
   font-weight: 800;
   color: #e8eef8;
 }
 
 .sports__lead {
-  margin: 10px 0 0;
-  font-size: 1.45rem;
+  margin: 8px 0 0;
+  font-size: 0.95rem;
   color: rgba(232, 238, 248, 0.62);
   font-weight: 600;
 }
 
 .sports__season {
-  margin: 12px 0 0;
-  font-size: 1.25rem;
+  margin: 10px 0 0;
+  font-size: 0.9rem;
   font-weight: 750;
   color: rgba(125, 211, 252, 0.9);
   display: flex;
@@ -308,13 +308,13 @@ function formatDate(iso) {
 }
 
 .sports-note {
-  margin: 0 0 14px;
-  padding: 14px 16px;
-  border-radius: 14px;
+  margin: 0 0 12px;
+  padding: 10px 12px;
+  border-radius: 12px;
   background: rgba(251, 191, 36, 0.1);
   border: 1px solid rgba(251, 191, 36, 0.25);
   color: #fde68a;
-  font-size: 1.2rem;
+  font-size: 0.88rem;
   font-weight: 700;
   line-height: 1.4;
 }
@@ -322,7 +322,7 @@ function formatDate(iso) {
 .sports__leagues {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;
 }
 
 .sports__chip {
@@ -330,10 +330,10 @@ function formatDate(iso) {
   background: rgba(255, 255, 255, 0.06);
   color: rgba(232, 238, 248, 0.78);
   border-radius: 999px;
-  padding: 14px 22px;
-  min-height: 52px;
+  padding: 8px 14px;
+  min-height: 36px;
   font-weight: 750;
-  font-size: 1.25rem;
+  font-size: 0.9rem;
   cursor: pointer;
 }
 
@@ -391,13 +391,13 @@ function formatDate(iso) {
 
 .sports-card__head h3 {
   margin: 0;
-  font-size: 1.85rem;
+  font-size: 1.15rem;
   font-weight: 800;
   color: #fff;
 }
 
 .sports-card__head span {
-  font-size: 1.2rem;
+  font-size: 0.85rem;
   font-weight: 700;
   color: rgba(232, 238, 248, 0.5);
 }
@@ -410,12 +410,12 @@ function formatDate(iso) {
 .sports-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 1.3rem;
+  font-size: 0.92rem;
 }
 
 .sports-table th,
 .sports-table td {
-  padding: 14px 10px;
+  padding: 10px 8px;
   text-align: center;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   color: rgba(232, 238, 248, 0.88);
@@ -468,8 +468,8 @@ function formatDate(iso) {
 }
 
 .score-item__meta {
-  margin: 0 0 12px;
-  font-size: 1.15rem;
+  margin: 0 0 10px;
+  font-size: 0.8rem;
   font-weight: 700;
   color: rgba(232, 238, 248, 0.5);
 }
@@ -477,15 +477,15 @@ function formatDate(iso) {
 .score-item__row {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
-  gap: 12px;
+  gap: 10px;
   align-items: center;
-  font-size: 1.35rem;
+  font-size: 0.95rem;
   font-weight: 750;
   color: #e8eef8;
 }
 
 .score-item__row strong {
-  font-size: 1.7rem;
+  font-size: 1.15rem;
   color: #7dd3fc;
 }
 
@@ -496,7 +496,7 @@ function formatDate(iso) {
 .sports-empty {
   margin: 0;
   color: rgba(232, 238, 248, 0.5);
-  font-size: 1.25rem;
+  font-size: 0.9rem;
   font-weight: 650;
 }
 
@@ -559,14 +559,14 @@ function formatDate(iso) {
 }
 
 .news-card__body strong {
-  font-size: 1.45rem;
+  font-size: 1.05rem;
   line-height: 1.3;
   color: #fff;
 }
 
 .news-card__body p {
   margin: 0;
-  font-size: 1.2rem;
+  font-size: 0.88rem;
   line-height: 1.5;
   color: rgba(232, 238, 248, 0.68);
   display: -webkit-box;
@@ -591,13 +591,13 @@ function formatDate(iso) {
 }
 
 .news-nav {
-  width: 48px;
-  height: 48px;
-  border-radius: 14px;
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.16);
   background: rgba(255, 255, 255, 0.08);
   color: #e8eef8;
-  font-size: 1.8rem;
+  font-size: 1.2rem;
   font-weight: 700;
   cursor: pointer;
   line-height: 1;

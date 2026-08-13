@@ -949,7 +949,7 @@ onMounted(async () => {
 
 .dash__eyebrow {
   margin: 0 0 6px;
-  font-size: 1.15rem;
+  font-size: 0.85rem;
   font-weight: 800;
   letter-spacing: 0.16em;
   color: rgba(56, 189, 248, 0.95);
@@ -957,7 +957,7 @@ onMounted(async () => {
 
 .dash__title {
   margin: 0;
-  font-size: clamp(2.6rem, 4.2vw, 3.5rem);
+  font-size: clamp(1.35rem, 2.2vw, 1.75rem);
   font-weight: 800;
   letter-spacing: -0.03em;
   color: #fff;
@@ -966,20 +966,20 @@ onMounted(async () => {
 .dash__searchbar {
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: 16px 18px;
+  gap: 10px;
+  padding: 10px 12px;
   flex-wrap: wrap;
-  min-height: 76px;
+  min-height: 44px;
 }
 
 .dash__search-field {
   flex: 1;
-  min-width: 260px;
+  min-width: 240px;
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 12px 16px;
-  border-radius: 16px;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 14px;
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.14);
 }
@@ -989,7 +989,7 @@ onMounted(async () => {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 2.15rem;
+  font-size: 1.35rem;
   line-height: 1;
   opacity: 0.85;
   color: rgba(232, 238, 248, 0.9);
@@ -1003,7 +1003,7 @@ onMounted(async () => {
   outline: none;
   background: transparent;
   color: #fff;
-  font-size: 1.35rem;
+  font-size: 1rem;
   font-weight: 600;
 }
 
@@ -1041,14 +1041,14 @@ onMounted(async () => {
 .dash__grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
+  gap: 12px;
   align-items: stretch;
 }
 
 .dash__cell {
   position: relative;
   min-width: 0;
-  min-height: 300px;
+  min-height: 220px;
   display: flex;
   flex-direction: column;
   transition:
@@ -1114,7 +1114,7 @@ onMounted(async () => {
   padding: 0;
   overflow: hidden;
   cursor: pointer;
-  min-height: 300px;
+  min-height: 220px;
 }
 
 .dash__calendar {
@@ -1187,7 +1187,7 @@ onMounted(async () => {
   }
 
   .dash__cell {
-    min-height: 260px;
+    min-height: 200px;
   }
 
   .detail__grid {

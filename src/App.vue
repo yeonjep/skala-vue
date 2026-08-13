@@ -71,7 +71,7 @@ onMounted(() => {
   padding: 0;
   box-sizing: border-box;
   color: #e8eef8;
-  font-size: 22px;
+  font-size: 13px;
   font-family:
     'Pretendard',
     'Apple SD Gothic Neo',
@@ -82,23 +82,23 @@ onMounted(() => {
 }
 
 .hub-app--lab {
-  padding: 28px 24px 56px;
+  padding: 20px 18px 40px;
   display: flex;
   justify-content: center;
 }
 
 .hub-main-panel {
   box-sizing: border-box;
-  padding: 22px 24px 28px;
+  padding: 12px 14px 18px;
   overflow-x: hidden;
 }
 
 .hub-header {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 8px;
   width: 100%;
-  margin: 0 0 16px;
+  margin: 0 0 10px;
   flex-shrink: 0;
 }
 
@@ -106,29 +106,29 @@ onMounted(() => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: 10px;
   flex-wrap: wrap;
 }
 
 .hub-brand {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   text-decoration: none;
   color: #fff;
   font-weight: 800;
-  font-size: 1.75rem;
+  font-size: 1.1rem;
   letter-spacing: -0.02em;
 }
 
 .hub-brand__mark {
-  width: 48px;
-  height: 48px;
-  border-radius: 16px;
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.4rem;
+  font-size: 0.95rem;
   background: linear-gradient(145deg, rgba(56, 189, 248, 0.35), rgba(129, 140, 248, 0.35));
   border: 1px solid rgba(255, 255, 255, 0.16);
 }
@@ -136,10 +136,10 @@ onMounted(() => {
 .hub-nav {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 8px;
+  gap: 4px;
   width: 100%;
   box-sizing: border-box;
-  padding: 8px;
+  padding: 4px;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.12);
@@ -152,9 +152,9 @@ onMounted(() => {
   justify-content: center;
   text-decoration: none;
   color: rgba(232, 238, 248, 0.65);
-  font-size: 1.4rem;
+  font-size: 0.82rem;
   font-weight: 800;
-  padding: 16px 14px;
+  padding: 7px 10px;
   border-radius: 999px;
   white-space: nowrap;
   min-width: 0;
@@ -180,10 +180,10 @@ onMounted(() => {
 }
 
 .hub-fav {
-  font-size: 1.05rem;
+  font-size: 0.9rem;
   font-weight: 800;
   color: #fbbf24;
-  padding: 10px 14px;
+  padding: 8px 12px;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.12);
@@ -201,9 +201,9 @@ onMounted(() => {
 .hub-footer {
   width: 100%;
   margin: auto 0 0;
-  padding-top: 16px;
+  padding-top: 12px;
   flex-shrink: 0;
-  font-size: 1rem;
+  font-size: 0.85rem;
   color: rgba(232, 238, 248, 0.45);
 }
 

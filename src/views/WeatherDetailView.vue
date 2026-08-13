@@ -133,8 +133,8 @@ onMounted(async () => {
 }
 
 .detail-eyebrow {
-  margin: 0 0 8px;
-  font-size: 1.2rem;
+  margin: 0 0 6px;
+  font-size: 0.75rem;
   font-weight: 800;
   letter-spacing: 0.08em;
   color: rgba(125, 211, 252, 0.85);
@@ -143,53 +143,53 @@ onMounted(async () => {
 .detail-page h3 {
   color: #e8eef8;
   font-weight: 800;
-  font-size: clamp(2.2rem, 4vw, 2.8rem);
-  margin: 0 0 8px 0;
+  font-size: clamp(1.35rem, 2.2vw, 1.75rem);
+  margin: 0 0 6px 0;
 }
 
 .api-credit {
   margin: 0;
-  font-size: 1.25rem;
+  font-size: 0.85rem;
   color: rgba(232, 238, 248, 0.55);
   font-weight: 600;
 }
 
 .load-msg {
   text-align: center;
-  padding: 28px;
+  padding: 20px;
   color: rgba(125, 211, 252, 0.9);
   font-weight: 700;
-  font-size: 1.4rem;
+  font-size: 0.95rem;
 }
 
 .detail-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 20px;
-  margin-top: 20px;
+  gap: 14px;
+  margin-top: 14px;
 }
 
 .info-card {
   background: rgba(18, 24, 38, 0.55);
   border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 26px;
-  padding: 28px 30px;
+  border-radius: 18px;
+  padding: 16px 18px;
   backdrop-filter: blur(16px);
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
 }
 
 .info-card h4 {
   color: #fff;
-  margin: 0 0 22px 0;
-  font-size: 1.85rem;
+  margin: 0 0 12px 0;
+  font-size: 1.1rem;
   font-weight: 800;
   line-height: 1.3;
 }
 
 .info-card p {
   color: rgba(232, 238, 248, 0.85);
-  margin: 0 0 16px 0;
-  font-size: 1.55rem;
+  margin: 0 0 10px 0;
+  font-size: 0.92rem;
   font-weight: 650;
   line-height: 1.45;
 }
@@ -200,7 +200,7 @@ onMounted(async () => {
 
 .info-card strong {
   color: #fff;
-  font-size: 1.7rem;
+  font-size: 1rem;
   font-weight: 800;
 }
 

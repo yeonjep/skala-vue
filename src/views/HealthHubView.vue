@@ -213,8 +213,8 @@ onUnmounted(stopAuto)
 }
 
 .health__eyebrow {
-  margin: 0 0 10px;
-  font-size: 1.25rem;
+  margin: 0 0 8px;
+  font-size: 0.85rem;
   font-weight: 800;
   letter-spacing: 0.06em;
   color: rgba(74, 222, 128, 0.85);
@@ -222,14 +222,14 @@ onUnmounted(stopAuto)
 
 .health__head h2 {
   margin: 0;
-  font-size: clamp(2.6rem, 4.5vw, 3.4rem);
+  font-size: clamp(1.75rem, 3vw, 2.35rem);
   font-weight: 800;
   color: #e8eef8;
 }
 
 .health__lead {
-  margin: 10px 0 0;
-  font-size: 1.45rem;
+  margin: 8px 0 0;
+  font-size: 0.95rem;
   color: rgba(232, 238, 248, 0.62);
   font-weight: 600;
 }
@@ -254,16 +254,16 @@ onUnmounted(stopAuto)
 }
 
 .health-card h3 {
-  margin: 0 0 10px;
-  font-size: 1.85rem;
+  margin: 0 0 8px;
+  font-size: 1.15rem;
   font-weight: 800;
   color: #fff;
 }
 
 .health-card__hint,
 .health-muted {
-  margin: 0 0 18px;
-  font-size: 1.25rem;
+  margin: 0 0 14px;
+  font-size: 0.9rem;
   color: rgba(232, 238, 248, 0.55);
   font-weight: 600;
   line-height: 1.45;
@@ -272,14 +272,14 @@ onUnmounted(stopAuto)
 .bmi-form {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px;
+  gap: 12px;
 }
 
 .bmi-form label {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  font-size: 1.3rem;
+  gap: 8px;
+  font-size: 0.9rem;
   font-weight: 750;
   color: rgba(232, 238, 248, 0.78);
 }
@@ -287,64 +287,64 @@ onUnmounted(stopAuto)
 .bmi-form input,
 .health-select {
   border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 18px;
-  padding: 18px 20px;
-  min-height: 64px;
+  border-radius: 14px;
+  padding: 12px 14px;
+  min-height: 46px;
   background: rgba(8, 12, 22, 0.55);
   color: #e8eef8;
-  font-size: 1.55rem;
+  font-size: 1rem;
   font-weight: 700;
   box-sizing: border-box;
 }
 
 .bmi-result {
-  margin-top: 20px;
-  padding: 18px 20px;
-  border-radius: 18px;
+  margin-top: 16px;
+  padding: 14px 16px;
+  border-radius: 14px;
   background: rgba(74, 222, 128, 0.12);
   border: 1px solid rgba(74, 222, 128, 0.28);
 }
 
 .bmi-result strong {
-  font-size: 2.6rem;
+  font-size: 1.75rem;
   color: #86efac;
-  margin-right: 12px;
+  margin-right: 10px;
 }
 
 .bmi-result span {
-  font-size: 1.45rem;
+  font-size: 1rem;
   font-weight: 800;
   color: #e8eef8;
 }
 
 .bmi-result p {
-  margin: 10px 0 0;
-  font-size: 1.3rem;
+  margin: 8px 0 0;
+  font-size: 0.9rem;
   color: rgba(232, 238, 248, 0.75);
   line-height: 1.45;
 }
 
 .water-tip {
-  margin: 0 0 16px;
-  font-size: 1.45rem;
+  margin: 0 0 14px;
+  font-size: 0.95rem;
   font-weight: 700;
   color: #e8eef8;
   line-height: 1.5;
 }
 
 .air-box {
-  padding: 18px 20px;
-  border-radius: 18px;
+  padding: 14px 16px;
+  border-radius: 14px;
   background: rgba(56, 189, 248, 0.1);
   border: 1px solid rgba(56, 189, 248, 0.28);
 }
 
 .air-box p {
-  margin: 0 0 10px;
+  margin: 0 0 8px;
   display: flex;
   justify-content: space-between;
   gap: 10px;
-  font-size: 1.35rem;
+  font-size: 0.95rem;
   font-weight: 750;
   color: #e8eef8;
 }
@@ -451,14 +451,14 @@ onUnmounted(stopAuto)
 }
 
 .ex-card__body strong {
-  font-size: 1.55rem;
+  font-size: 1.05rem;
   line-height: 1.25;
   color: #fff;
 }
 
 .ex-card__body p {
   margin: 0;
-  font-size: 1.2rem;
+  font-size: 0.88rem;
   line-height: 1.5;
   color: rgba(232, 238, 248, 0.68);
   display: -webkit-box;
@@ -471,11 +471,11 @@ onUnmounted(stopAuto)
 .ex-card__tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 6px;
 }
 
 .ex-card__tags span {
-  font-size: 1.05rem;
+  font-size: 0.78rem;
   font-weight: 750;
   padding: 7px 12px;
   border-radius: 10px;
@@ -497,13 +497,13 @@ onUnmounted(stopAuto)
 }
 
 .ex-nav {
-  width: 48px;
-  height: 48px;
-  border-radius: 14px;
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.16);
   background: rgba(255, 255, 255, 0.08);
   color: #e8eef8;
-  font-size: 1.8rem;
+  font-size: 1.2rem;
   font-weight: 700;
   cursor: pointer;
   line-height: 1;

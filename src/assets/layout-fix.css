@@ -13,16 +13,16 @@
   --ac-glass-strong: rgba(255, 255, 255, 0.12);
   --ac-border: rgba(255, 255, 255, 0.14);
   --ac-accent: #38bdf8;
-  --side-rail-width: 112px;
-  --side-rail-expanded: 320px;
+  --side-rail-width: 64px;
+  --side-rail-expanded: 220px;
   --shine-a: #7dd3fc;
   --shine-b: #c4b5fd;
   --shine-c: #f9a8d4;
   --shine-hot: rgba(255, 255, 255, 0.95);
   --beam-angle: 0deg;
-  --el-font-size-base: 18px;
-  --el-font-size-small: 16px;
-  --el-font-size-extra-small: 15px;
+  --el-font-size-base: 14px;
+  --el-font-size-small: 13px;
+  --el-font-size-extra-small: 12px;
 }
 
 html {
@@ -32,6 +32,7 @@ html {
   overflow-x: hidden !important;
   margin: 0 !important;
   padding: 0 !important;
+  font-size: 13px !important;
   background-color: var(--ac-bg) !important;
 }
 
@@ -413,7 +414,7 @@ body {
   -webkit-backdrop-filter: blur(28px) saturate(160%) !important;
   color: #e8eef8 !important;
   outline: none !important;
-  font-size: 1.25rem !important;
+  font-size: 1.15rem !important;
 }
 
 .mac-window.is-maximized {
@@ -429,27 +430,27 @@ body {
 }
 
 .mac-window__bar {
-  min-height: 72px !important;
+  min-height: 52px !important;
 }
 
 .mac-window__title {
-  font-size: 1.55rem !important;
+  font-size: 1.1rem !important;
   font-weight: 800 !important;
 }
 
 .mac-window__body {
-  padding: 28px 32px !important;
+  padding: 18px 20px !important;
   overflow: auto !important;
   flex: 1 1 auto !important;
   min-height: 0 !important;
-  font-size: 1.3rem !important;
+  font-size: 1rem !important;
 }
 
 .mac-window__body .glass-card {
   height: 100% !important;
-  min-height: 560px !important;
+  min-height: 420px !important;
   background: rgba(255, 255, 255, 0.06) !important;
-  font-size: 1.15em !important;
+  font-size: 1em !important;
 }
 
 .mac-window__body .glass-card::after {
@@ -457,41 +458,41 @@ body {
 }
 
 .mac-dot {
-  width: 22px !important;
-  height: 22px !important;
-  min-width: 22px !important;
-  min-height: 22px !important;
+  width: 14px !important;
+  height: 14px !important;
+  min-width: 14px !important;
+  min-height: 14px !important;
 }
 
-/* —— 전역 타이포 대폭 상향 —— */
+/* —— 전역 타이포 (컴팩트 밀도) —— */
 .hub-app .hub-brand__text {
-  font-size: 2rem !important;
+  font-size: 1.1rem !important;
 }
 .hub-app .hub-nav__item {
-  font-size: 1.4rem !important;
-  padding: 16px 14px !important;
+  font-size: 0.82rem !important;
+  padding: 7px 10px !important;
 }
 .hub-app .hub-fav {
-  font-size: 1.25rem !important;
+  font-size: 0.78rem !important;
 }
 .hub-app .hub-footer {
-  font-size: 1.15rem !important;
+  font-size: 0.75rem !important;
 }
 
 .dash__eyebrow {
-  font-size: 1.3rem !important;
+  font-size: 0.72rem !important;
 }
 .dash__title {
-  font-size: clamp(3rem, 5vw, 4rem) !important;
+  font-size: clamp(1.35rem, 2.2vw, 1.75rem) !important;
 }
 .dash__search-field input {
-  font-size: 1.5rem !important;
+  font-size: 0.9rem !important;
 }
 .dash__calendar-head h3 {
-  font-size: 1.9rem !important;
+  font-size: 1.05rem !important;
 }
 .dash__calendar-head p {
-  font-size: 1.25rem !important;
+  font-size: 0.8rem !important;
 }
 
 .glass-card h2,
@@ -502,7 +503,7 @@ body {
 .fav__head h3,
 .chart__head h3,
 .radar__head h3 {
-  font-size: clamp(1.85rem, 2.2vw, 2.35rem) !important;
+  font-size: clamp(0.95rem, 1.1vw, 1.1rem) !important;
 }
 
 .glass-card p,
@@ -516,7 +517,7 @@ body {
 .chart__labels,
 .radar__credit,
 .radar__time {
-  font-size: 1.25rem !important;
+  font-size: 0.78rem !important;
 }
 
 .forecast__row,
@@ -524,25 +525,57 @@ body {
 .fav__temp,
 .metric strong,
 .detail__item strong {
-  font-size: 1.45rem !important;
+  font-size: 0.9rem !important;
 }
 
 .metric span,
 .detail__item span,
 .hero__eyebrow {
-  font-size: 1.2rem !important;
+  font-size: 0.72rem !important;
 }
 
-/* 기온은 카드 히어로 — dash 날짜 타이틀보다 더 크게 */
+/* 기온 히어로 — 카드 안에서만 강조 */
 .glass-card .hero__temp,
 .hero .hero__temp {
-  font-size: clamp(5.5rem, 11vw, 9.5rem) !important;
+  font-size: clamp(2.4rem, 5vw, 3.6rem) !important;
   font-weight: 900 !important;
   line-height: 0.9 !important;
   letter-spacing: -0.06em !important;
 }
 
 .detail__lead {
-  font-size: 2.35rem !important;
+  font-size: 1.2rem !important;
+}
+
+/* 가이드 / 소개 / 도시 페이지도 같은 밀도 */
+.guide-page h3,
+.about-page h3,
+.cities-page h3 {
+  font-size: clamp(1.35rem, 2.2vw, 1.75rem) !important;
+}
+.guide-lead,
+.guide-card p,
+.guide-card h4,
+.about-page .description-box,
+.about-page .home-btn,
+.guide-page .home-btn {
+  font-size: inherit;
+}
+.guide-card {
+  padding: 14px 16px !important;
+}
+.guide-card h4 {
+  font-size: 1.05rem !important;
+}
+.guide-card p,
+.guide-lead {
+  font-size: 0.9rem !important;
+}
+.about-page .description-box {
+  font-size: 0.92rem !important;
+  padding: 16px 18px !important;
+}
+.about-page code {
+  font-size: 0.85rem !important;
 }
 
