@@ -498,34 +498,53 @@ body {
 .glass-card h2,
 .glass-card h3,
 .hero__city,
-.forecast__head h3,
 .world__head h3,
-.fav__head h3,
 .chart__head h3,
 .radar__head h3 {
-  font-size: clamp(0.95rem, 1.1vw, 1.1rem) !important;
+  font-size: clamp(1.05rem, 1.2vw, 1.2rem) !important;
+}
+
+/* 즐겨찾기 · 7일 — 스포츠 표와 비슷한 가독성 */
+.fav__head h3,
+.forecast__head h3 {
+  font-size: 1.2rem !important;
 }
 
 .glass-card p,
 .hero__date,
-.hero__status,
 .hero__hint,
-.forecast__head p,
 .world__head p,
 .radar__head p,
-.fav__meta small,
 .chart__labels,
 .radar__credit,
 .radar__time {
-  font-size: 0.78rem !important;
+  font-size: 0.82rem !important;
 }
 
-.forecast__row,
+.forecast__head p {
+  font-size: 0.88rem !important;
+}
+
+.hero__status {
+  font-size: 1.05rem !important;
+}
+
+.fav__meta small {
+  font-size: 0.95rem !important;
+}
+
+.forecast__row {
+  font-size: 1.05rem !important;
+}
+
 .fav__meta strong,
-.fav__temp,
+.fav__temp {
+  font-size: 1.15rem !important;
+}
+
 .metric strong,
 .detail__item strong {
-  font-size: 0.9rem !important;
+  font-size: 0.95rem !important;
 }
 
 .metric span,
@@ -534,10 +553,10 @@ body {
   font-size: 0.72rem !important;
 }
 
-/* 기온 히어로 — 카드 안에서만 강조 */
+/* 기온 히어로 — 카드 비대 방지 */
 .glass-card .hero__temp,
 .hero .hero__temp {
-  font-size: clamp(2.4rem, 5vw, 3.6rem) !important;
+  font-size: clamp(2.1rem, 4vw, 3rem) !important;
   font-weight: 900 !important;
   line-height: 0.9 !important;
   letter-spacing: -0.06em !important;

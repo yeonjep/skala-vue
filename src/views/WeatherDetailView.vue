@@ -206,10 +206,10 @@ onMounted(async () => {
 
 .aqi-badge {
   display: inline-block;
-  margin-left: 10px;
-  padding: 6px 14px;
+  margin-left: 8px;
+  padding: 4px 10px;
   border-radius: 999px;
-  font-size: 1.15rem;
+  font-size: 0.85rem;
   font-weight: 750;
   vertical-align: middle;
   background: rgba(56, 189, 248, 0.22);
@@ -219,30 +219,30 @@ onMounted(async () => {
 .empty-result {
   text-align: center;
   color: #fecaca;
-  padding: 22px;
-  margin-bottom: 18px;
+  padding: 14px;
+  margin-bottom: 12px;
   background: rgba(180, 35, 24, 0.15);
-  border-radius: 14px;
-  font-size: 1.35rem;
+  border-radius: 12px;
+  font-size: 0.95rem;
 }
 
 .buddy-legend {
-  margin: 20px 0 0;
-  font-size: 1.3rem;
+  margin: 14px 0 0;
+  font-size: 0.9rem;
   font-weight: 650;
   color: rgba(232, 238, 248, 0.58);
-  line-height: 1.55;
+  line-height: 1.5;
 }
 
 .back-btn {
   display: inline-block;
-  padding: 14px 22px;
+  padding: 10px 16px;
   background: rgba(255, 255, 255, 0.1);
   color: #e8eef8;
   border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 14px;
+  border-radius: 12px;
   font-weight: 750;
-  font-size: 1.2rem;
+  font-size: 0.9rem;
   cursor: pointer;
 }
 

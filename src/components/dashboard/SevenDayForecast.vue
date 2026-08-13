@@ -53,26 +53,26 @@ function onOpen() {
 
 <style scoped>
 .forecast {
-  padding: 20px 16px;
+  padding: 16px 14px;
   box-sizing: border-box;
   height: 100%;
 }
 
 .forecast__head {
-  margin-bottom: 14px;
-  padding: 0 8px;
+  margin-bottom: 10px;
+  padding: 0 6px;
 }
 
 .forecast__head h3 {
   margin: 0;
-  font-size: 1.75rem;
+  font-size: 1.2rem;
   font-weight: 800;
   color: #fff;
 }
 
 .forecast__head p {
-  margin: 6px 0 0;
-  font-size: 1.2rem;
+  margin: 4px 0 0;
+  font-size: 0.88rem;
   font-weight: 600;
   color: rgba(232, 238, 248, 0.55);
 }
@@ -83,17 +83,17 @@ function onOpen() {
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 5px;
 }
 
 .forecast__row {
   display: grid;
-  grid-template-columns: 84px 1fr 64px 96px;
-  gap: 10px;
+  grid-template-columns: 72px 1fr 56px 88px;
+  gap: 8px;
   align-items: center;
-  padding: 14px 14px;
-  border-radius: 14px;
-  font-size: 1.25rem;
+  padding: 9px 10px;
+  border-radius: 12px;
+  font-size: 1.05rem;
   font-weight: 700;
   color: rgba(232, 238, 248, 0.88);
 }

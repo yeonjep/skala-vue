@@ -165,14 +165,14 @@ onUnmounted(() => {
 
 .world__head h3 {
   margin: 0;
-  font-size: 1.7rem;
+  font-size: 1.2rem;
   font-weight: 800;
   color: #fff;
 }
 
 .world__head p {
-  margin: 6px 0 0;
-  font-size: 1.2rem;
+  margin: 4px 0 0;
+  font-size: 0.88rem;
   font-weight: 600;
   color: rgba(232, 238, 248, 0.55);
 }
@@ -186,8 +186,8 @@ onUnmounted(() => {
 .world__stage {
   position: relative;
   flex: 1;
-  min-height: 280px;
-  border-radius: 18px;
+  min-height: 180px;
+  border-radius: 14px;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.12);
 }

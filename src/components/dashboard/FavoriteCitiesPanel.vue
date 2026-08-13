@@ -83,12 +83,12 @@ function tempOf(city) {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .fav__head h3 {
   margin: 0;
-  font-size: 1.55rem;
+  font-size: 1.2rem;
   font-weight: 800;
   color: #fff;
 }
@@ -96,20 +96,20 @@ function tempOf(city) {
 .fav__list {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
 }
 
 .fav__item {
   display: grid;
-  grid-template-columns: 44px 1fr auto;
-  gap: 12px;
+  grid-template-columns: 40px 1fr auto;
+  gap: 10px;
   align-items: center;
   width: 100%;
   border: 1px solid rgba(255, 255, 255, 0.1);
   text-align: left;
   cursor: pointer;
-  padding: 14px 14px;
-  border-radius: 16px;
+  padding: 12px 12px;
+  border-radius: 14px;
   background: rgba(255, 255, 255, 0.06);
   color: #e8eef8;
 }
@@ -119,7 +119,7 @@ function tempOf(city) {
 }
 
 .fav__emoji {
-  font-size: 1.7rem;
+  font-size: 1.45rem;
 }
 
 .fav__meta {
@@ -129,18 +129,18 @@ function tempOf(city) {
 }
 
 .fav__meta strong {
-  font-size: 1.25rem;
+  font-size: 1.15rem;
   font-weight: 800;
 }
 
 .fav__meta small {
   color: rgba(232, 238, 248, 0.5);
   font-weight: 600;
-  font-size: 1.05rem;
+  font-size: 0.95rem;
 }
 
 .fav__temp {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: 800;
   color: #fff;
 }

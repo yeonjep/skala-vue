@@ -1048,7 +1048,7 @@ onMounted(async () => {
 .dash__cell {
   position: relative;
   min-width: 0;
-  min-height: 220px;
+  min-height: 180px;
   display: flex;
   flex-direction: column;
   transition:
@@ -1114,7 +1114,7 @@ onMounted(async () => {
   padding: 0;
   overflow: hidden;
   cursor: pointer;
-  min-height: 220px;
+  min-height: 180px;
 }
 
 .dash__calendar {

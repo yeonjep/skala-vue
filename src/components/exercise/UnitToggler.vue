@@ -21,7 +21,7 @@ const configStore = useConfigStore()
 }
 
 .unit-label {
-  font-size: 1.25rem;
+  font-size: 0.88rem;
   color: rgba(232, 238, 248, 0.7);
 }
 
@@ -32,14 +32,14 @@ const configStore = useConfigStore()
 .toggle-btn {
   appearance: none;
   -webkit-appearance: none;
-  padding: 12px 18px;
+  padding: 8px 14px;
   background: rgba(255, 255, 255, 0.08) !important;
   color: #fff !important;
   border: 1px solid rgba(255, 255, 255, 0.18) !important;
   border-radius: 999px;
   cursor: pointer;
   font-weight: 750;
-  font-size: 1.2rem;
+  font-size: 0.88rem;
   backdrop-filter: blur(12px);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
   transition: all 0.18s ease;

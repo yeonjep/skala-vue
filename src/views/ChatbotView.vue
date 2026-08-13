@@ -198,8 +198,8 @@ function clearChat() {
 }
 
 .chat-eyebrow {
-  margin: 0 0 8px;
-  font-size: 1.15rem;
+  margin: 0 0 6px;
+  font-size: 0.85rem;
   font-weight: 800;
   letter-spacing: 0.08em;
   color: rgba(125, 211, 252, 0.75);
@@ -207,7 +207,7 @@ function clearChat() {
 
 .chat-head h2 {
   margin: 0;
-  font-size: clamp(2.4rem, 4vw, 3.2rem);
+  font-size: clamp(1.75rem, 3vw, 2.35rem);
   font-weight: 800;
   letter-spacing: -0.03em;
   color: #e8eef8;
@@ -215,7 +215,7 @@ function clearChat() {
 
 .chat-lead {
   margin: 8px 0 0;
-  font-size: 1.35rem;
+  font-size: 0.95rem;
   color: rgba(232, 238, 248, 0.62);
   font-weight: 600;
 }
@@ -228,9 +228,9 @@ function clearChat() {
 .ghost-btn {
   border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 999px;
-  padding: 14px 22px;
+  padding: 8px 14px;
   font-weight: 800;
-  font-size: 1.2rem;
+  font-size: 0.9rem;
   cursor: pointer;
   background: rgba(255, 255, 255, 0.1);
   color: #e8eef8;
@@ -242,8 +242,8 @@ function clearChat() {
 }
 
 .key-panel {
-  padding: 20px 22px;
-  border-radius: 22px;
+  padding: 14px 16px;
+  border-radius: 16px;
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.14);
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25);
@@ -251,17 +251,17 @@ function clearChat() {
 }
 
 .key-panel__title {
-  margin: 0 0 10px;
+  margin: 0 0 8px;
   font-weight: 800;
-  font-size: 1.45rem;
+  font-size: 1.05rem;
   color: #e8eef8;
 }
 
 .key-panel__steps {
-  margin: 0 0 14px;
+  margin: 0 0 12px;
   padding-left: 1.3em;
-  font-size: 1.25rem;
-  line-height: 1.6;
+  font-size: 0.92rem;
+  line-height: 1.55;
   color: rgba(232, 238, 248, 0.72);
 }
 
@@ -270,9 +270,9 @@ function clearChat() {
 }
 
 .key-panel__steps code {
-  font-size: 0.92em;
-  padding: 2px 8px;
-  border-radius: 8px;
+  font-size: 0.9em;
+  padding: 2px 6px;
+  border-radius: 6px;
   background: rgba(255, 255, 255, 0.1);
   color: #e8eef8;
 }
@@ -288,12 +288,12 @@ function clearChat() {
   flex: 1;
   min-width: 0;
   box-sizing: border-box;
-  height: 68px;
-  min-height: 68px;
+  height: 44px;
+  min-height: 44px;
   border: 1px solid rgba(125, 211, 252, 0.45);
-  border-radius: 18px;
-  padding: 0 22px;
-  font-size: 1.45rem;
+  border-radius: 14px;
+  padding: 0 14px;
+  font-size: 0.95rem;
   font-weight: 600;
   line-height: 1.3;
   background: rgba(8, 12, 22, 0.55);
@@ -303,7 +303,7 @@ function clearChat() {
 .key-row input::placeholder,
 .composer input::placeholder {
   color: rgba(232, 238, 248, 0.42);
-  font-size: 1.35rem;
+  font-size: 0.9rem;
 }
 
 .key-row input:focus,
@@ -314,8 +314,8 @@ function clearChat() {
 }
 
 .key-status {
-  margin: 12px 0 0;
-  font-size: 1.2rem;
+  margin: 10px 0 0;
+  font-size: 0.88rem;
   font-weight: 700;
   color: #fbbf24;
 }
@@ -329,7 +329,7 @@ function clearChat() {
   min-height: 0;
   display: flex;
   flex-direction: column;
-  border-radius: 28px;
+  border-radius: 18px;
   background: rgba(18, 24, 38, 0.55);
   border: 1px solid rgba(255, 255, 255, 0.14);
   backdrop-filter: blur(20px) saturate(140%);
@@ -342,18 +342,18 @@ function clearChat() {
 
 .chat-list {
   flex: 1 1 auto;
-  min-height: 240px;
+  min-height: 200px;
   overflow: auto;
-  padding: 22px 22px 12px;
+  padding: 16px 16px 10px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
 }
 
 .bubble {
   max-width: min(92%, 720px);
-  padding: 16px 20px;
-  border-radius: 20px;
+  padding: 12px 14px;
+  border-radius: 14px;
 }
 
 .bubble.is-bot {
@@ -372,10 +372,10 @@ function clearChat() {
 
 .bubble__who {
   display: block;
-  font-size: 1.05rem;
+  font-size: 0.78rem;
   font-weight: 800;
   opacity: 0.6;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
 
 .bubble.is-user .bubble__who {
@@ -384,48 +384,48 @@ function clearChat() {
 
 .bubble__text {
   margin: 0;
-  font-size: 1.45rem;
-  line-height: 1.55;
+  font-size: 0.95rem;
+  line-height: 1.5;
   white-space: pre-wrap;
   word-break: break-word;
 }
 
 .typing {
   margin: 0;
-  font-size: 1.3rem;
+  font-size: 0.9rem;
   font-weight: 700;
   color: rgba(232, 238, 248, 0.55);
 }
 
 .chat-error {
-  margin: 0 18px 10px;
-  padding: 14px 16px;
-  border-radius: 14px;
+  margin: 0 14px 8px;
+  padding: 10px 12px;
+  border-radius: 12px;
   background: rgba(180, 35, 24, 0.18);
   color: #fecaca;
-  font-size: 1.25rem;
+  font-size: 0.9rem;
   font-weight: 700;
   flex-shrink: 0;
 }
 
 .composer {
   display: flex;
-  gap: 14px;
+  gap: 10px;
   flex-shrink: 0;
   align-items: stretch;
-  padding: 18px 20px 20px;
+  padding: 12px 14px 14px;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   background: rgba(8, 12, 22, 0.35);
 }
 
 .send-btn {
   border: none;
-  border-radius: 18px;
-  height: 68px;
-  min-height: 68px;
-  padding: 0 32px;
+  border-radius: 14px;
+  height: 44px;
+  min-height: 44px;
+  padding: 0 20px;
   font-weight: 800;
-  font-size: 1.4rem;
+  font-size: 0.95rem;
   cursor: pointer;
   background: linear-gradient(145deg, #38bdf8, #6366f1);
   color: #fff;

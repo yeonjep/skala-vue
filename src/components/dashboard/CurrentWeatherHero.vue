@@ -86,17 +86,17 @@ const temp = computed(() =>
 
 <style scoped>
 .hero {
-  padding: 22px;
+  padding: 16px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
   min-height: 100%;
   box-sizing: border-box;
 }
 
 .hero__eyebrow {
-  margin: 0 0 6px;
-  font-size: 1.05rem;
+  margin: 0 0 4px;
+  font-size: 0.78rem;
   font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -105,15 +105,15 @@ const temp = computed(() =>
 
 .hero__city {
   margin: 0;
-  font-size: 2.4rem;
+  font-size: 1.35rem;
   font-weight: 800;
   letter-spacing: -0.03em;
   color: #fff;
 }
 
 .hero__date {
-  margin: 6px 0 0;
-  font-size: 1.2rem;
+  margin: 4px 0 0;
+  font-size: 0.88rem;
   font-weight: 600;
   color: rgba(232, 238, 248, 0.55);
 }
@@ -122,28 +122,28 @@ const temp = computed(() =>
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 12px;
+  gap: 10px;
   flex-shrink: 0;
 }
 
 .hero__glyph {
   flex-shrink: 0;
-  margin-top: 4px;
+  margin-top: 2px;
 }
 
 .hero__temp-block {
-  flex: 1 1 auto;
+  flex: 0 0 auto;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: flex-start;
-  min-height: 180px;
-  padding: 12px 0 8px;
+  min-height: 0;
+  padding: 6px 0 4px;
 }
 
 .hero__temp {
   margin: 0;
-  font-size: clamp(5.5rem, 11vw, 9.5rem);
+  font-size: clamp(2.1rem, 4vw, 3rem);
   font-weight: 900;
   letter-spacing: -0.06em;
   line-height: 0.9;
@@ -152,8 +152,8 @@ const temp = computed(() =>
 }
 
 .hero__status {
-  margin: 10px 0 0;
-  font-size: 1.55rem;
+  margin: 6px 0 0;
+  font-size: 1.05rem;
   font-weight: 750;
   color: rgba(232, 238, 248, 0.78);
 }
@@ -161,14 +161,14 @@ const temp = computed(() =>
 .hero__metrics {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 10px;
+  gap: 8px;
   margin-top: auto;
   flex-shrink: 0;
 }
 
 .metric {
-  padding: 14px 10px;
-  border-radius: 16px;
+  padding: 10px 8px;
+  border-radius: 12px;
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.1);
   text-align: center;
@@ -176,23 +176,23 @@ const temp = computed(() =>
 
 .metric span {
   display: block;
-  font-size: 1.05rem;
+  font-size: 0.72rem;
   font-weight: 800;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: rgba(232, 238, 248, 0.55);
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
 
 .metric strong {
-  font-size: 1.35rem;
+  font-size: 0.95rem;
   font-weight: 800;
   color: #fff;
 }
 
 .hero__hint {
   margin: 0;
-  font-size: 1.05rem;
+  font-size: 0.82rem;
   font-weight: 600;
   color: rgba(56, 189, 248, 0.8);
   flex-shrink: 0;
@@ -200,7 +200,7 @@ const temp = computed(() =>
 
 @media (max-width: 720px) {
   .hero__temp {
-    font-size: clamp(4.2rem, 16vw, 6rem);
+    font-size: clamp(1.9rem, 10vw, 2.6rem);
   }
 
   .hero__metrics {
