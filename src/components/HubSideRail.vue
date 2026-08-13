@@ -225,7 +225,7 @@ onUnmounted(() => {
         <span class="side-rail__logo" aria-hidden="true">☁</span>
         <div class="side-rail__brand-text">
           <strong>AeroCast</strong>
-          <small>Tools · 드래그로 이동</small>
+          <small>드래그로 이동</small>
         </div>
       </div>
 
@@ -476,29 +476,32 @@ onUnmounted(() => {
     opacity 0.22s ease 0.04s,
     transform 0.22s ease 0.04s,
     width 0.22s ease;
-  white-space: nowrap;
 }
 
 .side-rail--left.is-expanded .side-rail__brand-text,
 .side-rail--right.is-expanded .side-rail__brand-text {
   width: auto;
+  flex: 1 1 auto;
   opacity: 1;
   transform: translateX(0);
 }
 
 .side-rail__brand-text strong {
-  font-size: 1.1rem;
+  font-size: 0.95rem;
   font-weight: 800;
   color: #fff;
   letter-spacing: -0.02em;
   line-height: 1.15;
+  white-space: nowrap;
 }
 
 .side-rail__brand-text small {
-  font-size: 0.95rem;
-  font-weight: 700;
+  font-size: 0.68rem;
+  font-weight: 650;
   color: rgba(232, 238, 248, 0.5);
   margin-top: 2px;
+  line-height: 1.25;
+  white-space: nowrap;
 }
 
 .side-rail__list {
