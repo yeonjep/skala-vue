@@ -1,203 +1,232 @@
-# 울산4반 Vue 3·4·5일차 종합실습 제출 - 박연제
+# 울산4반 Vue 4일차 종합실습 제출 — 박연제
 
 ## 제출 개요
 
-- 반: 울산4반
-- 제출자: 박연제(U116)
-- 제출일: 2026-08-12
-- 제출 항목: Component(3) · Router(4) · Pinia Store(5)
-- 앱 이름: **AeroCast**
+| 항목 | 내용 |
+|------|------|
+| 반 | 울산4반 |
+| 제출자 | 박연제 (U116) |
+| 제출일 | 2026-08-13 |
+| 과제 | Vue 종합실습 (Component · Router · Pinia · Axios · UI 고도화 · 배포) |
+| 앱 이름 | **AeroCast** |
 
-## 실행 방법
+> 3일차 README 원본은 `README_day3_backup.txt` 에 백업해 두었습니다.
 
-```
+---
+
+## 배포 주소 (필수)
+
+- **배포 URL (영구):** https://yeonjep.github.io/skala-vue/
+- **소스 레포:** https://github.com/yeonjep/skala-vue
+- 배포 방식: GitHub Pages (`main` 푸시 → Actions 자동 빌드/배포)
+
+### 배포 메모 (교안: Build & Deployment)
+
+1. `npm run build` → `dist/` 정적 파일 생성 ✅
+2. GitHub Pages에 호스팅 ✅ (Vue Router용 `404.html` 폴백 포함)
+3. **API 키는 Git에 올리지 않음** — `.env` / `.env.local`만 로컬·호스팅 환경변수로 설정
+4. Groq 챗봇은 `VITE_GROQ_API_KEY`가 있을 때만 동작 (없으면 안내 UI 표시)
+
+> 구글 드라이브/제출란에는 **https://yeonjep.github.io/skala-vue/** 를 붙여 넣으면 됩니다.  
+> 첫 배포 직후 1~2분 정도 Actions 완료를 기다리면 접속됩니다.
+
+---
+
+## 실행 방법 (채점용)
+
+```bash
+# node_modules 없는 zip 기준
 npm install
 npm run dev
 ```
 
-### 주요 URL
+브라우저에서 `http://localhost:3000` 접속
 
-| 화면                              | 주소                           |
-| --------------------------------- | ------------------------------ |
-| 홈                                | `/`                            |
-| 날씨 대시보드 (과제 3·4·5 실사용) | `/cities`                      |
-| 도시 상세                         | `/weather/city_01` (서울 예시) |
-| 서비스 소개                       | `/about`                       |
-| 날씨 가이드 (본인 추가 View)      | `/guide`                       |
-| 404                               | `/kk` 처럼 **없는 주소** 입력  |
-| 1·2·3일차 원본 Lab                | `/lab/1`, `/lab/2`, `/lab/3`   |
+### 품질 / 환경변수
 
-## 프로젝트 구조 (과제 3·4·5 관련)
+```bash
+npm run lint          # ESLint + oxlint
+cp .env.example .env  # Groq 키는 여기만 (Git 제외)
+```
+
+---
+
+## 주요 URL
+
+| 화면 | 주소 |
+|------|------|
+| 홈 대시보드 | `/` |
+| 전국 날씨 (과제 3·4·5 실사용) | `/cities` |
+| 도시 상세 + 누비 캐릭터 | `/weather/:cityId` |
+| 날씨 가이드 | `/guide` |
+| 서비스 소개 | `/about` |
+| Groq 챗봇 | `/chat` |
+| 운동 뉴스 (ESPN) | `/sports` |
+| 건강 관리 (wger) | `/health` |
+| 404 | `/kk` 등 없는 주소 |
+| Lab | `/lab/1` ~ `/lab/3` |
+
+---
+
+## 이번(4일차)에 추가·정교화한 내용
+
+### 1) 홈 대시보드 고도화 (`HubHomeView`)
+
+- Open-Meteo 기반 **현재 날씨 · 7일 예보 · Overview 차트 · 세계 지도 · 즐겨찾기 · 레이더**
+- 카드 **드래그로 자리 교체** (레이아웃 `localStorage` 저장)
+- macOS 스타일 **상세 팝업** (닫기 / 최소화 / 최대화)
+- **7일 예보**: wttr.in 폴백이 3일만 주던 문제를 보완해 **항상 7일** 표시
+- Overview 팝업: 그래프가 창 높이를 채우고, 찌그러지던 점을 **원형 점**으로 수정
+- Current Weather: 기온을 **초대형 히어로 숫자**로 배치해 여백 활용
+
+### 2) 월간 캘린더 (`MonthWeatherCalendar`)
+
+- 시스템 이모지 → **통통하고 입체적인 SVG 날씨 아이콘** (`WeatherGlyph`)
+- 날짜·기온 글자 크기 확대
+
+### 3) 날씨 상세 + 캐릭터 누비 (`WeatherBuddy`)
+
+- 온도·습도·불쾌지수·강수에 따라 **8~9가지 모션/표정**
+- 상세 카드(기온·대기질) 타이포 확대
+
+### 4) Axios + 외부 API
+
+| API | 용도 |
+|-----|------|
+| Open-Meteo | 현재/예보/월간/대기질 (키 없음) |
+| wttr.in | Open-Meteo 한도 시 폴백 |
+| ESPN | `/sports` 축구 순위·스코어·뉴스 |
+| wger.de | `/health` 운동 라이브러리 |
+| Groq | `/chat` LLM 챗봇 (환경변수 키) |
+
+### 5) 사이드 레일 (`HubSideRail`)
+
+- 홈 / 챗봇 / 운동 뉴스 / 건강 관리
+- 호버 시 펼침, **커서 이탈 시 자동 접힘**
+- 드래그로 상·하·좌·우 도킹
+
+### 6) UI/UX 다듬기
+
+- 다크 배경에서 **제목 대비** 개선 (소개·가이드·전국 날씨)
+- `/cities` 검색창 **세로 확대 + 입력 글자 확대**
+- 건강·운동 페이지: 큰 타이포, 뉴스/운동 카드 **자동 스와이프**
+- Element Plus · Leaflet · Axios · Pinia · Vue Router 조합
+
+### 7) 수업 과제 핵심 유지 (3·4·5)
+
+- **Component**: `WeatherParent` + SearchBar / WeatherCard / BaseDashboardCard / slot
+- **Router**: Lazy Loading · `/weather/:cityId` · Catch-all 404 · `?search=` 동기화
+- **Pinia**: `configStore`(℃/℉) · `weatherStore`(즐겨찾기·최근검색)
+
+---
+
+## 프로젝트 구조 (핵심)
 
 ```
 src/
-├─ App.vue                          # 셸: RouterLink 네비 + UnitToggler + RouterView
-├─ router/
-│  └─ index.js                      # [4] 라우트 · Lazy Loading · Catch-all
-├─ stores/
-│  ├─ configStore.js                # [5] 섭씨/화씨 전역 단위
-│  └─ weatherStore.js               # [5] 나만의 Store (즐겨찾기·최근 검색)
-├─ composables/
-│  └─ useDisplayTemp.js             # [5] 표시 온도 변환 composable
-├─ utils/
-│  └─ temperature.js                # ℃ → ℉ 변환 유틸
+├─ App.vue / HubSideRail.vue
+├─ api/          openMeteo · espnFootball · healthApi · groq
 ├─ components/
-│  ├─ MonthWeatherCalendar.vue      # 홈 월간 캘린더 (제품 UI)
-│  └─ exercise/
-│     ├─ WeatherParent.vue          # [3] 부모 — 상태·로직 소유, 자식 조립
-│     ├─ BaseDashboardCard.vue      # [3] slot 공통 카드 래퍼
-│     ├─ SearchBar.vue              # [3] props/emit 검색창
-│     ├─ WeatherCard.vue            # [3] props/emit 도시 카드 (+[5] 단위·즐겨찾기)
-│     ├─ UnitToggler.vue            # [5] 단위 변경 버튼
-│     ├─ StorePanel.vue             # [5] 최근 검색·즐겨찾기 패널
-│     ├─ WeatherMockup.vue          # 1일차 원본 (/lab/1)
-│     └─ WeatherComposition.vue     # 2일차 원본 (/lab/2)
-└─ views/
-   ├─ HubHomeView.vue               # 홈 (/)
-   ├─ WeatherHomeView.vue           # [4] /cities — 안에서 WeatherParent 사용
-   ├─ WeatherDetailView.vue         # [4] /weather/:cityId 상세
-   ├─ WeatherAboutView.vue          # [4] /about
-   ├─ WeatherGuideView.vue          # [4] 본인 추가 View /guide
-   ├─ NotFoundView.vue              # [4] 404 + programmatic navigation
-   └─ AssignmentDayView.vue         # /lab/:day Lab 껍데기
+│  ├─ dashboard/   CurrentWeatherHero · SevenDayForecast · Overview …
+│  ├─ weather/     WeatherBuddy · WeatherGlyph
+│  └─ exercise/    WeatherParent · SearchBar · WeatherCard …
+├─ stores/       configStore · weatherStore
+├─ views/        HubHome · Weather* · Chatbot · Sports · Health …
+└─ router/index.js
 ```
 
 ---
 
-## 1. 과제 3 — Component (`src/components/exercise/`)
+## 스크린샷 (채점용)
 
-### 기본 요구사항 대응
+> 아래 이미지는 `screenshots/` 폴더에 있습니다.  
+> 최신 UI 캡처 파일명: `d4-*.png` (캡처 스크립트: `scripts/capture-readme-day4.mjs`)  
+> 캡처 전이면 기존 `d345-*.png` 를 참고용으로 함께 두었습니다.
 
-- 과제 2 Composition의 로직을 유지한 채 UI를 **4개 컴포넌트**로 분리함
-- **WeatherParent.vue**: `weatherList`, `searchQuery`, `filteredWeatherList`, `watch` / `watchEffect`, 요약 통계 등 상태·로직을 전부 소유하고 자식을 조립함
-- **BaseDashboardCard.vue**: `<slot>`으로 검색/목록 영역을 감싸는 공통 레이아웃 래퍼
-- **SearchBar.vue**: props `currentQuery` / emit `update-query`로 부모 `searchQuery`와 단방향 연동
-- **WeatherCard.vue**: props `cityItem` / emit `select-card`, `click-detail`로 카드 선택·상세보기 이벤트 전달
+### 1. 홈 대시보드
 
-### 실사용 연결
+![홈](./screenshots/d4-01-home.png)
 
-- 날씨 탭 `/cities` → `WeatherHomeView.vue`가 `WeatherParent`를 렌더링함 (목록 UI의 실제 본체)
-- 상세보기 클릭 시 Parent가 `router.push('/weather/' + cityId)`로 이동 (과제 4와 연결)
+### 2. 전국 날씨 (`/cities`) — Component · Store 실사용
 
-### 개인 추가 유지
+![날씨](./screenshots/d4-02-cities.png)
 
-- 도시 5개(서울·수원·부산·전주·강릉) + `humidity`
-- 요약 통계(도시/평균/더움/선선함) 및 최고·최저 기온 도시 pill
-- 검색 결과 없음 안내, 상세보기 클릭 횟수 + watch 콘솔 로그
+### 3. 검색 + URL 쿼리
 
----
+![검색](./screenshots/d4-03-search.png)
 
-## 2. 과제 4 — Router (`src/router/index.js`, `src/views/`)
+### 4. 도시 상세 + 누비
 
-### 기본 요구사항 대응
+![상세](./screenshots/d4-04-detail-nubi.png)
 
-| 경로               | View 파일               | 비고                      |
-| ------------------ | ----------------------- | ------------------------- |
-| `/`                | `HubHomeView.vue`       | 제품 홈 (즉시 로드)       |
-| `/cities`          | `WeatherHomeView.vue`   | 날씨 대시보드 (Lazy)      |
-| `/about`           | `WeatherAboutView.vue`  | 서비스 소개 (Lazy)        |
-| `/weather/:cityId` | `WeatherDetailView.vue` | **동적 경로** 상세 (Lazy) |
-| `/guide`           | `WeatherGuideView.vue`  | **본인 추가 View** (Lazy) |
-| `/:pathMatch(.*)*` | `NotFoundView.vue`      | **404 Catch-all** (Lazy)  |
+### 5. 소개 / 가이드
 
-- **선언적 네비게이션**: `App.vue`의 `<RouterLink>` (홈 / 날씨 / 가이드 / 소개)
-- **프로그래밍 네비게이션**: 상세보기 `router.push`, 404·소개 등의 “홈/대시보드로 이동” 버튼
-- **검색 ↔ URL 쿼리 동기화**: `WeatherParent`에서 `?search=`를 `watch` + `onMounted`로 양방향 반영
-- 상세보기의 `alert` 제거 → 페이지 이동으로 교체
+![소개](./screenshots/d4-05-about.png)
 
-### 404 화면 확인 방법
+![가이드](./screenshots/d4-06-guide.png)
 
-주소창에 **정의되지 않은 경로**를 입력하면 됩니다.
+### 6. 운동 뉴스 (본인 아이디어)
 
-예: `http://localhost:3000/kk` 또는 `http://localhost:3000/abc`
+![운동](./screenshots/d4-07-sports.png)
 
-→ `NotFoundView.vue`가 표시되고, **날씨 메인으로 이동** 버튼으로 홈(`/`)에 돌아갑니다.
+### 7. 건강 관리 (본인 아이디어)
 
-### 선택·추가 구현
+![건강](./screenshots/d4-08-health.png)
 
-- `/guide` 날씨 해석 가이드 View 추가
-- 제품형 허브 네비(AeroCast)로 과제 섹션을 하나로 통합 (과제 개념은 `/cities`·상세·스토어에 유지)
+### 8. Groq 챗봇 (본인 아이디어)
 
----
+![챗봇](./screenshots/d4-09-chat.png)
 
-## 3. 과제 5 — Pinia Store (`src/stores/`, `UnitToggler` 등)
+### 9. 404
 
-### 기본 요구사항 대응
+![404](./screenshots/d4-10-404.png)
 
-- **configStore** (`src/stores/configStore.js`)
-  - state: `unit` (`celsius` / `fahrenheit`)
-  - getter: `unitSymbol` (℃ / ℉), `unitLabel`
-  - action: `toggleUnit()`
-  - localStorage에 단위 저장
-- **UnitToggler.vue**: 헤더에 배치, 스토어 `toggleUnit` 호출
-- **WeatherCard.vue** / **WeatherDetailView.vue**: 목록·상세 모두 동일 단위로 온도 표시
-- 원본 `temp`는 섭씨 숫자 유지, 화면 표시만 변환
-- 더움/선선함 뱃지는 원본 섭씨 25° 기준 유지
+### 10. 단위 변경 (화씨)
 
-### 선택·자율 구현
+![단위](./screenshots/d4-11-unit.png)
 
-- **weatherStore** (`src/stores/weatherStore.js`): 최근 검색어 · 즐겨찾기 도시 + localStorage
-- **StorePanel.vue**: 날씨 화면에서 최근 검색/즐겨찾기 UI
-- **useDisplayTemp.js**: 표시 온도 변환 composable로 분리
-- 카드 ★ 버튼 및 헤더 즐겨찾기 개수 표시
+### (백업) 3일차 기준 스냅샷
+
+| 설명 | 파일 |
+|------|------|
+| 홈 | `screenshots/d345-01-home.png` |
+| 날씨 | `screenshots/d345-02-cities.png` |
+| 검색 | `screenshots/d345-03-search-query.png` |
+| 상세 | `screenshots/d345-04-detail.png` |
+| 소개 | `screenshots/d345-05-about.png` |
+| 가이드 | `screenshots/d345-06-guide.png` |
+| 404 | `screenshots/d345-07-404.png` |
+| 화씨 | `screenshots/d345-08-unit-fahrenheit.png` |
+| 즐겨찾기 | `screenshots/d345-09-favorite.png` |
 
 ---
 
-## 디자인 / 제품 UI (추가)
+## 본인 아이디어 / 보너스 포인트
 
-- 단일 셸 `App.vue` + soft glass 라이트 테마 (`aurora-bg` 배경)
-- 홈: 날짜 히어로 + 대표 도시 + **MonthWeatherCalendar** (이번 달 그리드, 오늘 흰색 캡슐, 날씨 이모지·기온 목데이터)
+1. **사이드 레일 도킹 UI** — 드래그 + 호버 확장 (Vue 상태·이벤트)
+2. **대시보드 카드 드래그 정렬** — 컴포넌트 조합 + localStorage
+3. **날씨 캐릭터 누비** — Composition 기반 상태 → SVG 모션
+4. **운동 뉴스 · 건강 허브** — Axios로 공개 API 연동 + 캐러셀
+5. **Groq 챗봇** — 환경변수 키 관리 (프론트 노출 주의, `.env` 미커밋)
+6. **Open-Meteo 한도 대응** — 캐시 · wttr 폴백 · 7일 예보 보충
+
+---
+
+## 제출 zip 체크리스트
+
+- [ ] `node_modules` **삭제** 후 zip
+- [ ] 파일명: `울산4반_Vue_4일차_종합실습제출_박연제.zip`
+- [ ] `README.md` + 스크린샷 포함
+- [ ] `.env` / 키 파일 **미포함** (`.env.example`만)
+- [ ] 채점자: `npm install` → `npm run dev` 가능
+- [ ] README에 **배포 URL** 기입
+- [ ] 개인 구글 드라이브 폴더에 업로드
+
+드라이브: [울산4반_Vue_4일차_종합실습제출](https://drive.google.com/drive/folders/1ODK-A1lh17Vm09_g-4mJ4JAlHug7czJg?usp=drive_link4)
 
 ---
 
-## 스크린샷
+## 라이선스 / 참고
 
-### 홈 (AeroCast)
-
-날짜 히어로와 월간 날씨 캘린더가 보이는 홈 화면입니다.
-
-![홈 화면](./screenshots/d345-01-home.png)
-
-### 과제 3·4·5 통합 — 날씨 대시보드 (`/cities`)
-
-`WeatherParent` + SearchBar / WeatherCard / BaseDashboardCard / StorePanel이 한 화면에 연결된 모습입니다.
-
-![날씨 대시보드](./screenshots/d345-02-cities.png)
-
-### 검색 + URL 쿼리 (`?search=`)
-
-검색어 입력 시 카드가 필터링되고, 주소에 `?search=`가 반영됩니다.
-
-![검색 및 쿼리](./screenshots/d345-03-search-query.png)
-
-### 동적 경로 상세 (`/weather/:cityId`)
-
-상세보기 클릭 후 도시별 상세 페이지입니다. 단위 변경 시 여기 온도도 함께 바뀝니다.
-
-![도시 상세](./screenshots/d345-04-detail.png)
-
-### 서비스 소개 / 가이드
-
-![소개](./screenshots/d345-05-about.png)
-
-![가이드](./screenshots/d345-06-guide.png)
-
-### 404 (없는 URL)
-
-주소창에 `/kk`처럼 없는 경로를 넣었을 때 Catch-all 404 화면입니다.
-
-![404](./screenshots/d345-07-404.png)
-
-### 단위 변경 (섭씨 ↔ 화씨)
-
-헤더 **단위변경** 후 목록 온도가 ℉로 바뀐 모습입니다.
-
-![단위 화씨](./screenshots/d345-08-unit-fahrenheit.png)
-
-### 즐겨찾기 (나만의 Store)
-
-카드 ★ 토글 및 StorePanel / 헤더 즐겨찾기 수 반영입니다.
-
-![즐겨찾기](./screenshots/d345-09-favorite.png)
-
----
+- Open-Meteo, ESPN public endpoints, wger.de, Groq — 각 서비스 이용약관 준수
+- 수업 교안 Hands on — Weather Refinement / Deployment 기준

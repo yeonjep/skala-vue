@@ -7,7 +7,9 @@ import { chromium } from 'playwright'
 const base = process.env.BASE_URL || 'http://localhost:3000'
 const out = 'screenshots'
 
-const browser = await chromium.launch()
+const browser = await chromium.launch({
+  channel: 'chrome', // 로컬 Chrome 사용 (playwright browser 설치 불필요)
+})
 const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } })
 
 async function shot(path, file, waitMs = 1000) {

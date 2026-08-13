@@ -6,6 +6,8 @@ import vue from '@vitejs/plugin-vue'
 // 필요하면: import vueDevTools from 'vite-plugin-vue-devtools' 후 plugins에 추가
 
 export default defineConfig({
+  // GitHub Pages: DEPLOY_BASE=/skala-vue/ 로 빌드
+  base: process.env.DEPLOY_BASE || '/',
   plugins: [vue()],
   resolve: {
     alias: {
