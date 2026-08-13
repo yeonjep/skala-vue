@@ -23,6 +23,7 @@ const handleGoHome = () => router.push('/cities')
         <li>
           <strong>스토어</strong> — 섭씨/화씨 단위 · 즐겨찾기 · 최근 검색
         </li>
+        <li>Axios + Open-Meteo: 실시간 도시 날씨 · 월간 캘린더 · 대기질 API</li>
         <li>부가 기능: 홈 월간 날씨 캘린더 · 날씨 해석 가이드</li>
       </ul>
     </div>

@@ -1,44 +1,51 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useConfigStore } from '@/stores/configStore'
 import { convertTemp } from '@/utils/temperature'
+import { CITY_CATALOG, DEFAULT_CITY } from '@/data/cities'
+import { fetchMonthDaily } from '@/api/openMeteo'
 
 const configStore = useConfigStore()
 
 const WEEKDAYS = ['M', 'T', 'W', 'T', 'F', 'S', 'S']
-const WEATHER_POOL = [
-  { emoji: '☀️', label: '맑음', high: 32, low: 22 },
-  { emoji: '🌤', label: '구름조금', high: 30, low: 21 },
-  { emoji: '⛅️', label: '구름많음', high: 28, low: 20 },
-  { emoji: '☁️', label: '흐림', high: 26, low: 19 },
-  { emoji: '🌧', label: '비', high: 24, low: 18 },
-  { emoji: '⛈', label: '뇌우', high: 25, low: 19 },
-  { emoji: '🌦', label: '소나기', high: 27, low: 20 },
-]
-
-/** 날짜별 고정 시드 날씨 (데모용) */
-function weatherForDate(year, month, day) {
-  const seed = year * 10000 + (month + 1) * 100 + day
-  const base = WEATHER_POOL[seed % WEATHER_POOL.length]
-  const wobble = (seed % 5) - 2
-  return {
-    emoji: base.emoji,
-    label: base.label,
-    high: base.high + wobble,
-    low: base.low + Math.floor(wobble / 2),
-  }
-}
-
-function startOfWeekMonday(date) {
-  const d = new Date(date.getFullYear(), date.getMonth(), date.getDate())
-  const day = (d.getDay() + 6) % 7 // Mon=0 … Sun=6
-  d.setDate(d.getDate() - day)
-  return d
-}
+const defaultCity = DEFAULT_CITY || CITY_CATALOG[0]
 
 const today = new Date()
 const year = today.getFullYear()
 const month = today.getMonth()
+
+const dailyMap = ref({})
+const isLoading = ref(false)
+const loadError = ref('')
+
+function startOfWeekMonday(date) {
+  const d = new Date(date.getFullYear(), date.getMonth(), date.getDate())
+  const day = (d.getDay() + 6) % 7
+  d.setDate(d.getDate() - day)
+  return d
+}
+
+function dateKey(y, m, d) {
+  return `${y}-${String(m + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`
+}
+
+onMounted(async () => {
+  isLoading.value = true
+  loadError.value = ''
+  try {
+    dailyMap.value = await fetchMonthDaily({
+      lat: defaultCity.lat,
+      lon: defaultCity.lon,
+      year,
+      monthIndex: month,
+    })
+  } catch (err) {
+    console.error('[Open-Meteo] 월간 날씨 실패:', err)
+    loadError.value = '이번 달 날씨를 불러오지 못했습니다.'
+  } finally {
+    isLoading.value = false
+  }
+})
 
 const monthLabel = computed(() =>
   today.toLocaleDateString('en-US', { month: 'short', year: 'numeric' }),
@@ -48,7 +55,6 @@ const monthTitleKo = computed(() =>
   today.toLocaleDateString('ko-KR', { year: 'numeric', month: 'long' }),
 )
 
-/** 이번 달 전체 + 앞뒤 패딩을 포함한 주 단위 그리드 */
 const weeks = computed(() => {
   const first = new Date(year, month, 1)
   const last = new Date(year, month + 1, 0)
@@ -68,18 +74,18 @@ const weeks = computed(() => {
       const inMonth = m === month
       const isToday =
         y === today.getFullYear() && m === today.getMonth() && d === today.getDate()
-      const wx = weatherForDate(y, m, d)
+      const wx = inMonth ? dailyMap.value[dateKey(y, m, d)] : null
 
       week.push({
         key: `${y}-${m}-${d}`,
         day: d,
         inMonth,
         isToday,
-        weekday: WEEKDAYS[i],
-        emoji: wx.emoji,
-        label: wx.label,
-        high: convertTemp(wx.high, configStore.unit),
-        low: convertTemp(wx.low, configStore.unit),
+        emoji: wx?.emoji ?? (inMonth ? '·' : ''),
+        label: wx?.label ?? '데이터 없음',
+        high: wx ? convertTemp(wx.high, configStore.unit) : '—',
+        low: wx ? convertTemp(wx.low, configStore.unit) : '—',
+        hasData: Boolean(wx),
       })
       cursor.setDate(cursor.getDate() + 1)
     }
@@ -96,22 +102,22 @@ const unit = computed(() => configStore.unitSymbol)
   <section class="month-cal" aria-label="이번 달 날씨 캘린더">
     <header class="month-cal__head">
       <div>
-        <p class="month-cal__eyebrow">This month</p>
+        <p class="month-cal__eyebrow">This month · {{ defaultCity.name }}</p>
         <h2 class="month-cal__title">{{ monthTitleKo }}</h2>
+        <p class="month-cal__credit">Open-Meteo Archive + Forecast</p>
       </div>
       <p class="month-cal__range">{{ monthLabel }}</p>
     </header>
+
+    <p v-if="isLoading" class="month-cal__status">월간 날씨를 불러오는 중…</p>
+    <p v-else-if="loadError" class="month-cal__status is-error">{{ loadError }}</p>
 
     <div class="month-cal__weekdays" aria-hidden="true">
       <span v-for="(wd, i) in WEEKDAYS" :key="`${wd}-${i}`">{{ wd }}</span>
     </div>
 
     <div class="month-cal__grid">
-      <div
-        v-for="(week, wi) in weeks"
-        :key="`w-${wi}`"
-        class="month-cal__week"
-      >
+      <div v-for="(week, wi) in weeks" :key="`w-${wi}`" class="month-cal__week">
         <div
           v-for="cell in week"
           :key="cell.key"
@@ -119,20 +125,16 @@ const unit = computed(() => configStore.unitSymbol)
           :class="{
             'is-outside': !cell.inMonth,
             'is-today': cell.isToday,
+            'is-empty': cell.inMonth && !cell.hasData,
           }"
           :aria-current="cell.isToday ? 'date' : undefined"
-          :aria-label="
-            cell.inMonth
-              ? `${cell.day}일, ${cell.label}, 최고 ${cell.high}${unit}, 최저 ${cell.low}${unit}`
-              : undefined
-          "
         >
           <div class="month-cal__pill">
             <span class="month-cal__date">{{ cell.day }}</span>
             <span class="month-cal__emoji" aria-hidden="true">{{ cell.emoji }}</span>
             <span class="month-cal__temps">
-              <span class="hi">{{ cell.high }}°</span>
-              <span class="lo">{{ cell.low }}°</span>
+              <span class="hi">{{ cell.high }}{{ cell.hasData ? '°' : '' }}</span>
+              <span class="lo">{{ cell.low }}{{ cell.hasData ? '°' : '' }}</span>
             </span>
           </div>
         </div>
@@ -154,16 +156,12 @@ const unit = computed(() => configStore.unitSymbol)
   box-shadow: 0 18px 40px rgba(90, 110, 140, 0.14);
 }
 
-:global(.hub-app--light) .month-cal {
-  background: rgba(255, 255, 255, 0.82);
-}
-
 .month-cal__head {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
   gap: 12px;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
   padding: 0 8px;
 }
 
@@ -182,11 +180,27 @@ const unit = computed(() => configStore.unitSymbol)
   color: #2a3340;
 }
 
+.month-cal__credit {
+  margin: 6px 0 0;
+  font-size: 0.9rem;
+  color: rgba(42, 51, 64, 0.42);
+}
+
 .month-cal__range {
   margin: 0;
   font-size: 1.15rem;
   font-weight: 600;
   color: rgba(42, 51, 64, 0.48);
+}
+
+.month-cal__status {
+  margin: 0 8px 12px;
+  font-weight: 600;
+  color: #3d6680;
+}
+
+.month-cal__status.is-error {
+  color: #b42318;
 }
 
 .month-cal__weekdays {
@@ -241,7 +255,6 @@ const unit = computed(() => configStore.unitSymbol)
   justify-content: flex-start;
   gap: 10px;
   box-sizing: border-box;
-  transition: background 0.18s ease, box-shadow 0.18s ease;
 }
 
 .month-cal__day.is-today .month-cal__pill {
@@ -254,6 +267,10 @@ const unit = computed(() => configStore.unitSymbol)
 .month-cal__day.is-outside {
   opacity: 0.28;
   pointer-events: none;
+}
+
+.month-cal__day.is-empty .month-cal__emoji {
+  opacity: 0.35;
 }
 
 .month-cal__date {
@@ -309,10 +326,6 @@ const unit = computed(() => configStore.unitSymbol)
 
   .month-cal__temps {
     font-size: 0.95rem;
-  }
-
-  .month-cal__week {
-    padding: 10px 0;
   }
 }
 </style>

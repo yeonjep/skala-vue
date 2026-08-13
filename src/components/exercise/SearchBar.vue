@@ -1,5 +1,5 @@
 <script setup>
-// [3일차 과제] props — 부모가 보유한 searchQuery를 currentQuery로 전달 (한글 동기화)
+//  props — 부모가 보유한 searchQuery를 currentQuery로 전달 (한글 동기화)
 defineProps({
   currentQuery: {
     type: String,

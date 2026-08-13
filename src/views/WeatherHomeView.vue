@@ -1,5 +1,5 @@
 <script setup>
-// [4일차] /cities View — 실제 날씨 UI는 3일차 WeatherParent가 담당
+// cities View — 실제 날씨 UI는 WeatherParent
 import WeatherParent from '../components/exercise/WeatherParent.vue'
 </script>
 

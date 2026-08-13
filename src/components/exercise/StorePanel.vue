@@ -1,4 +1,5 @@
 <script setup>
+// 최근검색, 즐겨찾기 목록 컴포넌트
 import { computed } from 'vue'
 import { useWeatherStore } from '@/stores/weatherStore'
 

@@ -4,7 +4,7 @@ import { useConfigStore } from '@/stores/configStore'
 import { useWeatherStore } from '@/stores/weatherStore'
 import { useDisplayTemp } from '@/composables/useDisplayTemp'
 
-// [3일차 과제] props — 부모(WeatherParent)가 cityItem 객체를 단방향 주입
+//  props — 부모(WeatherParent)가 cityItem 객체를 단방향 주입
 const props = defineProps({
   cityItem: {
     type: Object,
@@ -12,13 +12,13 @@ const props = defineProps({
   },
 })
 
-// [3일차 과제] emits — 카드 선택·상세보기 클릭 시 부모로 이벤트 전달
+//  emits — 카드 선택·상세보기 클릭 시 부모로 이벤트 전달
 const emit = defineEmits(['select-card', 'click-detail'])
 
 const configStore = useConfigStore()
 const weatherStore = useWeatherStore()
 
-// [5일차 과제] 스토어 단위에 따라 표시 온도 변환 (슬라이드 displayTemp 패턴)
+//  스토어 단위에 따라 표시 온도 변환 
 const displayTemp = useDisplayTemp(() => props.cityItem.temp)
 
 const isFavorite = computed(() => weatherStore.isFavorite(props.cityItem.id))

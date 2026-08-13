@@ -3,7 +3,7 @@ import { useRouter } from 'vue-router'
 
 const router = useRouter()
 
-// [4일차 과제] 404 페이지에서 메인으로 Programmatic Navigation
+//  404 페이지에서 메인으로 Programmatic Navigation
 const goHome = () => {
   router.push({ name: 'HubHome' })
 }
