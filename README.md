@@ -189,8 +189,3 @@ src/
 | 2일차        | Mockup · Composition                 | `WeatherMockup.vue` · `WeatherComposition.vue`                                                                      | `/lab/1`, `/lab/2`                             |
 | 3일차        | Component · Router · Pinia           | `WeatherParent` · SearchBar/WeatherCard · `router/index.js` · `configStore`/`weatherStore` · UnitToggler/StorePanel | `/lab/3`, `/cities`, `/weather/:cityId`, `/kk` |
 | 4일차 (오늘) | Axios · Element Plus · 배포 · 보너스 | `src/api/*` · `main.js`(Element Plus) · sports/health/chat · GitHub Pages                                           | `/`, `/sports`, `/health`, `/chat`             |
-
-수업 연습용 샘플도 유지:
-
-- `src/components/practices/` — `basic` / `composition` / `component` / `library`
-- `src/App.vue.old` · `.2nd` · `.3rd` · `.exercise` (일차별 App 백업)
