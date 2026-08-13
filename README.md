@@ -57,18 +57,13 @@ npm run dev
 
 ## Vue 과정 과제 파일 위치
 
-> **1일차는 과제 없음.** 과제는 **2일차(목업·컴포지션)** 부터입니다.  
-> 아래 파일은 구현 중 삭제하지 않았고, 레포에 그대로 있습니다.
+> 과제는 **2일차부터**입니다. 아래 파일은 구현 중 삭제하지 않았고 레포에 그대로 있습니다.
 
 | 일차 | 내용 | 주요 파일 | 확인 경로 |
 |------|------|-----------|-----------|
-| 1일차 | 과제 없음 | — | — |
-| 2일차 | Mockup | `src/components/exercise/WeatherMockup.vue` | `/lab/1` |
-| 2일차 | Composition | `src/components/exercise/WeatherComposition.vue` | `/lab/2` |
-| 3일차 | Component | `WeatherParent.vue` · `SearchBar.vue` · `WeatherCard.vue` · `BaseDashboardCard.vue` | `/lab/3`, `/cities` |
-| 4일차 | Router | `src/router/index.js` · `WeatherDetailView` · `NotFoundView` · Lazy Loading | `/weather/:cityId`, `/kk` |
-| 5일차 | Pinia | `configStore.js` · `weatherStore.js` · `UnitToggler.vue` · `StorePanel.vue` | `/cities` (단위·즐겨찾기) |
-| 4일차 종합 (오늘) | Axios · Element Plus · 배포 · 보너스 | `src/api/*` · `main.js`(Element Plus) · sports/health/chat | `/`, `/sports`, `/health`, `/chat` |
+| 2일차 | Mockup · Composition | `WeatherMockup.vue` · `WeatherComposition.vue` | `/lab/1`, `/lab/2` |
+| 3일차 | Component · Router · Pinia | `WeatherParent` · SearchBar/WeatherCard · `router/index.js` · `configStore`/`weatherStore` · UnitToggler/StorePanel | `/lab/3`, `/cities`, `/weather/:cityId`, `/kk` |
+| 4일차 (오늘) | Axios · Element Plus · 배포 · 보너스 | `src/api/*` · `main.js`(Element Plus) · sports/health/chat · GitHub Pages | `/`, `/sports`, `/health`, `/chat` |
 
 수업 연습용 샘플도 유지:
 
