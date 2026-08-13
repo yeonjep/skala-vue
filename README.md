@@ -12,18 +12,12 @@
 
 ---
 
-## 배포 주소 
+## 배포 주소
 
 - **배포 URL:** https://yeonjep.github.io/skala-vue/
 - **소스 레포:** https://github.com/yeonjep/skala-vue
 - 배포 방식: GitHub Pages (`main` 푸시 → Actions 자동 빌드/배포)
-
-### 배포 메모 (교안: Build & Deployment)
-
-1. `npm run build` → `dist/` 정적 파일 생성
-2. GitHub Pages에 호스팅 (Vue Router용 `404.html` 폴백 포함)
-3. **API 키는 Git에 올리지 않음** — `.env` / `.env.local`만 로컬·호스팅 환경변수로 설정
-4. Groq 챗봇은 `VITE_GROQ_API_KEY`가 있을 때만 동작 (없으면 안내 UI 표시)
+- 챗봇 API Key(그록)는 로컬 .env 파일에 기록되어 제출 과제에는 공개되지 않았습니다. (로컬에서는 정상동작)
 
 ---
 
@@ -86,15 +80,15 @@ npm run dev
 
 ### 5) Axios + 외부 API
 
-| API | 용도 |
-|-----|------|
-| Open-Meteo | 현재/예보 · 월간 · 대기질 · 지오코딩 · 기후 |
-| wttr.in | Open-Meteo 실패 시 폴백 |
-| RainViewer | 홈 대시보드 강수 레이더 |
-| CartoCDN | Leaflet 지도 타일 (세계 지도 · 레이더 배경) |
-| ESPN | `/sports` 축구 순위·스코어·뉴스 (배포 시 스냅샷) |
-| wger.de | `/health` 운동 라이브러리 · BMI |
-| Groq | `/chat` AI 챗봇 (`VITE_GROQ_API_KEY`) |
+| API        | 용도                                             |
+| ---------- | ------------------------------------------------ |
+| Open-Meteo | 현재/예보 · 월간 · 대기질 · 지오코딩 · 기후      |
+| wttr.in    | Open-Meteo 실패 시 폴백                          |
+| RainViewer | 홈 대시보드 강수 레이더                          |
+| CartoCDN   | Leaflet 지도 타일 (세계 지도 · 레이더 배경)      |
+| ESPN       | `/sports` 축구 순위·스코어·뉴스 (배포 시 스냅샷) |
+| wger.de    | `/health` 운동 라이브러리 · BMI                  |
+| Groq       | `/chat` AI 챗봇 (`VITE_GROQ_API_KEY`)            |
 
 ### 6) 사이드 레일 (`HubSideRail`)
 
@@ -108,7 +102,6 @@ npm run dev
 ### 8) 배포
 
 - `npm run build` + **GitHub Pages** 자동 배포 (`main` 푸시 → Actions)
-
 
 ---
 
@@ -191,14 +184,13 @@ src/
 
 > 과제는 **2일차부터**입니다. 아래 파일은 구현 중 삭제하지 않았고 레포에 그대로 있습니다.
 
-| 일차 | 내용 | 주요 파일 | 확인 경로 |
-|------|------|-----------|-----------|
-| 2일차 | Mockup · Composition | `WeatherMockup.vue` · `WeatherComposition.vue` | `/lab/1`, `/lab/2` |
-| 3일차 | Component · Router · Pinia | `WeatherParent` · SearchBar/WeatherCard · `router/index.js` · `configStore`/`weatherStore` · UnitToggler/StorePanel | `/lab/3`, `/cities`, `/weather/:cityId`, `/kk` |
-| 4일차 (오늘) | Axios · Element Plus · 배포 · 보너스 | `src/api/*` · `main.js`(Element Plus) · sports/health/chat · GitHub Pages | `/`, `/sports`, `/health`, `/chat` |
+| 일차         | 내용                                 | 주요 파일                                                                                                           | 확인 경로                                      |
+| ------------ | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| 2일차        | Mockup · Composition                 | `WeatherMockup.vue` · `WeatherComposition.vue`                                                                      | `/lab/1`, `/lab/2`                             |
+| 3일차        | Component · Router · Pinia           | `WeatherParent` · SearchBar/WeatherCard · `router/index.js` · `configStore`/`weatherStore` · UnitToggler/StorePanel | `/lab/3`, `/cities`, `/weather/:cityId`, `/kk` |
+| 4일차 (오늘) | Axios · Element Plus · 배포 · 보너스 | `src/api/*` · `main.js`(Element Plus) · sports/health/chat · GitHub Pages                                           | `/`, `/sports`, `/health`, `/chat`             |
 
 수업 연습용 샘플도 유지:
 
 - `src/components/practices/` — `basic` / `composition` / `component` / `library`
 - `src/App.vue.old` · `.2nd` · `.3rd` · `.exercise` (일차별 App 백업)
-
