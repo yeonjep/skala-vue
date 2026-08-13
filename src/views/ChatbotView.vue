@@ -8,7 +8,7 @@ const messages = ref([
   {
     role: 'assistant',
     content:
-      '안녕하세요! AeroCast AI 도우미예요. 날씨뿐 아니라 일상 질문도 편하게 물어보세요. (Groq Llama)',
+      '안녕하세요! AeroCast AI 도우미예요. 날씨뿐 아니라 일상 질문도 편하게 물어보세요.',
   },
 ])
 const input = ref('')
@@ -103,7 +103,7 @@ function clearChat() {
       <div>
         <p class="chat-eyebrow">GROQ · {{ GROQ_MODEL }}</p>
         <h2>AI 챗봇</h2>
-        <p class="chat-lead">Groq Llama 범용 도우미 · 사이드바 Tools</p>
+        <p class="chat-lead">날씨·일상 질문을 도와드리는 AI 도우미 · 사이드바 Tools</p>
       </div>
       <div class="chat-actions">
         <button type="button" class="ghost-btn" @click="showSettings = !showSettings">

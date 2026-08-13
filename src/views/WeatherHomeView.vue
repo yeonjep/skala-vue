@@ -10,7 +10,6 @@ import WeatherParent from '../components/exercise/WeatherParent.vue'
         <p class="page-eyebrow">WEATHER</p>
         <h2 class="page-title">전국 날씨</h2>
       </div>
-      <p class="page-sub">검색 · 요약 · 즐겨찾기 · 단위 변환이 한 화면에 연결되어 있습니다.</p>
     </div>
 
     <!-- [3일차] WeatherParent = 실사용 부모 (SearchBar / WeatherCard / BaseDashboardCard 조립) -->

@@ -108,7 +108,7 @@ onUnmounted(stopAuto)
     <div class="health__tools">
       <section class="health-card">
         <h3>BMI 체크</h3>
-        <p class="health-card__hint">키·몸무게는 이 기기에만 쓰이며 서버로 보내지 않습니다.</p>
+        <p class="health-card__hint">키·몸무게로 BMI(비만도)를 바로 알려드립니다.</p>
         <div class="bmi-form">
           <label>
             키 (cm)

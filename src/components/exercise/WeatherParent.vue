@@ -148,9 +148,6 @@ const jumpCity = (cityId) => {
         <li>
           <span class="label">더움</span><span class="value">{{ hotCityCount }}</span>
         </li>
-        <li>
-          <span class="label">선선함</span><span class="value">{{ coolCityCount }}</span>
-        </li>
       </ul>
       <div v-if="!isLoading && hottestCity && coolestCity" class="summary-extremes">
         <span class="extreme-pill hot">
@@ -207,14 +204,14 @@ const jumpCity = (cityId) => {
 .list-box h3 {
   color: #2a3340;
   font-weight: 800;
-  font-size: 2rem;
+  font-size: 1.05rem;
   letter-spacing: -0.3px;
   margin: 0;
 }
 
 .api-credit {
-  margin: 0 0 16px;
-  font-size: 0.95rem;
+  margin: 0 0 10px;
+  font-size: 0.78rem;
   color: rgba(42, 51, 64, 0.45);
 }
 
@@ -222,9 +219,9 @@ const jumpCity = (cityId) => {
   flex-shrink: 0;
   border: none;
   border-radius: 999px;
-  padding: 10px 16px;
+  padding: 6px 12px;
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 0.82rem;
   cursor: pointer;
   background: rgba(42, 51, 64, 0.9);
   color: #fff;

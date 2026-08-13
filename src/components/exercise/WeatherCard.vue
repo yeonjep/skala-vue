@@ -63,13 +63,13 @@ function toggleFavorite() {
   box-sizing: border-box;
   overflow: hidden;
   border: none;
-  border-radius: 22px;
-  margin-bottom: 18px;
-  padding: 22px 28px 18px;
+  border-radius: 12px;
+  margin-bottom: 8px;
+  padding: 10px 12px 8px;
   background: rgba(255, 255, 255, 0.62);
   backdrop-filter: blur(20px) saturate(140%);
   -webkit-backdrop-filter: blur(20px) saturate(140%);
-  box-shadow: 0 10px 28px rgba(90, 110, 140, 0.12);
+  box-shadow: 0 6px 16px rgba(90, 110, 140, 0.1);
   cursor: pointer;
   transition:
     box-shadow 0.2s ease,
@@ -77,7 +77,7 @@ function toggleFavorite() {
 }
 
 .weather-card--favorite {
-  box-shadow: 0 10px 28px rgba(180, 140, 40, 0.18);
+  box-shadow: 0 6px 16px rgba(180, 140, 40, 0.16);
 }
 
 .weather-card:last-child {
@@ -88,17 +88,17 @@ function toggleFavorite() {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 16px;
-  margin-bottom: 12px;
+  gap: 10px;
+  margin-bottom: 4px;
 }
 
 .weather-card h4 {
   color: #2a3340;
   font-weight: 800;
-  font-size: 2.15rem;
+  font-size: 0.95rem;
   margin: 0;
   letter-spacing: -0.02em;
-  line-height: 1.35;
+  line-height: 1.3;
 }
 
 .favorite-btn {
@@ -110,7 +110,7 @@ function toggleFavorite() {
   border-radius: 0;
   background: transparent;
   color: rgba(42, 51, 64, 0.35);
-  font-size: 2.1rem;
+  font-size: 1.05rem;
   line-height: 1;
   cursor: pointer;
   transition: color 0.18s ease, transform 0.18s ease;
@@ -129,22 +129,22 @@ function toggleFavorite() {
 
 .card-temp {
   color: rgba(42, 51, 64, 0.78);
-  font-size: 1.55rem;
-  margin: 0 0 14px 0;
+  font-size: 0.85rem;
+  margin: 0 0 6px 0;
   font-weight: 600;
-  line-height: 1.5;
+  line-height: 1.35;
 }
 
 .weather-card:hover {
   background: rgba(255, 255, 255, 0.78);
-  box-shadow: 0 14px 34px rgba(90, 110, 140, 0.16);
+  box-shadow: 0 8px 18px rgba(90, 110, 140, 0.12);
 }
 
 .card-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 14px;
+  gap: 6px;
+  margin-bottom: 6px;
 }
 
 .badge,
@@ -152,12 +152,12 @@ function toggleFavorite() {
   display: inline-flex;
   align-items: center;
   border-radius: 999px;
-  padding: 10px 18px;
+  padding: 3px 8px;
   border: 1px solid transparent;
   backdrop-filter: blur(6px);
   font-weight: 700;
-  font-size: 1.2rem;
-  line-height: 1.3;
+  font-size: 0.72rem;
+  line-height: 1.25;
 }
 
 .badge.hot {
@@ -189,14 +189,14 @@ function toggleFavorite() {
   align-items: center;
   justify-content: center;
   margin: 0;
-  padding: 12px 24px;
+  padding: 5px 10px;
   background: rgba(42, 51, 64, 0.08);
   color: #2a3340;
   border: none;
   backdrop-filter: blur(8px);
-  border-radius: 14px;
+  border-radius: 10px;
   font-weight: 700;
-  font-size: 1.3rem;
+  font-size: 0.78rem;
   cursor: pointer;
   transition: all 0.18s ease;
   box-shadow: 0 2px 8px rgba(90, 110, 140, 0.1);
@@ -204,6 +204,6 @@ function toggleFavorite() {
 
 .btn-detail:hover {
   background: rgba(42, 51, 64, 0.14);
-  box-shadow: 0 6px 16px rgba(90, 110, 140, 0.14);
+  box-shadow: 0 4px 12px rgba(90, 110, 140, 0.12);
 }
 </style>
