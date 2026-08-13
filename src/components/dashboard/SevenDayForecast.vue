@@ -88,14 +88,15 @@ function onOpen() {
 
 .forecast__row {
   display: grid;
-  grid-template-columns: 72px 1fr 56px 88px;
-  gap: 8px;
+  grid-template-columns: 56px minmax(0, 1fr) 44px 72px;
+  gap: 6px;
   align-items: center;
-  padding: 9px 10px;
-  border-radius: 12px;
-  font-size: 1.05rem;
+  padding: 7px 8px;
+  border-radius: 10px;
+  font-size: 0.88rem;
   font-weight: 700;
   color: rgba(232, 238, 248, 0.88);
+  min-width: 0;
 }
 
 .forecast__row.is-today {
@@ -103,24 +104,40 @@ function onOpen() {
   border: 1px solid rgba(56, 189, 248, 0.3);
 }
 
+.forecast__day {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .forecast__wx {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   min-width: 0;
   font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.forecast__wx > span:last-child,
+.forecast__wx {
+  max-width: 100%;
 }
 
 .forecast__precip {
   text-align: right;
   color: #7dd3fc;
   font-weight: 800;
+  white-space: nowrap;
 }
 
 .forecast__temps {
   text-align: right;
   font-weight: 800;
   color: #fff;
+  white-space: nowrap;
 }
 
 .forecast__temps em {

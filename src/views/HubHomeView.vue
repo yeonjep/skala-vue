@@ -1058,13 +1058,14 @@ onMounted(async () => {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
-  align-items: stretch;
+  align-items: start;
 }
 
 .dash__cell {
   position: relative;
   min-width: 0;
-  min-height: 180px;
+  min-height: 0;
+  max-height: 420px;
   display: flex;
   flex-direction: column;
   transition:
@@ -1078,7 +1079,9 @@ onMounted(async () => {
   flex: 1 1 auto;
   width: 100%;
   min-width: 0;
-  min-height: 100%;
+  min-height: 0;
+  max-height: 420px;
+  overflow: auto;
   box-sizing: border-box;
 }
 
@@ -1130,7 +1133,7 @@ onMounted(async () => {
   padding: 0;
   overflow: hidden;
   cursor: pointer;
-  min-height: 180px;
+  min-height: 220px;
 }
 
 .dash__calendar {
@@ -1203,7 +1206,8 @@ onMounted(async () => {
   }
 
   .dash__cell {
-    min-height: 200px;
+    min-height: 0;
+    max-height: none;
   }
 
   .detail__grid {
