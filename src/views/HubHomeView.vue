@@ -148,14 +148,17 @@ const detailTitle = computed(() => {
   return map[detailType.value] || '상세'
 })
 
-const todayLabel = computed(() =>
-  new Date().toLocaleDateString('en-US', {
-    weekday: 'long',
-    month: 'long',
-    day: 'numeric',
-    year: 'numeric',
-  }),
-)
+const todayParts = computed(() => {
+  const d = new Date()
+  return {
+    weekday: d.toLocaleDateString('en-US', { weekday: 'long' }),
+    rest: d.toLocaleDateString('en-US', {
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric',
+    }),
+  }
+})
 
 function openDetail(type) {
   if (!type) return
@@ -346,7 +349,10 @@ onMounted(async () => {
     <div class="dash__top">
       <div>
         <p class="dash__eyebrow">WEATHER DASHBOARD</p>
-        <h1 class="dash__title">{{ todayLabel }}</h1>
+        <h1 class="dash__title">
+          <span class="dash__weekday">{{ todayParts.weekday }}</span
+          ><span class="dash__date-rest">, {{ todayParts.rest }}</span>
+        </h1>
       </div>
 
       <div class="dash__searchbar glass-card">
@@ -957,10 +963,20 @@ onMounted(async () => {
 
 .dash__title {
   margin: 0;
-  font-size: clamp(1.35rem, 2.2vw, 1.75rem);
+  font-size: clamp(1.75rem, 3vw, 2.35rem);
   font-weight: 800;
   letter-spacing: -0.03em;
   color: #fff;
+  line-height: 1.15;
+}
+
+.dash__weekday {
+  font-weight: 300;
+  letter-spacing: -0.01em;
+}
+
+.dash__date-rest {
+  font-weight: 800;
 }
 
 .dash__searchbar {

@@ -152,9 +152,9 @@ onMounted(() => {
   justify-content: center;
   text-decoration: none;
   color: rgba(232, 238, 248, 0.65);
-  font-size: 0.82rem;
+  font-size: 1.05rem;
   font-weight: 800;
-  padding: 7px 10px;
+  padding: 10px 14px;
   border-radius: 999px;
   white-space: nowrap;
   min-width: 0;

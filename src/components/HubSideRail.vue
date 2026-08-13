@@ -17,7 +17,7 @@ const TOOLS = [
   { id: 'home', label: '홈', icon: '⌂', to: '/', enabled: true },
   { id: 'chat', label: '챗봇', icon: '✦', to: '/chat', enabled: true },
   { id: 'sports', label: '운동 뉴스', icon: '⚽', to: '/sports', enabled: true },
-  { id: 'health', label: '건강 관리', icon: '♡', to: '/health', enabled: true },
+  { id: 'health', label: '건강 관리', icon: '🏋️', to: '/health', enabled: true },
 ]
 
 const dock = ref('left')
@@ -242,7 +242,12 @@ onUnmounted(() => {
             :disabled="!tool.enabled"
             @click="onSelect(tool)"
           >
-            <span class="side-rail__icon" aria-hidden="true">{{ tool.icon }}</span>
+            <span
+              class="side-rail__icon"
+              :class="{ 'is-home': tool.id === 'home', 'is-emoji': tool.id === 'sports' || tool.id === 'health' }"
+              aria-hidden="true"
+              >{{ tool.icon }}</span
+            >
             <span class="side-rail__label">{{ tool.label }}</span>
           </button>
         </li>
@@ -563,11 +568,20 @@ onUnmounted(() => {
 
 .side-rail__icon {
   flex: 0 0 auto;
-  width: 32px;
+  width: 36px;
   display: grid;
   place-items: center;
   font-size: 1.35rem;
   line-height: 1;
+}
+
+.side-rail__icon.is-home {
+  font-size: 1.85rem;
+  transform: translateY(-1px);
+}
+
+.side-rail__icon.is-emoji {
+  font-size: 1.45rem;
 }
 
 .side-rail__label {

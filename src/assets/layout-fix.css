@@ -469,8 +469,8 @@ body {
   font-size: 1.1rem !important;
 }
 .hub-app .hub-nav__item {
-  font-size: 0.82rem !important;
-  padding: 7px 10px !important;
+  font-size: 1.05rem !important;
+  padding: 10px 14px !important;
 }
 .hub-app .hub-fav {
   font-size: 0.78rem !important;
@@ -483,7 +483,15 @@ body {
   font-size: 0.72rem !important;
 }
 .dash__title {
-  font-size: clamp(1.35rem, 2.2vw, 1.75rem) !important;
+  font-size: clamp(1.75rem, 3vw, 2.35rem) !important;
+  font-weight: 800 !important;
+  line-height: 1.15 !important;
+}
+.dash__title .dash__weekday {
+  font-weight: 300 !important;
+}
+.dash__title .dash__date-rest {
+  font-weight: 800 !important;
 }
 .dash__search-field input {
   font-size: 0.9rem !important;

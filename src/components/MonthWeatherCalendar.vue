@@ -162,7 +162,7 @@ const weeks = computed(() => {
               :icon="cell.hasData ? cell.icon : 'empty'"
               :emoji="cell.emoji"
               :label="cell.label"
-              :size="58"
+              :size="36"
             />
             <span class="month-cal__temps">
               <span class="hi">{{ cell.high }}{{ cell.hasData ? '°' : '' }}</span>
@@ -261,8 +261,8 @@ const weeks = computed(() => {
 .month-cal__week {
   display: grid;
   grid-template-columns: repeat(7, minmax(0, 1fr));
-  gap: 8px;
-  padding: 16px 0;
+  gap: 6px;
+  padding: 8px 0;
   border-top: 1px solid rgba(90, 110, 140, 0.1);
 }
 
@@ -278,22 +278,22 @@ const weeks = computed(() => {
 
 .month-cal__pill {
   width: 100%;
-  max-width: 140px;
-  min-height: 210px;
-  padding: 18px 6px 16px;
+  max-width: 110px;
+  min-height: 132px;
+  padding: 10px 4px 10px;
   border-radius: 999px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  gap: 12px;
+  gap: 6px;
   box-sizing: border-box;
 }
 
 .month-cal__day.is-today .month-cal__pill {
   background: #fff;
   box-shadow:
-    0 14px 32px rgba(90, 110, 140, 0.18),
+    0 10px 24px rgba(90, 110, 140, 0.16),
     0 0 0 1px rgba(255, 255, 255, 0.9);
 }
 
@@ -307,22 +307,22 @@ const weeks = computed(() => {
 }
 
 .month-cal__date {
-  font-size: 2.15rem;
+  font-size: 1.35rem;
   font-weight: 800;
   line-height: 1;
   color: #2a3340;
 }
 
 .month-cal__glyph {
-  margin: 2px 0;
+  margin: 0;
 }
 
 .month-cal__temps {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
-  font-size: 1.55rem;
+  gap: 2px;
+  font-size: 1.05rem;
   font-weight: 750;
   line-height: 1.15;
 }
@@ -337,17 +337,17 @@ const weeks = computed(() => {
 
 @media (max-width: 900px) {
   .month-cal__pill {
-    max-width: 120px;
-    min-height: 180px;
-    gap: 10px;
+    max-width: 96px;
+    min-height: 118px;
+    gap: 5px;
   }
 
   .month-cal__date {
-    font-size: 1.75rem;
+    font-size: 1.2rem;
   }
 
   .month-cal__temps {
-    font-size: 1.25rem;
+    font-size: 0.95rem;
   }
 }
 
@@ -358,26 +358,26 @@ const weeks = computed(() => {
 
   .month-cal__pill {
     max-width: none;
-    min-height: 150px;
-    padding: 12px 2px 10px;
-    border-radius: 28px;
-    gap: 8px;
+    min-height: 108px;
+    padding: 8px 2px 8px;
+    border-radius: 22px;
+    gap: 4px;
   }
 
   .month-cal__date {
-    font-size: 1.45rem;
+    font-size: 1.1rem;
   }
 
   .month-cal__glyph {
-    transform: scale(0.82);
+    transform: scale(0.9);
   }
 
   .month-cal__temps {
-    font-size: 1.1rem;
+    font-size: 0.88rem;
   }
 
   .month-cal__weekdays span {
-    font-size: 1.1rem;
+    font-size: 1rem;
   }
 }
 </style>
