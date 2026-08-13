@@ -12,7 +12,7 @@
 
 ---
 
-## 배포 주소 (필수)
+## 배포 주소 
 
 - **배포 URL:** https://yeonjep.github.io/skala-vue/
 - **소스 레포:** https://github.com/yeonjep/skala-vue
@@ -57,23 +57,34 @@ npm run dev
 
 ## 4일차 구현
 
-4일차에는 **Axios 실연동 · UI 고도화 · 배포 · 추가 아이디어 페이지**를 구현했습니다.
+**Axios 실연동 · UI 프레임워크(Element Plus) · 배포 · 추가 아이디어 페이지**를 구현했습니다.
 
-### 1) 홈 대시보드 (`HubHomeView`)
+### 1) UI 프레임워크 — Element Plus
+
+교안의 UI 라이브러리 활용에 맞춰 **Element Plus**를 import 해 전역 등록했습니다.
+
+- `main.js`에서 `import ElementPlus from 'element-plus'` + `app.use(ElementPlus)`
+- 스타일: `element-plus/dist/index.css`
+- 실제 사용 예
+  - `ElMessage` — 홈 검색·즐겨찾기·에러 토스트
+  - `el-skeleton` — 7일 예보 · Overview · 즐겨찾기 로딩 UI
+- Lab: `/lab` 계열 `ElementPlus.vue` 연습 컴포넌트 (`ElMessageBox`, `el-card`, `el-button` 등)
+
+### 2) 홈 대시보드 (`HubHomeView`)
 
 - Open-Meteo 연동 **현재 날씨 · 7일 예보 · Overview 차트 · 세계 지도 · 즐겨찾기 · 강수 레이더**
 - 대시보드 카드 **드래그로 자리 교체** (`localStorage`에 배치 저장)
 - 카드 클릭 시 macOS 스타일 **상세 팝업** (닫기 / 최소화 / 최대화)
 
-### 2) 월간 캘린더 · 날씨 아이콘
+### 3) 월간 캘린더 · 날씨 아이콘
 
 - 홈 하단 **월간 날씨 캘린더**에 SVG 날씨 아이콘 (`WeatherGlyph`) 적용
 
-### 3) 날씨 상세 + 캐릭터 누비 (`WeatherBuddy`)
+### 4) 날씨 상세 + 캐릭터 누비 (`WeatherBuddy`)
 
 - `/weather/:cityId` 상세에서 기온·습도·강수 등에 따라 표정·모션이 바뀌는 **누비** 캐릭터
 
-### 4) Axios + 외부 API
+### 5) Axios + 외부 API
 
 | API | 용도 |
 |-----|------|
@@ -85,17 +96,16 @@ npm run dev
 | wger.de | `/health` 운동 라이브러리 · BMI |
 | Groq | `/chat` AI 챗봇 (`VITE_GROQ_API_KEY`) |
 
-### 5) 사이드 레일 (`HubSideRail`)
+### 6) 사이드 레일 (`HubSideRail`)
 
 - 홈 / 챗봇 / 운동 뉴스 / 건강 관리 바로가기
 - 호버 펼침 · 드래그로 상·하·좌·우 도킹
 
-### 6) UI 라이브러리 · 맵
+### 7) 지도 라이브러리
 
-- **Element Plus** 전역 등록 (`ElMessage`, `el-skeleton` 등)
 - **Leaflet**으로 세계 지도 · 강수 레이더 표시
 
-### 7) 배포
+### 8) 배포
 
 - `npm run build` + **GitHub Pages** 자동 배포 (`main` 푸시 → Actions)
 
