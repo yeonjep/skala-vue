@@ -55,10 +55,9 @@ npm run dev
 
 ---
 
-## 3일차 대비 4일차에 구현한 내용
+## 4일차 구현
 
-3일차까지는 Component · Router · Pinia 중심의 `/cities` 날씨 대시보드와 기본 홈·상세·가이드였고,  
-4일차에는 **Axios 실연동 · UI 고도화 · 배포 · 본인 아이디어 페이지**를 추가했습니다.
+4일차에는 **Axios 실연동 · UI 고도화 · 배포 · 추가 아이디어 페이지**를 구현했습니다.
 
 ### 1) 홈 대시보드 (`HubHomeView`)
 
@@ -76,12 +75,15 @@ npm run dev
 
 ### 4) Axios + 외부 API
 
-| API        | 용도                                  |
-| ---------- | ------------------------------------- |
-| Open-Meteo | 현재/예보/월간/대기질                 |
-| ESPN       | `/sports` 축구 순위·스코어·뉴스       |
-| wger.de    | `/health` 운동 라이브러리 · BMI       |
-| Groq       | `/chat` AI 챗봇 (`VITE_GROQ_API_KEY`) |
+| API | 용도 |
+|-----|------|
+| Open-Meteo | 현재/예보 · 월간 · 대기질 · 지오코딩 · 기후 |
+| wttr.in | Open-Meteo 실패 시 폴백 |
+| RainViewer | 홈 대시보드 강수 레이더 |
+| CartoCDN | Leaflet 지도 타일 (세계 지도 · 레이더 배경) |
+| ESPN | `/sports` 축구 순위·스코어·뉴스 |
+| wger.de | `/health` 운동 라이브러리 · BMI |
+| Groq | `/chat` AI 챗봇 (`VITE_GROQ_API_KEY`) |
 
 ### 5) 사이드 레일 (`HubSideRail`)
 
@@ -97,11 +99,6 @@ npm run dev
 
 - `npm run build` + **GitHub Pages** 자동 배포 (`main` 푸시 → Actions)
 
-### 8) 3일차 과제 핵심 유지
-
-- **Component**: `WeatherParent` + SearchBar / WeatherCard / BaseDashboardCard / slot
-- **Router**: Lazy Loading · `/weather/:cityId` · Catch-all 404 · `?search=` 동기화
-- **Pinia**: `configStore`(℃/℉) · `weatherStore`(즐겨찾기·최근검색)
 
 ---
 
@@ -110,7 +107,7 @@ npm run dev
 ```
 src/
 ├─ App.vue / HubSideRail.vue
-├─ api/          openMeteo · espnFootball · healthApi · groq
+├─ api/          openMeteo · rainViewer · espnFootball · healthApi · groq
 ├─ components/
 │  ├─ dashboard/   CurrentWeatherHero · SevenDayForecast · Overview …
 │  ├─ weather/     WeatherBuddy · WeatherGlyph
