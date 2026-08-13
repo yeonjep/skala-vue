@@ -9,18 +9,18 @@ const route = useRoute()
 
 const dayMeta = {
   '1': {
-    title: '1일차 · Mockup',
-    desc: 'WeatherMockup.vue — 소개(/about)와 이 경로에서 동일 컴포넌트가 렌더됩니다.',
+    title: '2일차 과제 · Mockup',
+    desc: 'WeatherMockup.vue — 2일차에 작성한 목업입니다.',
     component: WeatherMockup,
   },
   '2': {
-    title: '2일차 · Composition',
-    desc: 'WeatherComposition.vue — 소개(/about)와 이 경로에서 동일 컴포넌트가 렌더됩니다.',
+    title: '2일차 과제 · Composition',
+    desc: 'WeatherComposition.vue — 2일차에 작성한 Composition입니다.',
     component: WeatherComposition,
   },
   '3': {
-    title: '3일차 · Component (WeatherParent)',
-    desc: 'WeatherParent.vue — /cities 날씨 탭에서 쓰는 그 부모 컴포넌트입니다. (embedded 없음)',
+    title: '3일차 과제 · Component (WeatherParent)',
+    desc: 'WeatherParent.vue — /cities 날씨 탭에서 쓰는 부모 컴포넌트입니다.',
     component: WeatherParent,
   },
 }

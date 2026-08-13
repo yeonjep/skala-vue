@@ -55,6 +55,28 @@ npm run dev
 
 ---
 
+## Vue 과정 과제 파일 위치
+
+> **1일차는 과제 없음.** 과제는 **2일차(목업·컴포지션)** 부터입니다.  
+> 아래 파일은 구현 중 삭제하지 않았고, 레포에 그대로 있습니다.
+
+| 일차 | 내용 | 주요 파일 | 확인 경로 |
+|------|------|-----------|-----------|
+| 1일차 | 과제 없음 | — | — |
+| 2일차 | Mockup | `src/components/exercise/WeatherMockup.vue` | `/lab/1` |
+| 2일차 | Composition | `src/components/exercise/WeatherComposition.vue` | `/lab/2` |
+| 3일차 | Component | `WeatherParent.vue` · `SearchBar.vue` · `WeatherCard.vue` · `BaseDashboardCard.vue` | `/lab/3`, `/cities` |
+| 4일차 | Router | `src/router/index.js` · `WeatherDetailView` · `NotFoundView` · Lazy Loading | `/weather/:cityId`, `/kk` |
+| 5일차 | Pinia | `configStore.js` · `weatherStore.js` · `UnitToggler.vue` · `StorePanel.vue` | `/cities` (단위·즐겨찾기) |
+| 4일차 종합 (오늘) | Axios · Element Plus · 배포 · 보너스 | `src/api/*` · `main.js`(Element Plus) · sports/health/chat | `/`, `/sports`, `/health`, `/chat` |
+
+수업 연습용 샘플도 유지:
+
+- `src/components/practices/` — `basic` / `composition` / `component` / `library`
+- `src/App.vue.old` · `.2nd` · `.3rd` · `.exercise` (일차별 App 백업)
+
+---
+
 ## 4일차 구현
 
 **Axios 실연동 · UI 프레임워크(Element Plus) · 배포 · 추가 아이디어 페이지**를 구현했습니다.
