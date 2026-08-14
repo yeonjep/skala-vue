@@ -1,0 +1,1 @@
+import{_t as e,u as t}from"./_plugin-vue_export-helper-eoiq2_J-.js";import{d as n,l as r}from"./index-YlhlJXXL.js";function i(i){let a=n();return t(()=>{let t=e(i);return t==null||Number.isNaN(Number(t))?0:r(Number(t),a.unit)})}export{i as t};
